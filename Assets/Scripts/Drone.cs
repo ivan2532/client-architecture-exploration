@@ -5,6 +5,7 @@ public class Drone : MonoBehaviour
 {
     [SerializeField] private Camera droneCamera;
     [SerializeField] private Collider dummyTarget;
+    [SerializeField] private Hud hud;
     
     [SerializeField] private float lookSensitivity;
     [SerializeField] private Vector2 pitchRange;
@@ -82,6 +83,7 @@ public class Drone : MonoBehaviour
         
         if (raycastHitNotEmpty && hit.collider == dummyTarget)
         {
+            hud.IncrementScore();
             Debug.Log("Drone has shot dummy target!");
         }
     }
