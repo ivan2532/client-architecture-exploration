@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Player : MonoBehaviour
+public class MainCharacter : MonoBehaviour
 {
     [SerializeField] private Rigidbody playerRigidbody;
     [SerializeField] private float speed = 5f;

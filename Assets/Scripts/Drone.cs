@@ -7,7 +7,7 @@ public class Drone : MonoBehaviour
     [SerializeField] private Vector2 pitchRange;
     [SerializeField] private Vector2 yawRange;
     
-    [SerializeField] private Transform followTarget;
+    [SerializeField] private Transform mainCharacter;
     [SerializeField] private float smoothTime;
     
     private InputActions _inputActions;
@@ -53,7 +53,7 @@ public class Drone : MonoBehaviour
     {
         _pitch = transform.rotation.eulerAngles.x;
         _yaw = transform.rotation.eulerAngles.y;
-        _offsetFromTarget = transform.position - followTarget.position;
+        _offsetFromTarget = transform.position - mainCharacter.position;
     }
 
     private void HideCursor()
@@ -78,7 +78,7 @@ public class Drone : MonoBehaviour
     {
         transform.position = Vector3.SmoothDamp(
             transform.position, 
-            followTarget.position + _offsetFromTarget, 
+            mainCharacter.position + _offsetFromTarget, 
             ref _velocity, 
             smoothTime);
     }

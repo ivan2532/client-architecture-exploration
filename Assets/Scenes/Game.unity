@@ -133,7 +133,7 @@ GameObject:
   - component: {fileID: 166570739}
   - component: {fileID: 166570740}
   m_Layer: 0
-  m_Name: MainCamera
+  m_Name: Drone
   m_TagString: MainCamera
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -272,7 +272,7 @@ MonoBehaviour:
   lookSensitivity: 0.05
   pitchRange: {x: -45, y: 45}
   yawRange: {x: -45, y: 45}
-  followTarget: {fileID: 1848580627}
+  mainCharacter: {fileID: 1848580627}
   smoothTime: 0.1
 --- !u!43 &535139916
 Mesh:
@@ -10528,7 +10528,7 @@ GameObject:
   - component: {fileID: 1848580628}
   - component: {fileID: 1848580629}
   m_Layer: 0
-  m_Name: Player
+  m_Name: MainCharacter
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10847,9 +10847,9 @@ RectTransform:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 166570738}
   - {fileID: 1695237329}
   - {fileID: 800908211}
+  - {fileID: 166570738}
   - {fileID: 1848580627}
   - {fileID: 1446389491}
   - {fileID: 1937982985}
