@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -15,13 +16,15 @@ public class Player : MonoBehaviour
 
     private void OnEnable()
     {
-        _inputActions.Player.Move.performed += ctx => _movementInput = ctx.ReadValue<Vector2>();
-        _inputActions.Player.Move.canceled += ctx => _movementInput = Vector2.zero;
+        _inputActions.Player.Move.performed += OnMovePerformed;
+        _inputActions.Player.Move.canceled += OnMoveCanceled;
         _inputActions.Enable();
     }
 
     private void OnDisable()
     {
+        _inputActions.Player.Move.performed -= OnMovePerformed;
+        _inputActions.Player.Move.canceled -= OnMoveCanceled;
         _inputActions.Disable();
     }
     
@@ -29,5 +32,15 @@ public class Player : MonoBehaviour
     {
         var movement = new Vector3(_movementInput.x, 0f, _movementInput.y).normalized * speed;
         playerRigidbody.linearVelocity = new Vector3(movement.x, playerRigidbody.linearVelocity.y, movement.z);
+    }
+    
+    private void OnMovePerformed(InputAction.CallbackContext context)
+    {
+        _movementInput = context.ReadValue<Vector2>();
+    }
+
+    private void OnMoveCanceled(InputAction.CallbackContext context)
+    {
+        _movementInput = Vector2.zero;
     }
 }
