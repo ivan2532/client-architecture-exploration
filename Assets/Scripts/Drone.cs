@@ -83,7 +83,6 @@ public class Drone : MonoBehaviour
         if (raycastHitNotEmpty && hit.collider == dummyTarget)
         {
             hud.IncrementScore();
-            Debug.Log("Drone has shot dummy target!");
         }
     }
 
