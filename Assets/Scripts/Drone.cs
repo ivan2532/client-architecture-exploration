@@ -41,7 +41,7 @@ public class Drone : MonoBehaviour
     private void Start()
     {
         InitializeOrientation();
-        HideCursor();
+        CursorUtility.HideCursor();
     }
 
     private void Update()
@@ -59,12 +59,6 @@ public class Drone : MonoBehaviour
         _pitch = transform.rotation.eulerAngles.x;
         _yaw = transform.rotation.eulerAngles.y;
         _offsetFromTarget = transform.position - mainCharacter.position;
-    }
-
-    private void HideCursor()
-    {
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     private void OnLookPerformed(InputAction.CallbackContext context)
