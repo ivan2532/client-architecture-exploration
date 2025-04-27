@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Camera : MonoBehaviour
+public class Drone : MonoBehaviour
 {
     [SerializeField] private float lookSensitivity;
     [SerializeField] private Vector2 pitchRange;
