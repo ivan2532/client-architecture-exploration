@@ -9,10 +9,20 @@ public class MainMenu : MonoBehaviour
 {
     public void OnPlayButtonClicked()
     {
-        SceneManager.LoadScene("Game");
+        LoadGame();
     }
 
     public void OnExitButtonClicked()
+    {
+        ExitGame();
+    }
+
+    private void LoadGame()
+    {
+        SceneManager.LoadScene("Game");
+    }
+
+    private void ExitGame()
     {
 #if UNITY_EDITOR
         EditorApplication.ExitPlaymode();
