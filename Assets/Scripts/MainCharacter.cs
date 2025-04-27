@@ -3,6 +3,7 @@ using UnityEngine.InputSystem;
 
 public class MainCharacter : MonoBehaviour
 {
+    [SerializeField] private GameState gameState;
     [SerializeField] private Rigidbody playerRigidbody;
     [SerializeField] private float speed = 5f;
 
@@ -36,11 +37,13 @@ public class MainCharacter : MonoBehaviour
     
     private void OnMovePerformed(InputAction.CallbackContext context)
     {
+        if (gameState.Paused) return;
         _movementInput = context.ReadValue<Vector2>();
     }
 
     private void OnMoveCanceled(InputAction.CallbackContext context)
     {
+        if (gameState.Paused) return;
         _movementInput = Vector2.zero;
     }
 }
