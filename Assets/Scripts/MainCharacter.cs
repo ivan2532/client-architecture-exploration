@@ -6,12 +6,12 @@ public class MainCharacter : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidbody;
     [SerializeField] private float speed = 5f;
 
-    private MainCharacterInputActions _inputActions;
+    private GameInputActions _inputActions;
     private Vector2 _movementInput;
 
     private void Awake()
     {
-        _inputActions = new MainCharacterInputActions();
+        _inputActions = new GameInputActions();
     }
 
     private void OnEnable()

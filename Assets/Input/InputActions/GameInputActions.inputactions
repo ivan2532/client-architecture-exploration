@@ -1,14 +1,62 @@
 {
-    "name": "MainCharacterInputActions",
+    "name": "GameInputActions",
     "maps": [
         {
+            "name": "Drone",
+            "id": "55780b30-71f6-4ee7-832e-ede028719a7b",
+            "actions": [
+                {
+                    "name": "Look",
+                    "type": "Value",
+                    "id": "d404932d-314c-40a1-aa09-0a8decf9449a",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Shoot",
+                    "type": "Button",
+                    "id": "3ba5f312-46dc-4c5b-892d-cfeb22f38183",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "a17710c2-e892-4c0c-99aa-eb5796e87eab",
+                    "path": "<Pointer>/delta",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Look",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2c55ba5-584e-424b-bc38-e71c9e52f22d",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";Keyboard&Mouse",
+                    "action": "Shoot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
             "name": "MainCharacter",
-            "id": "834bdfeb-1fcf-42d9-9a76-52d89b219403",
+            "id": "3afcb2a6-e694-40b9-b2b6-8bbe1bd175ae",
             "actions": [
                 {
                     "name": "Move",
                     "type": "Value",
-                    "id": "ce050e55-df05-4ec1-9e09-ad2b8495262d",
+                    "id": "905c7e89-ac00-453f-bdab-643429a6cf94",
                     "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
@@ -18,7 +66,7 @@
             "bindings": [
                 {
                     "name": "WASD",
-                    "id": "0c5930b1-fcc7-49e0-ac96-13222ca0dcb0",
+                    "id": "907a78bf-3738-4869-bd8e-80d64fa79ac2",
                     "path": "Dpad",
                     "interactions": "",
                     "processors": "",
@@ -29,7 +77,7 @@
                 },
                 {
                     "name": "up",
-                    "id": "9c4502f7-9ecb-4bc2-a5bf-30fd88c1be2e",
+                    "id": "2e0a6659-68d1-4f07-9dc2-5da2005e8709",
                     "path": "<Keyboard>/w",
                     "interactions": "",
                     "processors": "",
@@ -40,7 +88,7 @@
                 },
                 {
                     "name": "down",
-                    "id": "34737427-b359-4087-889d-b30a9295d568",
+                    "id": "16524267-2c35-4bc6-98f7-54b1dfff9893",
                     "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
@@ -51,7 +99,7 @@
                 },
                 {
                     "name": "left",
-                    "id": "d4f1ac8b-bff7-4dc5-b14f-fe8f57ac1423",
+                    "id": "edd7165d-af34-468c-8b69-2a07dd39f8e8",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
@@ -62,7 +110,7 @@
                 },
                 {
                     "name": "right",
-                    "id": "6883140e-1ea2-4c2e-8710-69b1e7e82489",
+                    "id": "690c1c7e-93ad-4ff2-9098-6c1cf9007517",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",

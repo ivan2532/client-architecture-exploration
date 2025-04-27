@@ -14,7 +14,7 @@ public class Drone : MonoBehaviour
     [SerializeField] private Transform mainCharacter;
     [SerializeField] private float smoothTime;
     
-    private DroneInputActions _inputActions;
+    private GameInputActions _inputActions;
     private float _pitch;
     private float _yaw;
     
@@ -23,7 +23,7 @@ public class Drone : MonoBehaviour
 
     private void Awake()
     {
-        _inputActions = new DroneInputActions();
+        _inputActions = new GameInputActions();
     }
     
     private void OnEnable()
