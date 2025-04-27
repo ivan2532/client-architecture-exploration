@@ -45,11 +45,6 @@ public class Drone : MonoBehaviour
         CursorUtility.HideCursor();
     }
 
-    private void Update()
-    {
-        UpdateRotation();
-    }
-
     private void LateUpdate()
     {
         FollowTarget();
@@ -65,30 +60,33 @@ public class Drone : MonoBehaviour
     private void OnLookPerformed(InputAction.CallbackContext context)
     {
         if (gameState.Paused) return;
-        
-        var orientationDelta = context.ReadValue<Vector2>();
-        _pitch = Mathf.Clamp(_pitch - orientationDelta.y * lookSensitivity, pitchRange.x, pitchRange.y);
-        _yaw = Mathf.Clamp(_yaw + orientationDelta.x * lookSensitivity, yawRange.x, yawRange.y);
+        UpdateOrientation(context.ReadValue<Vector2>());
     }
 
     private void OnShootPerformed(InputAction.CallbackContext context)
     {
         if (gameState.Paused) return;
-        
+        Shoot();
+    }
+
+    private void UpdateOrientation(Vector2 delta)
+    {
+        _pitch = Mathf.Clamp(_pitch - delta.y * lookSensitivity, pitchRange.x, pitchRange.y);
+        _yaw = Mathf.Clamp(_yaw + delta.x * lookSensitivity, yawRange.x, yawRange.y);
+        transform.localRotation = Quaternion.Euler(_pitch, _yaw, 0f);
+    }
+
+    private void Shoot()
+    {
         var raycastHitNotEmpty = Physics.Raycast(
             droneCamera.transform.position, 
             droneCamera.transform.forward, 
             out var hit);
-        
+
         if (raycastHitNotEmpty && hit.collider == dummyTarget)
         {
             hud.IncrementScore();
         }
-    }
-
-    private void UpdateRotation()
-    {
-        transform.localRotation = Quaternion.Euler(_pitch, _yaw, 0f);
     }
 
     private void FollowTarget()
