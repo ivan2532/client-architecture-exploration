@@ -10,7 +10,7 @@ public class Drone : MonoBehaviour
     [SerializeField] private Transform mainCharacter;
     [SerializeField] private float smoothTime;
     
-    private InputActions _inputActions;
+    private DroneInputActions _inputActions;
     private float _pitch;
     private float _yaw;
 
@@ -19,12 +19,12 @@ public class Drone : MonoBehaviour
 
     private void Awake()
     {
-        _inputActions = new InputActions();
+        _inputActions = new DroneInputActions();
     }
     
     private void OnEnable()
     {
-        _inputActions.Player.Look.performed += OnLookPerformed;
+        _inputActions.Drone.Look.performed += OnLookPerformed;
         _inputActions.Enable();
     }
 

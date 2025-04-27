@@ -6,25 +6,25 @@ public class MainCharacter : MonoBehaviour
     [SerializeField] private Rigidbody playerRigidbody;
     [SerializeField] private float speed = 5f;
 
-    private InputActions _inputActions;
+    private MainCharacterInputActions _inputActions;
     private Vector2 _movementInput;
 
     private void Awake()
     {
-        _inputActions = new InputActions();
+        _inputActions = new MainCharacterInputActions();
     }
 
     private void OnEnable()
     {
-        _inputActions.Player.Move.performed += OnMovePerformed;
-        _inputActions.Player.Move.canceled += OnMoveCanceled;
+        _inputActions.MainCharacter.Move.performed += OnMovePerformed;
+        _inputActions.MainCharacter.Move.canceled += OnMoveCanceled;
         _inputActions.Enable();
     }
 
     private void OnDisable()
     {
-        _inputActions.Player.Move.performed -= OnMovePerformed;
-        _inputActions.Player.Move.canceled -= OnMoveCanceled;
+        _inputActions.MainCharacter.Move.performed -= OnMovePerformed;
+        _inputActions.MainCharacter.Move.canceled -= OnMoveCanceled;
         _inputActions.Disable();
     }
     
