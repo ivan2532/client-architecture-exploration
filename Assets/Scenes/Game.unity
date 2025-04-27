@@ -269,6 +269,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbef0cc037bd1974da81c454a6d22017, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  droneCamera: {fileID: 166570737}
+  dummyTarget: {fileID: 1446389488}
   lookSensitivity: 0.05
   pitchRange: {x: -45, y: 45}
   yawRange: {x: -45, y: 45}

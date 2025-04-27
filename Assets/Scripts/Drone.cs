@@ -3,6 +3,9 @@ using UnityEngine.InputSystem;
 
 public class Drone : MonoBehaviour
 {
+    [SerializeField] private Camera droneCamera;
+    [SerializeField] private Collider dummyTarget;
+    
     [SerializeField] private float lookSensitivity;
     [SerializeField] private Vector2 pitchRange;
     [SerializeField] private Vector2 yawRange;
@@ -13,7 +16,7 @@ public class Drone : MonoBehaviour
     private DroneInputActions _inputActions;
     private float _pitch;
     private float _yaw;
-
+    
     private Vector3 _offsetFromTarget;
     private Vector3 _velocity;
 
@@ -25,6 +28,7 @@ public class Drone : MonoBehaviour
     private void OnEnable()
     {
         _inputActions.Drone.Look.performed += OnLookPerformed;
+        _inputActions.Drone.Shoot.performed += OnShootPerformed;
         _inputActions.Enable();
     }
 
@@ -67,6 +71,19 @@ public class Drone : MonoBehaviour
         var orientationDelta = context.ReadValue<Vector2>();
         _pitch = Mathf.Clamp(_pitch - orientationDelta.y * lookSensitivity, pitchRange.x, pitchRange.y);
         _yaw = Mathf.Clamp(_yaw + orientationDelta.x * lookSensitivity, yawRange.x, yawRange.y);
+    }
+
+    private void OnShootPerformed(InputAction.CallbackContext context)
+    {
+        var raycastHitNotEmpty = Physics.Raycast(
+            droneCamera.transform.position, 
+            droneCamera.transform.forward, 
+            out var hit);
+        
+        if (raycastHitNotEmpty && hit.collider == dummyTarget)
+        {
+            Debug.Log("Drone has shot dummy target!");
+        }
     }
 
     private void UpdateRotation()
