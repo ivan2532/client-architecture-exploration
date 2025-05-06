@@ -1,12 +1,12 @@
 using UnityEngine;
 
-namespace Core
+namespace Core.View
 {
-    public class ApplicationView : MonoBehaviour
+    public class ApplicationView : ViewBase
     {
         private void Awake()
         {
-            Debug.Log("Awake called.");
+            Debug.Log("Application View Awake called.");
         }
     }
 }
