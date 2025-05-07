@@ -7,20 +7,21 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Utility.Extensions;
+using Object = UnityEngine.Object;
 
 namespace Core.Infrastructure
 {
-    public class ControllerManager : MonoBehaviour
+    public class ControllerService : IDisposable
     {
         private readonly Dictionary<ViewBase, ControllerBase> _controllers = new();
 
-        private void Awake()
+        public ControllerService()
         {
             SceneManager.sceneUnloaded += OnSceneUnloaded;
             SceneManager.sceneLoaded += OnSceneLoaded;
         }
 
-        private void OnDestroy()
+        public void Dispose()
         {
             SceneManager.sceneUnloaded -= OnSceneUnloaded;
             SceneManager.sceneLoaded -= OnSceneLoaded;
@@ -60,7 +61,7 @@ namespace Core.Infrastructure
 
         private void CreateControllersFromLoadedScene()
         {
-            var views = FindObjectsByType<ViewBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+            var views = Object.FindObjectsByType<ViewBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
             foreach (var view in views.Where(view => !_controllers.ContainsKey(view)))
             {
