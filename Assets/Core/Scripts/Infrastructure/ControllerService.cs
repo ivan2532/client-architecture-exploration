@@ -2,12 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Controller;
+using Core.Events;
 using Core.View;
 using JetBrains.Annotations;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-using Utility.Extensions;
-using Object = UnityEngine.Object;
 
 namespace Core.Infrastructure
 {
@@ -17,57 +14,33 @@ namespace Core.Infrastructure
 
         public ControllerService()
         {
-            SceneManager.sceneUnloaded += OnSceneUnloaded;
-            SceneManager.sceneLoaded += OnSceneLoaded;
+            EventBus.Subscribe<ViewEnabledEvent>(OnViewEnabled);
+            EventBus.Subscribe<ViewDisabledEvent>(OnViewDisabled);
         }
 
         public void Dispose()
         {
-            SceneManager.sceneUnloaded -= OnSceneUnloaded;
-            SceneManager.sceneLoaded -= OnSceneLoaded;
+            EventBus.Unsubscribe<ViewEnabledEvent>(OnViewEnabled);
+            EventBus.Unsubscribe<ViewDisabledEvent>(OnViewDisabled);
         }
 
-        private void OnSceneUnloaded(Scene scene)
+        private void OnViewEnabled(ViewEnabledEvent viewEnabledEvent)
         {
-            DisposeLocalControllersFromUnloadedScene();
+            var controller = TryCreateControllerForView(viewEnabledEvent.View);
+            if (controller != null) _controllers.Add(viewEnabledEvent.View, controller);
         }
 
-        private void OnSceneLoaded(Scene scene, LoadSceneMode loadSceneMode)
+        private void OnViewDisabled(ViewDisabledEvent viewDisabledEvent)
         {
-            CreateControllersFromLoadedScene();
-        }
+            var hasController = _controllers.TryGetValue(viewDisabledEvent.View, out var controller);
+            if (!hasController) return;
 
-        private void DisposeLocalControllersFromUnloadedScene()
-        {
-            var disposedControllerViews = new List<ViewBase>();
-
-            foreach (var (view, controller) in _controllers)
+            if (controller is IDisposable disposableController)
             {
-                if (view.gameObject.IsMarkedAsDontDestroyOnLoad()) continue;
-
-                if (controller is IDisposable disposableController)
-                {
-                    disposableController.Dispose();
-                }
-
-                disposedControllerViews.Add(view);
+                disposableController.Dispose();
             }
 
-            foreach (var disposedControllerView in disposedControllerViews)
-            {
-                _controllers.Remove(disposedControllerView);
-            }
-        }
-
-        private void CreateControllersFromLoadedScene()
-        {
-            var views = Object.FindObjectsByType<ViewBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
-
-            foreach (var view in views.Where(view => !_controllers.ContainsKey(view)))
-            {
-                var controller = TryCreateControllerForView(view);
-                if (controller != null) _controllers.Add(view, controller);
-            }
+            _controllers.Remove(viewDisabledEvent.View);
         }
 
         [CanBeNull]
