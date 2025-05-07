@@ -1,4 +1,4 @@
-// This class enables record use in Unity
+// Enables record use in Unity
 
 // ReSharper disable once CheckNamespace
 
