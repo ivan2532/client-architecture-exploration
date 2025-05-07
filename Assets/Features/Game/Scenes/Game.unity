@@ -402,18 +402,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 166570735}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbef0cc037bd1974da81c454a6d22017, type: 3}
+  m_Script: {fileID: 11500000, guid: 8ceaba7f18754f6798a83fd74f9ba12a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 1743478281}
   droneCamera: {fileID: 166570737}
-  dummyTarget: {fileID: 1446389488}
-  hud: {fileID: 2009157482}
-  lookSensitivity: 0.05
-  pitchRange: {x: -45, y: 45}
-  yawRange: {x: -45, y: 45}
-  mainCharacter: {fileID: 1848580627}
-  smoothTime: 0.1
 --- !u!1 &411883007
 GameObject:
   m_ObjectHideFlags: 0
@@ -11401,7 +11393,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04885bdee8cf0f42942e57a91c6faa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 1743478281}
+  gameState: {fileID: 0}
   pauseMenuCanvas: {fileID: 1458370827}
 --- !u!1 &1695237327
 GameObject:
@@ -11533,26 +11525,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1743478282}
-  - component: {fileID: 1743478281}
+  - component: {fileID: 1743478283}
   m_Layer: 0
-  m_Name: GameState
+  m_Name: Game
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1743478281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1743478280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1beb69fe79e210e4da429bcb9e843716, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!4 &1743478282
 Transform:
   m_ObjectHideFlags: 0
@@ -11568,6 +11548,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1743478283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743478280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b941aea937da4d27ba6f5f7174f56025, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  drone: {fileID: 166570740}
 --- !u!1 &1848580623
 GameObject:
   m_ObjectHideFlags: 0
@@ -11719,7 +11712,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960c21af92a2b974eb1c8e548530dc09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 1743478281}
+  gameState: {fileID: 0}
   playerRigidbody: {fileID: 1848580628}
   speed: 10
 --- !u!1 &1933200920
@@ -12019,6 +12012,7 @@ MonoBehaviour:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1743478282}
   - {fileID: 1695237329}
   - {fileID: 800908211}
   - {fileID: 166570738}
@@ -12028,4 +12022,3 @@ SceneRoots:
   - {fileID: 2009157481}
   - {fileID: 1458370828}
   - {fileID: 597335431}
-  - {fileID: 1743478282}
