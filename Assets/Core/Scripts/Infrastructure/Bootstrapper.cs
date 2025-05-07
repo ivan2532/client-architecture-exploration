@@ -7,9 +7,9 @@ namespace Core.Infrastructure
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
         {
-            var applicationPrefab = Resources.Load<GameObject>("Application");
-            var applicationInstance = Object.Instantiate(applicationPrefab);
-            Object.DontDestroyOnLoad(applicationInstance);
+            var applicationContextPrefab = Resources.Load<GameObject>("ApplicationContext");
+            var applicationContextInstance = Object.Instantiate(applicationContextPrefab);
+            Object.DontDestroyOnLoad(applicationContextInstance);
         }
     }
 }
