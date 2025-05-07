@@ -53,7 +53,7 @@ namespace Features.Game.View
         {
             var inputData = context.ReadValue<Vector2>();
             var inputDelta = new LookInputDelta(inputData.x, inputData.y);
-            EventBus.Notify(new LookPerformedEvent(inputDelta));
+            EventBus.Raise(new LookPerformedEvent(inputDelta));
         }
     }
 }

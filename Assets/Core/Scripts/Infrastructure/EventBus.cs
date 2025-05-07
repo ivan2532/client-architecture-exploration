@@ -30,15 +30,15 @@ namespace Core.Infrastructure
             }
         }
 
-        public static void Notify<TEvent>(TEvent notifiedEvent) where TEvent : IEvent
+        public static void Raise<TEvent>(TEvent raisedEvent) where TEvent : IEvent
         {
-            var type = notifiedEvent.GetType();
+            var type = raisedEvent.GetType();
 
             if (Subscribers.TryGetValue(type, out var callbacks))
             {
                 foreach (var callback in callbacks)
                 {
-                    ((Action<TEvent>)callback)?.Invoke(notifiedEvent);
+                    ((Action<TEvent>)callback)?.Invoke(raisedEvent);
                 }
             }
         }
