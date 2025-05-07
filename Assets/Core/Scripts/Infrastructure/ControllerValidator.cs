@@ -13,18 +13,17 @@ namespace Core.Infrastructure
 
         static ControllerValidator()
         {
-            EditorApplication.playModeStateChanged += OnPlayModeChanged;
             AssemblyReloadEvents.afterAssemblyReload += Validate;
+            EditorApplication.update += OnEditorUpdate;
         }
 
-        private static void OnPlayModeChanged(PlayModeStateChange state)
+        private static void OnEditorUpdate()
         {
-            if (state == PlayModeStateChange.ExitingEditMode && !_lastValidationSuccessful)
+            if (EditorApplication.isPlayingOrWillChangePlaymode && !_lastValidationSuccessful)
             {
                 EditorApplication.ExitPlaymode();
-                ShowSceneViewNotification(
-                    "Controller validation failed. Fix all errors before entering play mode.");
-                Validate();
+                Debug.LogError("Controller validation failed. Play mode was blocked.");
+                ShowSceneViewNotification("Fix controller validation errors before entering play mode.");
             }
         }
 
