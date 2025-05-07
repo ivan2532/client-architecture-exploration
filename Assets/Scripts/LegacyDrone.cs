@@ -1,24 +1,24 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class Drone : MonoBehaviour
+public class LegacyDrone : MonoBehaviour
 {
     [SerializeField] private GameState gameState;
     [SerializeField] private Camera droneCamera;
     [SerializeField] private Collider dummyTarget;
     [SerializeField] private Hud hud;
-    
+
     [SerializeField] private float lookSensitivity;
     [SerializeField] private Vector2 pitchRange;
     [SerializeField] private Vector2 yawRange;
-    
+
     [SerializeField] private Transform mainCharacter;
     [SerializeField] private float smoothTime;
-    
+
     private GameInputActions _inputActions;
     private float _pitch;
     private float _yaw;
-    
+
     private Vector3 _offsetFromTarget;
     private Vector3 _velocity;
 
@@ -26,7 +26,7 @@ public class Drone : MonoBehaviour
     {
         _inputActions = new GameInputActions();
     }
-    
+
     private void OnEnable()
     {
         _inputActions.Drone.Look.performed += OnLookPerformed;
@@ -38,7 +38,7 @@ public class Drone : MonoBehaviour
     {
         _inputActions.Disable();
     }
-    
+
     private void Start()
     {
         InitializeOrientation();
@@ -79,8 +79,8 @@ public class Drone : MonoBehaviour
     private void Shoot()
     {
         var raycastHitNotEmpty = Physics.Raycast(
-            droneCamera.transform.position, 
-            droneCamera.transform.forward, 
+            droneCamera.transform.position,
+            droneCamera.transform.forward,
             out var hit);
 
         if (raycastHitNotEmpty && hit.collider == dummyTarget)
@@ -92,9 +92,9 @@ public class Drone : MonoBehaviour
     private void FollowTarget()
     {
         transform.position = Vector3.SmoothDamp(
-            transform.position, 
-            mainCharacter.position + _offsetFromTarget, 
-            ref _velocity, 
+            transform.position,
+            mainCharacter.position + _offsetFromTarget,
+            ref _velocity,
             smoothTime);
     }
 }
