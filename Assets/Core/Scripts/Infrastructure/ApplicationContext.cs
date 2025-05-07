@@ -2,6 +2,7 @@ using UnityEngine;
 
 namespace Core.Infrastructure
 {
+    [DefaultExecutionOrder(-1)]
     public class ApplicationContext : MonoBehaviour
     {
         [SerializeField] private ServiceRegistry serviceRegistry;
