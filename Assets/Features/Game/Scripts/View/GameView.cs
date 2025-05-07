@@ -19,20 +19,23 @@ namespace Features.Game.View
         private float _pitch;
         private float _yaw;
 
-        protected override void Awake()
+        private void Awake()
         {
-            base.Awake();
             _inputActions = new GameInputActions();
         }
 
-        private void OnEnable()
+        protected override void OnEnable()
         {
+            base.OnEnable();
+
             _inputActions.Drone.Look.performed += OnLookPerformed;
             _inputActions.Enable();
         }
 
-        private void OnDisable()
+        protected override void OnDisable()
         {
+            base.OnDisable();
+
             _inputActions.Drone.Look.performed -= OnLookPerformed;
             _inputActions.Disable();
         }

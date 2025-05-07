@@ -7,12 +7,12 @@ namespace Core.View
 {
     public abstract class ViewBase : MonoBehaviour
     {
-        private void OnEnable()
+        protected virtual void OnEnable()
         {
             EventBus.Raise(new ViewEnabledEvent(this));
         }
 
-        private void OnDisable()
+        protected virtual void OnDisable()
         {
             EventBus.Raise(new ViewDisabledEvent(this));
         }
@@ -22,8 +22,9 @@ namespace Core.View
     {
         public TViewModel ViewModel { get; protected set; }
 
-        protected virtual void Awake()
+        protected override void OnEnable()
         {
+            base.OnEnable();
             InitializeViewModel();
         }
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using Core.Controller;
 using Core.Infrastructure;
+using Features.Game.Configuration;
 using Features.Game.Events;
 using Features.Game.Mappers;
 using Features.Game.Model;
@@ -14,11 +15,13 @@ namespace Features.Game.Controller
     public class GameController : ControllerBase<GameView>, IDisposable
     {
         private readonly GameView _view;
+        private readonly GameConfiguration _configuration;
         private readonly GameModel _game;
 
-        public GameController(GameView view) : base(view)
+        public GameController(GameView view, GameConfiguration configuration) : base(view)
         {
             _view = view;
+            _configuration = configuration;
 
             var drone = new DroneModel(view.DronePitch, view.DroneYaw);
             _game = new GameModel(drone);
@@ -33,22 +36,15 @@ namespace Features.Game.Controller
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
-            // TODO: Inject
-            var lookSensitivity = 0.1f;
-            var pitchRangeX = -45f;
-            var pitchRangeY = 45f;
-            var yawRangeX = -45f;
-            var yawRangeY = 45f;
-
             _game.Drone.Pitch = Mathf.Clamp(
-                _game.Drone.Pitch - lookPerformedEvent.InputDelta.Y * lookSensitivity,
-                pitchRangeX,
-                pitchRangeY);
+                _game.Drone.Pitch - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
+                _configuration.MinimumPitch,
+                _configuration.MaximumPitch);
 
             _game.Drone.Yaw = Mathf.Clamp(
-                _game.Drone.Yaw + lookPerformedEvent.InputDelta.X * lookSensitivity,
-                yawRangeX,
-                yawRangeY);
+                _game.Drone.Yaw + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
+                _configuration.MinimumYaw,
+                _configuration.MaximumYaw);
 
             _view.UpdateViewModel(GameModelToViewModelMapper.Map(_game));
         }

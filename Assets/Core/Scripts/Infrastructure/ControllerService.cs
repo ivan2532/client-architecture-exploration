@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using Core.Controller;
 using Core.Events;
+using Core.Utility;
 using Core.View;
 using JetBrains.Annotations;
 
@@ -10,10 +12,14 @@ namespace Core.Infrastructure
 {
     public class ControllerService : IDisposable
     {
+        private readonly ServiceRegistry _serviceRegistry;
+
         private readonly Dictionary<ViewBase, ControllerBase> _controllers = new();
 
-        public ControllerService()
+        public ControllerService(ServiceRegistry serviceRegistry)
         {
+            _serviceRegistry = serviceRegistry;
+
             EventBus.Subscribe<ViewEnabledEvent>(OnViewEnabled);
             EventBus.Subscribe<ViewDisabledEvent>(OnViewDisabled);
         }
@@ -60,23 +66,61 @@ namespace Core.Infrastructure
         }
 
         [CanBeNull]
-        private static ControllerBase TryCreateControllerForView(ViewBase view)
+        private ControllerBase TryCreateControllerForView(ViewBase view)
         {
             var controllerType = GetControllerType(view);
-            return controllerType != null
-                ? (ControllerBase)Activator.CreateInstance(controllerType, args: view)
-                : null;
+            if (controllerType == null) return null;
+
+            var resolvedConstructorParameters = ResolveControllerConstructorParameters(view, controllerType);
+            return (ControllerBase)Activator.CreateInstance(controllerType, args: resolvedConstructorParameters);
+        }
+
+        private object[] ResolveControllerConstructorParameters(ViewBase view, Type controllerType)
+        {
+            var constructorParameters = controllerType.GetConstructors().First().GetParameters();
+            var resolvedConstructorParameters = new object[constructorParameters.Length];
+
+            foreach (var parameter in constructorParameters)
+            {
+                resolvedConstructorParameters[parameter.Position] =
+                    ResolveControllerConstructorParameter(view, controllerType, parameter);
+            }
+
+            return resolvedConstructorParameters;
+        }
+
+        private object ResolveControllerConstructorParameter(
+            ViewBase view,
+            Type controllerType,
+            ParameterInfo parameter)
+        {
+            var parameterType = parameter.ParameterType;
+
+            if (parameterType == view.GetType())
+            {
+                return view;
+            }
+
+            try
+            {
+                return _serviceRegistry.Get(parameterType);
+            }
+            catch (Exception exception)
+            {
+                throw new InvalidOperationException(
+                    $"Cannot resolve parameter of type {parameterType.FullName} " +
+                    $"during creation of controller {controllerType.FullName}. " +
+                    "Make sure it is registered in the ServiceRegistry.",
+                    exception);
+            }
         }
 
         [CanBeNull]
         private static Type GetControllerType(ViewBase view)
         {
-            var controllerType = AppDomain.CurrentDomain.GetAssemblies()
-                .SelectMany(assembly => assembly.GetTypes())
-                .Where(type => type.BaseType != null && type.IsSubclassOf(typeof(ControllerBase)))
-                .Where(type => type.BaseType.IsGenericType &&
-                               type.BaseType.GetGenericTypeDefinition() == typeof(ControllerBase<>))
-                .FirstOrDefault(type => type.BaseType.GetGenericArguments()[0] == view.GetType());
+            var controllerType = ControllerUtility.GetAllControllerImplementationTypes()
+                .FirstOrDefault(type => type.BaseType != null &&
+                                        type.BaseType.GetGenericArguments()[0] == view.GetType());
 
             return controllerType;
         }

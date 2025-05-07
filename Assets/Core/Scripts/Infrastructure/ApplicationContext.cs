@@ -10,7 +10,8 @@ namespace Core.Infrastructure
 
         private void OnEnable()
         {
-            _controllerService = new ControllerService();
+            serviceRegistry.Initialize();
+            _controllerService = new ControllerService(serviceRegistry);
         }
 
         private void OnDisable()
