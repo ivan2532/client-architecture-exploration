@@ -40,15 +40,13 @@ namespace Features.Game.View
             _inputActions.Disable();
         }
 
-        protected override void InitializeViewModel()
+        protected override GameViewModel CreateInitialViewModel()
         {
-            // TODO: How to ensure drone's view model is initialized?
-            ViewModel = new GameViewModel(drone.ViewModel);
+            return new GameViewModel(drone.ViewModel);
         }
 
-        public override void UpdateViewModel(GameViewModel viewModel)
+        protected override void OnUpdateViewModel(GameViewModel viewModel)
         {
-            base.UpdateViewModel(viewModel);
             drone.UpdateViewModel(viewModel.Drone);
         }
 

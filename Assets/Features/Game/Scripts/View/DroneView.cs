@@ -11,14 +11,13 @@ namespace Features.Game.View
         public float Pitch => transform.rotation.eulerAngles.y;
         public float Yaw => transform.rotation.eulerAngles.x;
 
-        protected override void InitializeViewModel()
+        protected override DroneViewModel CreateInitialViewModel()
         {
-            ViewModel = new DroneViewModel(Pitch, Yaw);
+            return new DroneViewModel(Pitch, Yaw);
         }
 
-        public override void UpdateViewModel(DroneViewModel droneViewModel)
+        protected override void OnUpdateViewModel(DroneViewModel droneViewModel)
         {
-            base.UpdateViewModel(droneViewModel);
             UpdateCameraOrientation();
         }
 
