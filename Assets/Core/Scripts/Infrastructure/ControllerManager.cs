@@ -4,9 +4,9 @@ using System.Linq;
 using Core.Controller;
 using Core.Utility;
 using Core.View;
+using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using Object = UnityEngine.Object;
 
 namespace Core.Infrastructure
 {
@@ -62,34 +62,31 @@ namespace Core.Infrastructure
         {
             var views = FindObjectsByType<ViewBase>(FindObjectsInactive.Include, FindObjectsSortMode.None);
 
-            foreach (var view in views)
+            foreach (var view in views.Where(view => !_controllers.ContainsKey(view)))
             {
-                if (!_controllers.ContainsKey(view))
-                {
-                    _controllers.Add(view, CreateControllerForView(view));
-                }
+                var controller = TryCreateControllerForView(view);
+                if (controller != null) _controllers.Add(view, controller);
             }
         }
 
-        private static ControllerBase CreateControllerForView(ViewBase view)
+        [CanBeNull]
+        private static ControllerBase TryCreateControllerForView(ViewBase view)
         {
             var controllerType = GetControllerType(view);
-            return (ControllerBase)Activator.CreateInstance(controllerType, args: view);
+            return controllerType != null
+                ? (ControllerBase)Activator.CreateInstance(controllerType, args: view)
+                : null;
         }
 
+        [CanBeNull]
         private static Type GetControllerType(ViewBase view)
         {
             var controllerType = AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
                 .Where(type => type.BaseType != null && type.IsSubclassOf(typeof(ControllerBase)))
-                .Where(type => type.BaseType.GetGenericTypeDefinition() == typeof(ControllerBase<>))
+                .Where(type => type.BaseType.IsGenericType &&
+                               type.BaseType.GetGenericTypeDefinition() == typeof(ControllerBase<>))
                 .FirstOrDefault(type => type.BaseType.GetGenericArguments()[0] == view.GetType());
-
-            if (controllerType == null)
-            {
-                throw new ArgumentException(
-                    $"Could not find controller type for view of type {view.GetType().FullName}.", nameof(view));
-            }
 
             return controllerType;
         }
