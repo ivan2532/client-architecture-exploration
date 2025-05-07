@@ -2,11 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Core.Controller;
-using Core.Utility;
 using Core.View;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Utility.Extensions;
 
 namespace Core.Infrastructure
 {
