@@ -20,6 +20,8 @@ namespace Core.Infrastructure
 
         public void Dispose()
         {
+            DisposeAllControllers();
+
             EventBus.Unsubscribe<ViewEnabledEvent>(OnViewEnabled);
             EventBus.Unsubscribe<ViewDisabledEvent>(OnViewDisabled);
         }
@@ -35,12 +37,26 @@ namespace Core.Infrastructure
             var hasController = _controllers.TryGetValue(viewDisabledEvent.View, out var controller);
             if (!hasController) return;
 
+            DisposeController(controller);
+            _controllers.Remove(viewDisabledEvent.View);
+        }
+
+        private void DisposeAllControllers()
+        {
+            foreach (var controller in _controllers.Values)
+            {
+                DisposeController(controller);
+            }
+
+            _controllers.Clear();
+        }
+
+        private static void DisposeController(ControllerBase controller)
+        {
             if (controller is IDisposable disposableController)
             {
                 disposableController.Dispose();
             }
-
-            _controllers.Remove(viewDisabledEvent.View);
         }
 
         [CanBeNull]
