@@ -10,8 +10,6 @@ using UnityEngine;
 
 namespace Features.Game.Controller
 {
-    // TODO: UsedImplicitly should be available in the latest JetBrains.Annotations
-    // TODO: NuGet packages in Unity
     [UsedImplicitly]
     public class GameController : ControllerBase<GameView>, IDisposable
     {
