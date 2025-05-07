@@ -29,6 +29,16 @@ namespace Core.Infrastructure
         {
         }
 
+        public void Register<TService, TImplementation>(TImplementation serviceImplementation)
+        {
+            Register(typeof(TService), serviceImplementation);
+        }
+
+        public TService Get<TService>()
+        {
+            return (TService)Get(typeof(TService));
+        }
+
         public void Register(Type serviceType, object serviceImplementation)
         {
             if (!_services.TryAdd(serviceType, serviceImplementation))
@@ -38,24 +48,19 @@ namespace Core.Infrastructure
             }
         }
 
-        public void Register<TService, TImplementation>(TImplementation serviceImplementation)
+        public object Get(Type serviceType)
         {
-            Register(typeof(TService), serviceImplementation);
+            if (_services.TryGetValue(serviceType, out var service))
+            {
+                return service;
+            }
+
+            throw new ArgumentException($"Service implementation for type {serviceType.FullName} not found!");
         }
 
         public bool Unregister<TService>()
         {
             return _services.Remove(typeof(TService));
-        }
-
-        public TService Get<TService>()
-        {
-            if (!_services.ContainsKey(typeof(TService)))
-            {
-                throw new ArgumentException($"Service implementation for type {nameof(TService)} not found!");
-            }
-
-            return (TService)_services[typeof(TService)];
         }
     }
 }
