@@ -44,3 +44,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33a6cea6c60aee4e809af1ecd6fa811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  serviceRegistry:
+    scriptableObjectServices:
+    - {fileID: 11400000, guid: a110605b5970b494a8b5d2cf5110e715, type: 2}

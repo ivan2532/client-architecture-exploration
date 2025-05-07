@@ -4,6 +4,8 @@ namespace Core.Infrastructure
 {
     public class ApplicationContext : MonoBehaviour
     {
+        [SerializeField] private ServiceRegistry serviceRegistry;
+
         private ControllerService _controllerService;
 
         private void OnEnable()
