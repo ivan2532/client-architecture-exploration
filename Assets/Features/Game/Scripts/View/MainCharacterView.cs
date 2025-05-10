@@ -20,7 +20,7 @@ namespace Features.Game.View
             return new MainCharacterViewModel(Velocity.Zero);
         }
 
-        protected override void OnUpdateViewModel(MainCharacterViewModel viewModel)
+        protected override void OnViewModelUpdate(MainCharacterViewModel viewModel)
         {
         }
 

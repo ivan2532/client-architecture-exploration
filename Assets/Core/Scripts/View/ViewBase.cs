@@ -46,12 +46,12 @@ namespace Core.View
         public void UpdateViewModel(TViewModel viewModel)
         {
             ViewModel = viewModel;
-            OnUpdateViewModel(ViewModel);
+            OnViewModelUpdate(ViewModel);
         }
 
         protected abstract TViewModel CreateInitialViewModel();
 
-        protected abstract void OnUpdateViewModel(TViewModel viewModel);
+        protected abstract void OnViewModelUpdate(TViewModel viewModel);
 
         private void InitializeViewModelIfNeeded()
         {

@@ -58,7 +58,7 @@ namespace Features.Game.View
             return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel);
         }
 
-        protected override void OnUpdateViewModel(GameViewModel viewModel)
+        protected override void OnViewModelUpdate(GameViewModel viewModel)
         {
             drone.UpdateViewModel(viewModel.Drone);
             mainCharacter.UpdateViewModel(viewModel.MainCharacter);

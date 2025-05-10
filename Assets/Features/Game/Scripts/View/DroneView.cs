@@ -16,7 +16,7 @@ namespace Features.Game.View
             return new DroneViewModel(Pitch, Yaw);
         }
 
-        protected override void OnUpdateViewModel(DroneViewModel droneViewModel)
+        protected override void OnViewModelUpdate(DroneViewModel droneViewModel)
         {
             UpdateCameraOrientation();
         }
