@@ -7,7 +7,6 @@ using Features.Game.Mappers;
 using Features.Game.Model;
 using Features.Game.View;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace Features.Game.Controller
 {
