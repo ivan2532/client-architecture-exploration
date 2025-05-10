@@ -1,4 +1,7 @@
-﻿using Core.View;
+﻿using System;
+using Core.Infrastructure;
+using Core.View;
+using Features.Game.Events;
 using Features.Game.ViewModel;
 using UnityEngine;
 
@@ -6,10 +9,16 @@ namespace Features.Game.View
 {
     public class DroneView : ViewBase<DroneViewModel>
     {
-        [SerializeField] private Camera droneCamera;
+        [SerializeField] private Transform droneCamera;
+        [SerializeField] private Transform mainCharacter;
 
         public float Pitch => transform.rotation.eulerAngles.y;
         public float Yaw => transform.rotation.eulerAngles.x;
+
+        private void LateUpdate()
+        {
+            EventBus.Raise(new DroneUpdateEvent(transform.position, mainCharacter.position));
+        }
 
         protected override DroneViewModel CreateInitialViewModel()
         {
@@ -24,7 +33,7 @@ namespace Features.Game.View
 
         private void UpdateCameraOrientation()
         {
-            droneCamera.transform.rotation = Quaternion.Euler(ViewModel.Yaw, ViewModel.Pitch, 0f);
+            droneCamera.rotation = Quaternion.Euler(ViewModel.Yaw, ViewModel.Pitch, 0f);
         }
     }
 }
