@@ -1,6 +1,4 @@
 using Core.View;
-using Features.Game.Domain;
-using Features.Game.Mappers;
 using Features.Game.ViewModel;
 using UnityEngine;
 
@@ -17,12 +15,12 @@ namespace Features.Game.View
 
         protected override MainCharacterViewModel CreateInitialViewModel()
         {
-            return new MainCharacterViewModel(Velocity.Zero);
+            return new MainCharacterViewModel(Vector3.zero);
         }
 
         private void UpdateVelocity()
         {
-            rigidbody.linearVelocity = VelocityToVector3Mapper.Map(ViewModel.Velocity);
+            rigidbody.linearVelocity = ViewModel.Velocity;
         }
     }
 }

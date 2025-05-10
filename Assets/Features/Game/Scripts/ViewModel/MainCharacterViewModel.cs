@@ -1,7 +1,7 @@
 ﻿using Core.ViewModel;
-using Features.Game.Domain;
+using UnityEngine;
 
 namespace Features.Game.ViewModel
 {
-    public record MainCharacterViewModel(Velocity Velocity) : IViewModel;
+    public record MainCharacterViewModel(Vector3 Velocity) : IViewModel;
 }

@@ -1,15 +1,16 @@
 ﻿using Features.Game.Configuration;
 using Features.Game.Events;
+using UnityEngine;
 
 namespace Features.Game.Domain
 {
     public class MainCharacter
     {
-        public Velocity Velocity => _velocity;
+        public Vector3 Velocity => _velocity;
 
         private readonly MainCharacterConfiguration _configuration;
 
-        private Velocity _velocity;
+        private Vector3 _velocity;
 
         public MainCharacter(MainCharacterConfiguration configuration)
         {
@@ -18,14 +19,16 @@ namespace Features.Game.Domain
 
         public void OnMovePerformed(MovePerformedEvent movePerformedEvent)
         {
-            _velocity.X = movePerformedEvent.NormalizedInput.X * _configuration.MovementSpeed;
-            _velocity.Z = movePerformedEvent.NormalizedInput.Y * _configuration.MovementSpeed;
+            _velocity = new Vector3(
+                movePerformedEvent.NormalizedInput.X * _configuration.MovementSpeed,
+                _velocity.y,
+                movePerformedEvent.NormalizedInput.Y * _configuration.MovementSpeed
+            );
         }
 
         public void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
-            _velocity.X = 0f;
-            _velocity.Z = 0f;
+            _velocity = new Vector3(0f, _velocity.y, 0f);
         }
     }
 }
