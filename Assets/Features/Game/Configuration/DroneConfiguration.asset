@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8b48750ce66d4b81b8d23b0b1e1fff2b, type: 3}
   m_Name: DroneConfiguration
   m_EditorClassIdentifier: 
-  <LookSensitivity>k__BackingField: 0.1
+  <LookSensitivity>k__BackingField: 0.05
   <MinimumPitch>k__BackingField: -45
   <MaximumPitch>k__BackingField: 45
   <MinimumYaw>k__BackingField: -45
