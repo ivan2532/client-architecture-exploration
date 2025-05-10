@@ -6,5 +6,6 @@ namespace Features.Game.Configuration
     public class GameConfiguration : ScriptableObject
     {
         [field: SerializeField] public DroneConfiguration Drone { get; private set; }
+        [field: SerializeField] public MainCharacterConfiguration MainCharacter { get; private set; }
     }
 }

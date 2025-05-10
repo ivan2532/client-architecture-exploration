@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: GameConfiguration
   m_EditorClassIdentifier: 
   <Drone>k__BackingField: {fileID: 11400000, guid: a110605b5970b494a8b5d2cf5110e715, type: 2}
+  <MainCharacter>k__BackingField: {fileID: 11400000, guid: 1d2af3f2d71dd9b408e2da73fe610b31, type: 2}
