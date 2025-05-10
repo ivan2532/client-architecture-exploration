@@ -37,12 +37,12 @@ namespace Features.Game.Controller
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
             _game.Drone.Pitch = Mathf.Clamp(
-                _game.Drone.Pitch - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
+                _game.Drone.Pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
                 _configuration.MinimumPitch,
                 _configuration.MaximumPitch);
 
             _game.Drone.Yaw = Mathf.Clamp(
-                _game.Drone.Yaw + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
+                _game.Drone.Yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
                 _configuration.MinimumYaw,
                 _configuration.MaximumYaw);
 

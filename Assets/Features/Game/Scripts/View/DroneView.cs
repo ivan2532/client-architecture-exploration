@@ -23,7 +23,7 @@ namespace Features.Game.View
 
         private void UpdateCameraOrientation()
         {
-            droneCamera.transform.rotation = Quaternion.Euler(ViewModel.Pitch, ViewModel.Yaw, 0f);
+            droneCamera.transform.rotation = Quaternion.Euler(ViewModel.Yaw, ViewModel.Pitch, 0f);
         }
     }
 }
