@@ -405,7 +405,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ceaba7f18754f6798a83fd74f9ba12a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  droneCamera: {fileID: 166570737}
+  droneCamera: {fileID: 166570738}
+  mainCharacter: {fileID: 1848580627}
 --- !u!1 &411883007
 GameObject:
   m_ObjectHideFlags: 0

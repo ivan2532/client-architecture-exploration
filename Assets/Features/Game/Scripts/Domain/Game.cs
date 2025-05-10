@@ -27,5 +27,10 @@ namespace Features.Game.Domain
         {
             MainCharacter.OnMoveCancelled(moveCancelledEvent);
         }
+
+        public void OnDroneUpdate(DroneUpdateEvent updateEvent)
+        {
+            Drone.Update(updateEvent);
+        }
     }
 }

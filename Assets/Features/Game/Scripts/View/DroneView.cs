@@ -1,5 +1,4 @@
-﻿using System;
-using Core.Infrastructure;
+﻿using Core.Infrastructure;
 using Core.View;
 using Features.Game.Events;
 using Features.Game.ViewModel;
@@ -12,6 +11,8 @@ namespace Features.Game.View
         [SerializeField] private Transform droneCamera;
         [SerializeField] private Transform mainCharacter;
 
+        public Vector3 OffsetFromMainCharacter => transform.position - mainCharacter.position;
+        public Vector3 Position => transform.position;
         public float Pitch => transform.rotation.eulerAngles.y;
         public float Yaw => transform.rotation.eulerAngles.x;
 
@@ -22,13 +23,19 @@ namespace Features.Game.View
 
         protected override DroneViewModel CreateInitialViewModel()
         {
-            return new DroneViewModel(Pitch, Yaw);
+            return new DroneViewModel(Position, Pitch, Yaw);
         }
 
         protected override void OnViewModelUpdated()
         {
             base.OnViewModelUpdated();
+            UpdatePosition();
             UpdateCameraOrientation();
+        }
+
+        private void UpdatePosition()
+        {
+            transform.position = ViewModel.Position;
         }
 
         private void UpdateCameraOrientation()

@@ -1,22 +1,44 @@
 ﻿using System;
 using Features.Game.Configuration;
 using Features.Game.Events;
+using UnityEngine;
 
 namespace Features.Game.Domain
 {
     public class Drone
     {
+        public Vector3 Position { get; private set; }
         public float Pitch { get; private set; }
         public float Yaw { get; private set; }
 
         private readonly DroneConfiguration _configuration;
+        private readonly Vector3 _offsetFromMainCharacter;
 
-        public Drone(DroneConfiguration configuration, float pitch, float yaw)
+        private Vector3 _velocity;
+
+        public Drone(
+            DroneConfiguration configuration,
+            Vector3 offsetFromMainCharacter,
+            Vector3 position,
+            float pitch,
+            float yaw)
         {
             _configuration = configuration;
+            _offsetFromMainCharacter = offsetFromMainCharacter;
 
+            Position = position;
             Pitch = pitch;
             Yaw = yaw;
+        }
+
+        public void Update(DroneUpdateEvent updateEvent)
+        {
+            Position = Vector3.SmoothDamp(
+                updateEvent.DronePosition,
+                updateEvent.MainCharacterPosition + _offsetFromMainCharacter,
+                ref _velocity,
+                _configuration.FollowSmoothTime
+            );
         }
 
         public void OnLookPerformed(LookPerformedEvent lookPerformedEvent)

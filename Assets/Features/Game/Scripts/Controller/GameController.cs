@@ -30,8 +30,16 @@ namespace Features.Game.Controller
 
         private Domain.Game CreateModel(GameConfiguration configuration, GameView view)
         {
-            var drone = new Drone(configuration.Drone, view.DronePitch, view.DroneYaw);
+            var drone = new Drone(
+                configuration.Drone,
+                view.DroneOffsetFromMainCharacter,
+                view.DronePosition,
+                view.DronePitch,
+                view.DroneYaw
+            );
+
             var mainCharacter = new MainCharacter(configuration.MainCharacter);
+
             return new Domain.Game(drone, mainCharacter);
         }
 
@@ -40,6 +48,7 @@ namespace Features.Game.Controller
             EventBus.Subscribe<LookPerformedEvent>(OnLookPerformed);
             EventBus.Subscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Subscribe<MoveCancelledEvent>(OnMoveCancelled);
+            EventBus.Subscribe<DroneUpdateEvent>(OnDroneUpdate);
         }
 
         private void UnsubscribeFromEvents()
@@ -47,6 +56,7 @@ namespace Features.Game.Controller
             EventBus.Unsubscribe<LookPerformedEvent>(OnLookPerformed);
             EventBus.Unsubscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Unsubscribe<MoveCancelledEvent>(OnMoveCancelled);
+            EventBus.Unsubscribe<DroneUpdateEvent>(OnDroneUpdate);
         }
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
@@ -64,6 +74,12 @@ namespace Features.Game.Controller
         private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
             _game.OnMoveCancelled(moveCancelledEvent);
+            UpdateViewModel();
+        }
+
+        private void OnDroneUpdate(DroneUpdateEvent updateEvent)
+        {
+            _game.OnDroneUpdate(updateEvent);
             UpdateViewModel();
         }
 

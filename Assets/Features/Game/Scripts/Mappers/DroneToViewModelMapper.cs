@@ -7,7 +7,7 @@ namespace Features.Game.Mappers
     {
         public static DroneViewModel Map(Drone model)
         {
-            return new DroneViewModel(model.Pitch, model.Yaw);
+            return new DroneViewModel(model.Position, model.Pitch, model.Yaw);
         }
     }
 }

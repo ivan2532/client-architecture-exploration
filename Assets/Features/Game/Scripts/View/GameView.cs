@@ -13,6 +13,8 @@ namespace Features.Game.View
         [SerializeField] private DroneView drone;
         [SerializeField] private MainCharacterView mainCharacter;
 
+        public Vector3 DroneOffsetFromMainCharacter => drone.OffsetFromMainCharacter;
+        public Vector3 DronePosition => drone.Position;
         public float DronePitch => drone.Pitch;
         public float DroneYaw => drone.Yaw;
 
