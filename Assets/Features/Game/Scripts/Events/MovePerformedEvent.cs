@@ -3,5 +3,5 @@ using Features.Game.Model;
 
 namespace Features.Game.Events
 {
-    public record MovePerformedEvent(MoveInput Input) : IEvent;
+    public record MovePerformedEvent(MoveInput NormalizedInput) : IEvent;
 }

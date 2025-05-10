@@ -72,7 +72,8 @@ namespace Features.Game.View
         private void OnMovePerformed(InputAction.CallbackContext context)
         {
             var inputData = context.ReadValue<Vector2>();
-            var input = new MoveInput(inputData.x, inputData.y);
+            var inputVectorNormalized = new Vector2(inputData.x, inputData.y).normalized;
+            var input = new MoveInput(inputVectorNormalized.x, inputVectorNormalized.y);
             EventBus.Raise(new MovePerformedEvent(input));
         }
 
