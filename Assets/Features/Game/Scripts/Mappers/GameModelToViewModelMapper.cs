@@ -7,7 +7,7 @@ namespace Features.Game.Mappers
     {
         public static GameViewModel Map(GameModel model)
         {
-            return new GameViewModel(new DroneViewModel(model.Drone.Pitch, model.Drone.Yaw));
+            return new GameViewModel(DroneModelToViewModelMapper.Map(model.Drone));
         }
     }
 }
