@@ -20,7 +20,7 @@ namespace Features.Game.Model
             _velocity.Z = movePerformedEvent.NormalizedInput.Y;
         }
 
-        public void OnMoveCancelled(MoveCancelledEvent movePerformedEvent)
+        public void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
             _velocity.X = 0f;
             _velocity.Z = 0f;

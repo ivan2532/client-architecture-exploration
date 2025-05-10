@@ -14,28 +14,61 @@ namespace Features.Game.Controller
     public class GameController : ControllerBase<GameView>, IDisposable
     {
         private readonly GameView _view;
-        private readonly GameConfiguration _configuration;
         private readonly GameModel _game;
 
         public GameController(GameView view, GameConfiguration configuration) : base(view)
         {
             _view = view;
-            _configuration = configuration;
-
-            var drone = new DroneModel(configuration.Drone, view.DronePitch, view.DroneYaw);
-            _game = new GameModel(drone);
-
-            EventBus.Subscribe<LookPerformedEvent>(OnLookPerformed);
+            _game = CreateModel(configuration, view);
+            SubscribeToEvents();
         }
 
         public void Dispose()
         {
+            UnsubscribeFromEvents();
+        }
+
+        private GameModel CreateModel(GameConfiguration configuration, GameView view)
+        {
+            var drone = new DroneModel(configuration.Drone, view.DronePitch, view.DroneYaw);
+            var mainCharacter = new MainCharacterModel(configuration.MainCharacter);
+            return new GameModel(drone, mainCharacter);
+        }
+
+        private void SubscribeToEvents()
+        {
+            EventBus.Subscribe<LookPerformedEvent>(OnLookPerformed);
+            EventBus.Subscribe<MovePerformedEvent>(OnMovePerformed);
+            EventBus.Subscribe<MoveCancelledEvent>(OnMoveCancelled);
+        }
+
+        private void UnsubscribeFromEvents()
+        {
             EventBus.Unsubscribe<LookPerformedEvent>(OnLookPerformed);
+            EventBus.Unsubscribe<MovePerformedEvent>(OnMovePerformed);
+            EventBus.Unsubscribe<MoveCancelledEvent>(OnMoveCancelled);
         }
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
             _game.OnLookPerformed(lookPerformedEvent);
+            UpdateViewModel();
+        }
+
+        private void OnMovePerformed(MovePerformedEvent movePerformedEvent)
+        {
+            _game.OnMovePerformed(movePerformedEvent);
+            UpdateViewModel();
+        }
+
+        private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
+        {
+            _game.OnMoveCancelled(moveCancelledEvent);
+            UpdateViewModel();
+        }
+
+        private void UpdateViewModel()
+        {
             _view.UpdateViewModel(GameModelToViewModelMapper.Map(_game));
         }
     }
