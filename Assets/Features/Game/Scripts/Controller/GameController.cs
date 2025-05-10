@@ -23,7 +23,7 @@ namespace Features.Game.Controller
             _view = view;
             _configuration = configuration;
 
-            var drone = new DroneModel(view.DronePitch, view.DroneYaw);
+            var drone = new DroneModel(configuration.Drone, view.DronePitch, view.DroneYaw);
             _game = new GameModel(drone);
 
             EventBus.Subscribe<LookPerformedEvent>(OnLookPerformed);
@@ -36,16 +36,7 @@ namespace Features.Game.Controller
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
-            _game.Drone.Pitch = Mathf.Clamp(
-                _game.Drone.Pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
-                _configuration.MinimumPitch,
-                _configuration.MaximumPitch);
-
-            _game.Drone.Yaw = Mathf.Clamp(
-                _game.Drone.Yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
-                _configuration.MinimumYaw,
-                _configuration.MaximumYaw);
-
+            _game.OnLookPerformed(lookPerformedEvent);
             _view.UpdateViewModel(GameModelToViewModelMapper.Map(_game));
         }
     }

@@ -9,7 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 06c765564d6b441a977b1eb2724c3bba, type: 3}
-  m_Name: GameConfiguration
+  m_Script: {fileID: 11500000, guid: 8b48750ce66d4b81b8d23b0b1e1fff2b, type: 3}
+  m_Name: DroneConfiguration
   m_EditorClassIdentifier: 
-  <Drone>k__BackingField: {fileID: 11400000, guid: a110605b5970b494a8b5d2cf5110e715, type: 2}
+  <LookSensitivity>k__BackingField: 0.1
+  <MinimumPitch>k__BackingField: -45
+  <MaximumPitch>k__BackingField: 45
+  <MinimumYaw>k__BackingField: -45
+  <MaximumYaw>k__BackingField: 45

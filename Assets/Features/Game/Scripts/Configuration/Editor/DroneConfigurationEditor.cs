@@ -4,8 +4,8 @@ using Utility.Extensions.Editor;
 
 namespace Features.Game.Configuration.Editor
 {
-    [CustomEditor(typeof(GameConfiguration))]
-    public class GameConfigurationEditor : UnityEditor.Editor
+    [CustomEditor(typeof(DroneConfiguration))]
+    public class DroneConfigurationEditor : UnityEditor.Editor
     {
         private SerializedProperty _lookSensitivityProperty;
         private SerializedProperty _minimumPitchProperty;
@@ -15,11 +15,11 @@ namespace Features.Game.Configuration.Editor
 
         private void OnEnable()
         {
-            _lookSensitivityProperty = serializedObject.FindAutoProperty(nameof(GameConfiguration.LookSensitivity));
-            _minimumPitchProperty = serializedObject.FindAutoProperty(nameof(GameConfiguration.MinimumPitch));
-            _maximumPitchProperty = serializedObject.FindAutoProperty(nameof(GameConfiguration.MaximumPitch));
-            _minimumYawProperty = serializedObject.FindAutoProperty(nameof(GameConfiguration.MinimumYaw));
-            _maximumYawProperty = serializedObject.FindAutoProperty(nameof(GameConfiguration.MaximumYaw));
+            _lookSensitivityProperty = serializedObject.FindAutoProperty(nameof(DroneConfiguration.LookSensitivity));
+            _minimumPitchProperty = serializedObject.FindAutoProperty(nameof(DroneConfiguration.MinimumPitch));
+            _maximumPitchProperty = serializedObject.FindAutoProperty(nameof(DroneConfiguration.MaximumPitch));
+            _minimumYawProperty = serializedObject.FindAutoProperty(nameof(DroneConfiguration.MinimumYaw));
+            _maximumYawProperty = serializedObject.FindAutoProperty(nameof(DroneConfiguration.MaximumYaw));
         }
 
         public override void OnInspectorGUI()
