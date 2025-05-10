@@ -10,15 +10,9 @@ namespace Features.Game.View
     {
         [SerializeField] private new Rigidbody rigidbody;
 
-        private bool _velocityUpdatePending;
-
         private void FixedUpdate()
         {
-            if (_velocityUpdatePending)
-            {
-                UpdateVelocity();
-                _velocityUpdatePending = false;
-            }
+            UpdateVelocity();
         }
 
         protected override MainCharacterViewModel CreateInitialViewModel()
@@ -28,7 +22,6 @@ namespace Features.Game.View
 
         protected override void OnUpdateViewModel(MainCharacterViewModel viewModel)
         {
-            _velocityUpdatePending = true;
         }
 
         private void UpdateVelocity()
