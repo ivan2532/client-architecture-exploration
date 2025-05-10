@@ -1,5 +1,5 @@
 ﻿using Core.Infrastructure;
-using Features.Game.Model;
+using Features.Game.Domain;
 
 namespace Features.Game.Events
 {

@@ -1,6 +1,6 @@
 using Core.View;
+using Features.Game.Domain;
 using Features.Game.Mappers;
-using Features.Game.Model;
 using Features.Game.ViewModel;
 using UnityEngine;
 

@@ -1,9 +1,9 @@
 ﻿using Features.Game.Configuration;
 using Features.Game.Events;
 
-namespace Features.Game.Model
+namespace Features.Game.Domain
 {
-    public class MainCharacterModel
+    public class MainCharacter
     {
         public Velocity Velocity => _velocity;
 
@@ -11,7 +11,7 @@ namespace Features.Game.Model
 
         private Velocity _velocity;
 
-        public MainCharacterModel(MainCharacterConfiguration configuration)
+        public MainCharacter(MainCharacterConfiguration configuration)
         {
             _configuration = configuration;
         }

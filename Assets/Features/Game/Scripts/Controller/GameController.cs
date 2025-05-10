@@ -2,9 +2,9 @@
 using Core.Controller;
 using Core.Infrastructure;
 using Features.Game.Configuration;
+using Features.Game.Domain;
 using Features.Game.Events;
 using Features.Game.Mappers;
-using Features.Game.Model;
 using Features.Game.View;
 using JetBrains.Annotations;
 
@@ -14,7 +14,7 @@ namespace Features.Game.Controller
     public class GameController : ControllerBase<GameView>, IDisposable
     {
         private readonly GameView _view;
-        private readonly GameModel _game;
+        private readonly Domain.Game _game;
 
         public GameController(GameView view, GameConfiguration configuration) : base(view)
         {
@@ -28,11 +28,11 @@ namespace Features.Game.Controller
             UnsubscribeFromEvents();
         }
 
-        private GameModel CreateModel(GameConfiguration configuration, GameView view)
+        private Domain.Game CreateModel(GameConfiguration configuration, GameView view)
         {
-            var drone = new DroneModel(configuration.Drone, view.DronePitch, view.DroneYaw);
-            var mainCharacter = new MainCharacterModel(configuration.MainCharacter);
-            return new GameModel(drone, mainCharacter);
+            var drone = new Drone(configuration.Drone, view.DronePitch, view.DroneYaw);
+            var mainCharacter = new MainCharacter(configuration.MainCharacter);
+            return new Domain.Game(drone, mainCharacter);
         }
 
         private void SubscribeToEvents()
@@ -69,7 +69,7 @@ namespace Features.Game.Controller
 
         private void UpdateViewModel()
         {
-            _view.UpdateViewModel(GameModelToViewModelMapper.Map(_game));
+            _view.UpdateViewModel(GameToViewModelMapper.Map(_game));
         }
     }
 }

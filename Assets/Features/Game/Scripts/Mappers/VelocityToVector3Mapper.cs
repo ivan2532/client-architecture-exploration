@@ -1,4 +1,4 @@
-﻿using Features.Game.Model;
+﻿using Features.Game.Domain;
 using UnityEngine;
 
 namespace Features.Game.Mappers

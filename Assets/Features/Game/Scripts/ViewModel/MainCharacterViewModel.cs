@@ -1,5 +1,5 @@
 ﻿using Core.ViewModel;
-using Features.Game.Model;
+using Features.Game.Domain;
 
 namespace Features.Game.ViewModel
 {

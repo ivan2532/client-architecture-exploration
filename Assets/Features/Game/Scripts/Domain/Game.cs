@@ -1,13 +1,13 @@
 ﻿using Features.Game.Events;
 
-namespace Features.Game.Model
+namespace Features.Game.Domain
 {
-    public class GameModel
+    public class Game
     {
-        public readonly DroneModel Drone;
-        public readonly MainCharacterModel MainCharacter;
+        public readonly Drone Drone;
+        public readonly MainCharacter MainCharacter;
 
-        public GameModel(DroneModel drone, MainCharacterModel mainCharacter)
+        public Game(Drone drone, MainCharacter mainCharacter)
         {
             Drone = drone;
             MainCharacter = mainCharacter;

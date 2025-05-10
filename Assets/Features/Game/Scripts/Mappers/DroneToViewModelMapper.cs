@@ -1,11 +1,11 @@
-﻿using Features.Game.Model;
+﻿using Features.Game.Domain;
 using Features.Game.ViewModel;
 
 namespace Features.Game.Mappers
 {
-    public static class DroneModelToViewModelMapper
+    public static class DroneToViewModelMapper
     {
-        public static DroneViewModel Map(DroneModel model)
+        public static DroneViewModel Map(Drone model)
         {
             return new DroneViewModel(model.Pitch, model.Yaw);
         }

@@ -2,16 +2,16 @@
 using Features.Game.Configuration;
 using Features.Game.Events;
 
-namespace Features.Game.Model
+namespace Features.Game.Domain
 {
-    public class DroneModel
+    public class Drone
     {
         public float Pitch { get; private set; }
         public float Yaw { get; private set; }
 
         private readonly DroneConfiguration _configuration;
 
-        public DroneModel(DroneConfiguration configuration, float pitch, float yaw)
+        public Drone(DroneConfiguration configuration, float pitch, float yaw)
         {
             _configuration = configuration;
 
