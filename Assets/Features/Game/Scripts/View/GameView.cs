@@ -58,10 +58,11 @@ namespace Features.Game.View
             return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel);
         }
 
-        protected override void OnViewModelUpdate(GameViewModel viewModel)
+        protected override void OnViewModelUpdated()
         {
-            drone.UpdateViewModel(viewModel.Drone);
-            mainCharacter.UpdateViewModel(viewModel.MainCharacter);
+            base.OnViewModelUpdated();
+            drone.UpdateViewModel(ViewModel.Drone);
+            mainCharacter.UpdateViewModel(ViewModel.MainCharacter);
         }
 
         private void OnLookPerformed(InputAction.CallbackContext context)

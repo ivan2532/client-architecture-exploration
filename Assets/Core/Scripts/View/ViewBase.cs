@@ -27,11 +27,8 @@ namespace Core.View
                 InitializeViewModelIfNeeded();
                 return _viewModel;
             }
-            private set
-            {
-                _viewModel = value;
-                _viewModelInitialized = true;
-            }
+
+            private set => _viewModel = value;
         }
 
         private bool _viewModelInitialized;
@@ -46,18 +43,22 @@ namespace Core.View
         public void UpdateViewModel(TViewModel viewModel)
         {
             ViewModel = viewModel;
-            OnViewModelUpdate(ViewModel);
+            OnViewModelUpdated();
         }
 
         protected abstract TViewModel CreateInitialViewModel();
 
-        protected abstract void OnViewModelUpdate(TViewModel viewModel);
+        protected virtual void OnViewModelUpdated()
+        {
+            _viewModelInitialized = true;
+        }
 
         private void InitializeViewModelIfNeeded()
         {
             if (!_viewModelInitialized)
             {
-                UpdateViewModel(CreateInitialViewModel());
+                var initialViewModel = CreateInitialViewModel();
+                UpdateViewModel(initialViewModel);
             }
         }
     }
