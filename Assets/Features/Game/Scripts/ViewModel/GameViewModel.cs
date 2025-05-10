@@ -5,6 +5,7 @@ namespace Features.Game.ViewModel
     public record GameViewModel(
         DroneViewModel Drone,
         MainCharacterViewModel MainCharacter,
-        HudViewModel Hud
+        HudViewModel Hud,
+        bool ShowCursor
     ) : IViewModel;
 }

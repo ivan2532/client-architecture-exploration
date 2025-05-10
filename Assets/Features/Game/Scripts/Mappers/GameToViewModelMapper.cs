@@ -9,7 +9,8 @@ namespace Features.Game.Mappers
             return new GameViewModel(
                 DroneToViewModelMapper.Map(model.Drone),
                 MainCharacterToViewModelMapper.Map(model.MainCharacter),
-                new HudViewModel(model.Score.Value)
+                new HudViewModel(model.Score.Value),
+                model.ShowCursor
             );
         }
     }

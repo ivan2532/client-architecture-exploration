@@ -9,6 +9,8 @@ namespace Features.Game.Domain
         public readonly MainCharacter MainCharacter;
         public readonly Score Score;
 
+        public bool ShowCursor { get; private set; }
+
         public Game(Drone drone, MainCharacter mainCharacter)
         {
             Drone = drone;

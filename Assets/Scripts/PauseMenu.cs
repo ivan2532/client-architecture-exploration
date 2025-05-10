@@ -1,12 +1,13 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using Utility;
 
 public class PauseMenu : MonoBehaviour
 {
     [SerializeField] private GameState gameState;
     [SerializeField] private Canvas pauseMenuCanvas;
-    
+
     private GameInputActions _inputActions;
 
     private void Awake()

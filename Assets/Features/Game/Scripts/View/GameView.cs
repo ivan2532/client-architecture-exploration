@@ -5,6 +5,7 @@ using Features.Game.Events;
 using Features.Game.ViewModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Utility;
 
 namespace Features.Game.View
 {
@@ -60,7 +61,7 @@ namespace Features.Game.View
 
         protected override GameViewModel CreateInitialViewModel()
         {
-            return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel, hud.ViewModel);
+            return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel, hud.ViewModel, false);
         }
 
         protected override void OnViewModelUpdated()
@@ -69,6 +70,7 @@ namespace Features.Game.View
             drone.UpdateViewModel(ViewModel.Drone);
             mainCharacter.UpdateViewModel(ViewModel.MainCharacter);
             hud.UpdateViewModel(ViewModel.Hud);
+            UpdateCursorVisibility();
         }
 
         private void OnLookPerformed(InputAction.CallbackContext context)
@@ -95,6 +97,12 @@ namespace Features.Game.View
         private void OnMoveCanceled(InputAction.CallbackContext context)
         {
             EventBus.Raise(new MoveCancelledEvent());
+        }
+
+        private void UpdateCursorVisibility()
+        {
+            if (ViewModel.ShowCursor) CursorUtility.ShowCursor();
+            else CursorUtility.HideCursor();
         }
     }
 }
