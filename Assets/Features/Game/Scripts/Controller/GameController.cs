@@ -45,23 +45,39 @@ namespace Features.Game.Controller
 
         private void SubscribeToEvents()
         {
+            EventBus.Subscribe<ShootPerformedEvent>(OnShootPerformed);
             EventBus.Subscribe<LookPerformedEvent>(OnLookPerformed);
+            EventBus.Subscribe<DroneUpdateEvent>(OnDroneUpdate);
+
             EventBus.Subscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Subscribe<MoveCancelledEvent>(OnMoveCancelled);
-            EventBus.Subscribe<DroneUpdateEvent>(OnDroneUpdate);
         }
 
         private void UnsubscribeFromEvents()
         {
+            EventBus.Unsubscribe<ShootPerformedEvent>(OnShootPerformed);
             EventBus.Unsubscribe<LookPerformedEvent>(OnLookPerformed);
+            EventBus.Unsubscribe<DroneUpdateEvent>(OnDroneUpdate);
+
             EventBus.Unsubscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Unsubscribe<MoveCancelledEvent>(OnMoveCancelled);
-            EventBus.Unsubscribe<DroneUpdateEvent>(OnDroneUpdate);
+        }
+
+        private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
+        {
+            var shootResult = _game.OnShootPerformed(shootPerformedEvent);
+            if (shootResult.ScoreChanged) UpdateViewModel();
         }
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
             _game.OnLookPerformed(lookPerformedEvent);
+            UpdateViewModel();
+        }
+
+        private void OnDroneUpdate(DroneUpdateEvent updateEvent)
+        {
+            _game.OnDroneUpdate(updateEvent);
             UpdateViewModel();
         }
 
@@ -74,12 +90,6 @@ namespace Features.Game.Controller
         private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
             _game.OnMoveCancelled(moveCancelledEvent);
-            UpdateViewModel();
-        }
-
-        private void OnDroneUpdate(DroneUpdateEvent updateEvent)
-        {
-            _game.OnDroneUpdate(updateEvent);
             UpdateViewModel();
         }
 

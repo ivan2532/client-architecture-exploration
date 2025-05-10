@@ -42,6 +42,7 @@ namespace Features.Game.View
         private void EnableInput()
         {
             _inputActions.Drone.Look.performed += OnLookPerformed;
+            _inputActions.Drone.Shoot.performed += OnShootPerformed;
             _inputActions.MainCharacter.Move.performed += OnMovePerformed;
             _inputActions.MainCharacter.Move.canceled += OnMoveCanceled;
             _inputActions.Enable();
@@ -50,6 +51,7 @@ namespace Features.Game.View
         private void DisableInput()
         {
             _inputActions.Drone.Look.performed -= OnLookPerformed;
+            _inputActions.Drone.Shoot.performed -= OnShootPerformed;
             _inputActions.MainCharacter.Move.performed -= OnMovePerformed;
             _inputActions.MainCharacter.Move.canceled -= OnMoveCanceled;
             _inputActions.Disable();
@@ -72,6 +74,12 @@ namespace Features.Game.View
             var inputData = context.ReadValue<Vector2>();
             var inputDelta = new LookInputDelta(inputData.x, inputData.y);
             EventBus.Raise(new LookPerformedEvent(inputDelta));
+        }
+
+        private void OnShootPerformed(InputAction.CallbackContext context)
+        {
+            var shootRaycastResult = drone.ShootRaycast();
+            EventBus.Raise(new ShootPerformedEvent(shootRaycastResult));
         }
 
         private void OnMovePerformed(InputAction.CallbackContext context)

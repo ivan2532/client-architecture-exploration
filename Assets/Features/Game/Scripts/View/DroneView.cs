@@ -10,6 +10,7 @@ namespace Features.Game.View
     {
         [SerializeField] private Transform droneCamera;
         [SerializeField] private Transform mainCharacter;
+        [SerializeField] private Collider dummyTarget;
 
         public Vector3 OffsetFromMainCharacter => transform.position - mainCharacter.position;
         public Vector3 Position => transform.position;
@@ -31,6 +32,12 @@ namespace Features.Game.View
             base.OnViewModelUpdated();
             UpdatePosition();
             UpdateCameraOrientation();
+        }
+
+        public RaycastShootResult ShootRaycast()
+        {
+            Physics.Raycast(droneCamera.position, droneCamera.forward, out var hit);
+            return new RaycastShootResult(hit.collider == dummyTarget);
         }
 
         private void UpdatePosition()
