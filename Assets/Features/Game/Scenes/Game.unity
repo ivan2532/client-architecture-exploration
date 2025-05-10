@@ -9963,6 +9963,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1446389488 stripped
+BoxCollider:
+  m_CorrespondingSourceObject: {fileID: 7879907826123415979, guid: b07d6966a8e33d54897ea6e4b18e6871, type: 3}
+  m_PrefabInstance: {fileID: 1347751144691181196}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1695237327
 GameObject:
   m_ObjectHideFlags: 0
@@ -10130,6 +10135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   drone: {fileID: 166570740}
   mainCharacter: {fileID: 1848580629}
+  hud: {fileID: 2009157482}
 --- !u!4 &1848580627 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7609154005711820468, guid: 6b0fcac65c4e27e4eb7cef1dc380ec53, type: 3}
@@ -10146,6 +10152,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 960c21af92a2b974eb1c8e548530dc09, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2009157482 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4912441626732967731, guid: bf9b49d0bd45d194a91ae88a517ae644, type: 3}
+  m_PrefabInstance: {fileID: 4041114830582090113}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: beca2b57f2a6794499e66cd90ffdb7b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1138564879231618090
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -10157,6 +10174,30 @@ PrefabInstance:
     - target: {fileID: 5082448648153571102, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
       propertyPath: m_Name
       value: PauseMenuCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731827319018998886, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731827319018998886, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6731827319018998886, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302886290431237731, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302886290431237731, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8302886290431237731, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9082232515437131501, guid: 8467f796dd78e7543a9175f036b5d534, type: 3}
       propertyPath: m_Pivot.x
@@ -10469,6 +10510,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Drone
       objectReference: {fileID: 0}
+    - target: {fileID: 8465234439114801256, guid: 66d2828ddde98274396817c5fa264fa9, type: 3}
+      propertyPath: dummyTarget
+      value: 
+      objectReference: {fileID: 1446389488}
     - target: {fileID: 8465234439114801256, guid: 66d2828ddde98274396817c5fa264fa9, type: 3}
       propertyPath: mainCharacter
       value: 

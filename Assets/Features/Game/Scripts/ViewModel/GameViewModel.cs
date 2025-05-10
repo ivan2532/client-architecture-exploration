@@ -2,5 +2,9 @@
 
 namespace Features.Game.ViewModel
 {
-    public record GameViewModel(DroneViewModel Drone, MainCharacterViewModel MainCharacter) : IViewModel;
+    public record GameViewModel(
+        DroneViewModel Drone,
+        MainCharacterViewModel MainCharacter,
+        HudViewModel Hud
+    ) : IViewModel;
 }

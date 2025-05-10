@@ -12,6 +12,7 @@ namespace Features.Game.View
     {
         [SerializeField] private DroneView drone;
         [SerializeField] private MainCharacterView mainCharacter;
+        [SerializeField] private HudView hud;
 
         public Vector3 DroneOffsetFromMainCharacter => drone.OffsetFromMainCharacter;
         public Vector3 DronePosition => drone.Position;
@@ -59,7 +60,7 @@ namespace Features.Game.View
 
         protected override GameViewModel CreateInitialViewModel()
         {
-            return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel);
+            return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel, hud.ViewModel);
         }
 
         protected override void OnViewModelUpdated()
@@ -67,6 +68,7 @@ namespace Features.Game.View
             base.OnViewModelUpdated();
             drone.UpdateViewModel(ViewModel.Drone);
             mainCharacter.UpdateViewModel(ViewModel.MainCharacter);
+            hud.UpdateViewModel(ViewModel.Hud);
         }
 
         private void OnLookPerformed(InputAction.CallbackContext context)

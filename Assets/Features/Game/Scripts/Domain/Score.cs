@@ -2,11 +2,11 @@
 {
     public class Score
     {
-        private int _value;
+        public int Value { get; private set; }
 
         public void Increment()
         {
-            _value++;
+            Value++;
         }
     }
 }
