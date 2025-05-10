@@ -11,6 +11,7 @@ namespace Features.Game.View
     public class GameView : ViewBase<GameViewModel>
     {
         [SerializeField] private DroneView drone;
+        [SerializeField] private MainCharacterView mainCharacter;
 
         public float DronePitch => drone.Pitch;
         public float DroneYaw => drone.Yaw;
@@ -54,12 +55,13 @@ namespace Features.Game.View
 
         protected override GameViewModel CreateInitialViewModel()
         {
-            return new GameViewModel(drone.ViewModel);
+            return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel);
         }
 
         protected override void OnUpdateViewModel(GameViewModel viewModel)
         {
             drone.UpdateViewModel(viewModel.Drone);
+            mainCharacter.UpdateViewModel(viewModel.MainCharacter);
         }
 
         private void OnLookPerformed(InputAction.CallbackContext context)

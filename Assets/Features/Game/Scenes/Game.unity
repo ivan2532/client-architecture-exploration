@@ -11561,6 +11561,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   drone: {fileID: 166570740}
+  mainCharacter: {fileID: 1848580629}
 --- !u!1 &1848580623
 GameObject:
   m_ObjectHideFlags: 0
@@ -11713,7 +11714,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rigidbody: {fileID: 1848580628}
-  speed: 10
 --- !u!1 &1933200920
 GameObject:
   m_ObjectHideFlags: 0

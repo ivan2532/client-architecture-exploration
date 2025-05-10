@@ -5,6 +5,8 @@ namespace Features.Game.Model
 {
     public class MainCharacterModel
     {
+        public Velocity Velocity => _velocity;
+
         private readonly MainCharacterConfiguration _configuration;
 
         private Velocity _velocity;
