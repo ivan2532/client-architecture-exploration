@@ -27,16 +27,28 @@ namespace Features.Game.View
         protected override void OnEnable()
         {
             base.OnEnable();
-
-            _inputActions.Drone.Look.performed += OnLookPerformed;
-            _inputActions.Enable();
+            EnableInput();
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
+            DisableInput();
+        }
 
+        private void EnableInput()
+        {
+            _inputActions.Drone.Look.performed += OnLookPerformed;
+            _inputActions.MainCharacter.Move.performed += OnMovePerformed;
+            _inputActions.MainCharacter.Move.canceled += OnMoveCanceled;
+            _inputActions.Enable();
+        }
+
+        private void DisableInput()
+        {
             _inputActions.Drone.Look.performed -= OnLookPerformed;
+            _inputActions.MainCharacter.Move.performed -= OnMovePerformed;
+            _inputActions.MainCharacter.Move.canceled -= OnMoveCanceled;
             _inputActions.Disable();
         }
 
@@ -55,6 +67,18 @@ namespace Features.Game.View
             var inputData = context.ReadValue<Vector2>();
             var inputDelta = new LookInputDelta(inputData.x, inputData.y);
             EventBus.Raise(new LookPerformedEvent(inputDelta));
+        }
+
+        private void OnMovePerformed(InputAction.CallbackContext context)
+        {
+            var inputData = context.ReadValue<Vector2>();
+            var input = new MoveInput(inputData.x, inputData.y);
+            EventBus.Raise(new MovePerformedEvent(input));
+        }
+
+        private void OnMoveCanceled(InputAction.CallbackContext context)
+        {
+            EventBus.Raise(new MoveCancelledEvent());
         }
     }
 }
