@@ -16,8 +16,8 @@ namespace Features.Game.Model
 
         public void OnMovePerformed(MovePerformedEvent movePerformedEvent)
         {
-            _velocity.X = movePerformedEvent.NormalizedInput.X;
-            _velocity.Z = movePerformedEvent.NormalizedInput.Y;
+            _velocity.X = movePerformedEvent.NormalizedInput.X * _configuration.MovementSpeed;
+            _velocity.Z = movePerformedEvent.NormalizedInput.Y * _configuration.MovementSpeed;
         }
 
         public void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
