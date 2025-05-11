@@ -1,5 +1,4 @@
 ﻿using Core.Infrastructure;
-using Core.Infrastructure.ViewController;
 using UnityEngine;
 
 namespace Features.Game.ViewModels

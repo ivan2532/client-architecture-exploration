@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Features.MainMenu.Views
+namespace Core.Infrastructure
 {
     public class ViewNotInitializedException<TView> : Exception
     {

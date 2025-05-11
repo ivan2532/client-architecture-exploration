@@ -1,5 +1,5 @@
-﻿using System;
-using Core.Infrastructure;
+﻿using Core.Infrastructure;
+using Features.Game;
 using Features.MainMenu.Events;
 using UnityEngine.SceneManagement;
 
@@ -9,17 +9,24 @@ using UnityEditor;
 
 namespace Features.MainMenu
 {
-    public class MainMenuService : IDisposable
+    public class MainMenuService
     {
-        public void Dispose()
+        private readonly GameService _gameService;
+
+        public MainMenuService(GameService gameService)
         {
-            UnsubscribeFromEvents();
+            _gameService = gameService;
         }
 
-        public void LoadMainMenu()
+        public void Load()
         {
             SceneManager.LoadScene("MainMenu");
             SubscribeToEvents();
+        }
+
+        public void Unload()
+        {
+            UnsubscribeFromEvents();
         }
 
         private void SubscribeToEvents()
@@ -46,8 +53,8 @@ namespace Features.MainMenu
 
         private void LoadGame()
         {
-            UnsubscribeFromEvents();
-            SceneManager.LoadScene("Game");
+            Unload();
+            _gameService.Load();
         }
 
         private void ExitGame()

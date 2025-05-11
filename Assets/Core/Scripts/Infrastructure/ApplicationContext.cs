@@ -1,12 +1,16 @@
-using System;
+using Features.Game;
+using Features.Game.Configuration;
 using Features.MainMenu;
 using UnityEngine;
 
 namespace Core.Infrastructure
 {
-    public class ApplicationContext : MonoBehaviour, IDisposable
+    public class ApplicationContext : MonoBehaviour
     {
+        [SerializeField] private GameConfiguration gameConfiguration;
+
         private MainMenuService _mainMenuService;
+        private GameService _gameService;
 
         private void OnEnable()
         {
@@ -16,22 +20,24 @@ namespace Core.Infrastructure
 
         private void OnDisable()
         {
-            Dispose();
-        }
-
-        public void Dispose()
-        {
-            _mainMenuService.Dispose();
+            Unload();
         }
 
         private void Initialize()
         {
-            _mainMenuService = new MainMenuService();
+            _mainMenuService = new MainMenuService(_gameService);
+            _gameService = new GameService(gameConfiguration, _mainMenuService);
         }
 
         private void StartApplication()
         {
-            _mainMenuService.LoadMainMenu();
+            _mainMenuService.Load();
+        }
+
+        private void Unload()
+        {
+            _mainMenuService.Unload();
+            _gameService.Unload();
         }
     }
 }

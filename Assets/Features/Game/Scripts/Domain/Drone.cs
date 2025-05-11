@@ -31,7 +31,7 @@ namespace Features.Game.Domain
             Yaw = yaw;
         }
 
-        public void Update(DroneUpdateEvent updateEvent)
+        public void OnUpdate(DroneUpdateEvent updateEvent)
         {
             Position = Vector3.SmoothDamp(
                 updateEvent.DronePosition,

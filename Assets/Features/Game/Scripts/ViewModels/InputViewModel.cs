@@ -2,5 +2,5 @@
 
 namespace Features.Game.ViewModels
 {
-    public record PauseMenuViewModel(bool Visible) : IViewModel;
+    public record InputViewModel(bool InputEnabled) : IViewModel;
 }

@@ -1,12 +1,11 @@
 ﻿using Core.Infrastructure;
-using Core.Infrastructure.ViewController;
 using Features.Game.Events;
 using Features.Game.ViewModels;
 using UnityEngine;
 
 namespace Features.Game.Views
 {
-    public class DroneView : View<DroneViewModel>
+    public class DroneView : View<DroneView, DroneViewModel>
     {
         [SerializeField] private Transform droneCamera;
         [SerializeField] private Transform mainCharacter;

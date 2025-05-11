@@ -1,14 +1,23 @@
+using System;
 using Core.Infrastructure;
-using Core.Infrastructure.ViewController;
 using Features.Game.Events;
 using Features.Game.ViewModels;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Features.Game.Views
 {
-    public class PauseMenuView : View<PauseMenuViewModel>
+    public class PauseMenuView : View<PauseMenuView, PauseMenuViewModel>
     {
         [SerializeField] private Canvas pauseMenuCanvas;
+        [SerializeField] private Button resumeButton;
+        [SerializeField] private Button mainMenuButton;
+
+        private void Awake()
+        {
+            resumeButton.onClick.AddListener(OnResumeButtonClicked);
+            mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
+        }
 
         protected override PauseMenuViewModel CreateInitialViewModel()
         {
@@ -21,12 +30,12 @@ namespace Features.Game.Views
             UpdateVisibility();
         }
 
-        public void OnResumeButtonClicked()
+        private void OnResumeButtonClicked()
         {
             EventBus.Raise(new ResumeButtonClickedEvent());
         }
 
-        public void OnMainMenuButtonClicked()
+        private void OnMainMenuButtonClicked()
         {
             EventBus.Raise(new MainMenuButtonClickedEvent());
         }
