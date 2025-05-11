@@ -53,5 +53,15 @@ namespace Features.Game.Domain
         {
             Paused = true;
         }
+
+        public void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
+        {
+            Paused = false;
+        }
+
+        public void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
+        {
+            Paused = false;
+        }
     }
 }

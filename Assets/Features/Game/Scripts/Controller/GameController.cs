@@ -7,6 +7,7 @@ using Features.Game.Events;
 using Features.Game.Mappers;
 using Features.Game.View;
 using JetBrains.Annotations;
+using UnityEngine.SceneManagement;
 
 namespace Features.Game.Controller
 {
@@ -53,6 +54,8 @@ namespace Features.Game.Controller
             EventBus.Subscribe<MoveCancelledEvent>(OnMoveCancelled);
 
             EventBus.Subscribe<PausePerformedEvent>(OnPausePerformed);
+            EventBus.Subscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
+            EventBus.Subscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);
         }
 
         private void UnsubscribeFromEvents()
@@ -65,6 +68,8 @@ namespace Features.Game.Controller
             EventBus.Unsubscribe<MoveCancelledEvent>(OnMoveCancelled);
 
             EventBus.Unsubscribe<PausePerformedEvent>(OnPausePerformed);
+            EventBus.Unsubscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
+            EventBus.Unsubscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);
         }
 
         private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
@@ -103,9 +108,27 @@ namespace Features.Game.Controller
             UpdateViewModel();
         }
 
+        private void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
+        {
+            _game.OnResumeButtonClicked(resumeButtonClickedEvent);
+            UpdateViewModel();
+        }
+
+        private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
+        {
+            _game.OnMainMenuButtonClicked(mainMenuButtonClickedEvent);
+            UpdateViewModel();
+            LoadMainMenu();
+        }
+
         private void UpdateViewModel()
         {
             _view.UpdateViewModel(GameToViewModelMapper.Map(_game));
+        }
+
+        private void LoadMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
