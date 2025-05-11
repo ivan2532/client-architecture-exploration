@@ -1,15 +1,12 @@
 using Core.Infrastructure;
 using Core.Infrastructure.ViewController;
-using Features.MainMenu.Scripts.Events;
+using Features.MainMenu.Events;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-namespace Features.MainMenu.Scripts.Views
+namespace Features.MainMenu.Views
 {
     public class MainMenuView : View
     {

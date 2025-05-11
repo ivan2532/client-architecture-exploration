@@ -1,11 +1,11 @@
 ﻿using System;
 using Core.Infrastructure;
 using Core.Infrastructure.ViewController;
-using Features.MainMenu.Scripts.Events;
-using Features.MainMenu.Scripts.Views;
+using Features.MainMenu.Events;
+using Features.MainMenu.Views;
 using JetBrains.Annotations;
 
-namespace Features.MainMenu.Scripts.Controllers
+namespace Features.MainMenu.Controllers
 {
     [UsedImplicitly]
     public class MainMenuController : Controller<MainMenuView>, IDisposable
