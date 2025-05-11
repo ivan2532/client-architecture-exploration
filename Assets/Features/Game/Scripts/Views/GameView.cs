@@ -5,6 +5,7 @@ using Features.Game.Events;
 using Features.Game.ViewModels;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 namespace Features.Game.Views
 {
@@ -43,24 +44,6 @@ namespace Features.Game.Views
             _inputActions.Disable();
         }
 
-        private void SubscribeToInputEvents()
-        {
-            _inputActions.Drone.Look.performed += OnLookPerformed;
-            _inputActions.Drone.Shoot.performed += OnShootPerformed;
-            _inputActions.MainCharacter.Move.performed += OnMovePerformed;
-            _inputActions.MainCharacter.Move.canceled += OnMoveCanceled;
-            _inputActions.Menus.Pause.performed += OnPausePerformed;
-        }
-
-        private void UnsubscribeFromInputEvents()
-        {
-            _inputActions.Drone.Look.performed -= OnLookPerformed;
-            _inputActions.Drone.Shoot.performed -= OnShootPerformed;
-            _inputActions.MainCharacter.Move.performed -= OnMovePerformed;
-            _inputActions.MainCharacter.Move.canceled -= OnMoveCanceled;
-            _inputActions.Menus.Pause.performed -= OnPausePerformed;
-        }
-
         protected override GameViewModel CreateInitialViewModel()
         {
             return new GameViewModel(
@@ -86,6 +69,29 @@ namespace Features.Game.Views
             UpdateCursorVisibility();
             SetInputEnabled();
             UpdateTimeScale();
+        }
+
+        public void LoadMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+        private void SubscribeToInputEvents()
+        {
+            _inputActions.Drone.Look.performed += OnLookPerformed;
+            _inputActions.Drone.Shoot.performed += OnShootPerformed;
+            _inputActions.MainCharacter.Move.performed += OnMovePerformed;
+            _inputActions.MainCharacter.Move.canceled += OnMoveCanceled;
+            _inputActions.Menus.Pause.performed += OnPausePerformed;
+        }
+
+        private void UnsubscribeFromInputEvents()
+        {
+            _inputActions.Drone.Look.performed -= OnLookPerformed;
+            _inputActions.Drone.Shoot.performed -= OnShootPerformed;
+            _inputActions.MainCharacter.Move.performed -= OnMovePerformed;
+            _inputActions.MainCharacter.Move.canceled -= OnMoveCanceled;
+            _inputActions.Menus.Pause.performed -= OnPausePerformed;
         }
 
         private void OnLookPerformed(InputAction.CallbackContext context)

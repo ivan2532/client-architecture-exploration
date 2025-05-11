@@ -118,17 +118,12 @@ namespace Features.Game.Controllers
         {
             _game.OnMainMenuButtonClicked();
             UpdateViewModel();
-            LoadMainMenu();
+            _view.LoadMainMenu();
         }
 
         private void UpdateViewModel()
         {
             _view.UpdateViewModel(GameToViewModelMapper.Map(_game));
-        }
-
-        private void LoadMainMenu()
-        {
-            SceneManager.LoadScene("MainMenu");
         }
     }
 }
