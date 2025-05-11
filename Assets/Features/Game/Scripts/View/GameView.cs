@@ -5,7 +5,6 @@ using Features.Game.Events;
 using Features.Game.ViewModel;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Utility;
 
 namespace Features.Game.View
 {
@@ -14,6 +13,7 @@ namespace Features.Game.View
         [SerializeField] private DroneView drone;
         [SerializeField] private MainCharacterView mainCharacter;
         [SerializeField] private HudView hud;
+        [SerializeField] private PauseMenuView pauseMenu;
 
         public Vector3 DroneOffsetFromMainCharacter => drone.OffsetFromMainCharacter;
         public Vector3 DronePosition => drone.Position;
@@ -32,45 +32,60 @@ namespace Features.Game.View
         protected override void OnEnable()
         {
             base.OnEnable();
-            EnableInput();
+            SubscribeToInputEvents();
+            _inputActions.Enable();
         }
 
         protected override void OnDisable()
         {
             base.OnDisable();
-            DisableInput();
+            UnsubscribeFromInputEvents();
+            _inputActions.Disable();
         }
 
-        private void EnableInput()
+        private void SubscribeToInputEvents()
         {
             _inputActions.Drone.Look.performed += OnLookPerformed;
             _inputActions.Drone.Shoot.performed += OnShootPerformed;
             _inputActions.MainCharacter.Move.performed += OnMovePerformed;
             _inputActions.MainCharacter.Move.canceled += OnMoveCanceled;
-            _inputActions.Enable();
+            _inputActions.Menus.Pause.performed += OnPausePerformed;
         }
 
-        private void DisableInput()
+        private void UnsubscribeFromInputEvents()
         {
             _inputActions.Drone.Look.performed -= OnLookPerformed;
             _inputActions.Drone.Shoot.performed -= OnShootPerformed;
             _inputActions.MainCharacter.Move.performed -= OnMovePerformed;
             _inputActions.MainCharacter.Move.canceled -= OnMoveCanceled;
-            _inputActions.Disable();
+            _inputActions.Menus.Pause.performed -= OnPausePerformed;
         }
 
         protected override GameViewModel CreateInitialViewModel()
         {
-            return new GameViewModel(drone.ViewModel, mainCharacter.ViewModel, hud.ViewModel, false);
+            return new GameViewModel(
+                drone.ViewModel,
+                mainCharacter.ViewModel,
+                hud.ViewModel,
+                pauseMenu.ViewModel,
+                false,
+                true,
+                1f
+            );
         }
 
         protected override void OnViewModelUpdated()
         {
             base.OnViewModelUpdated();
+
             drone.UpdateViewModel(ViewModel.Drone);
             mainCharacter.UpdateViewModel(ViewModel.MainCharacter);
             hud.UpdateViewModel(ViewModel.Hud);
+            pauseMenu.UpdateViewModel(ViewModel.PauseMenu);
+
             UpdateCursorVisibility();
+            SetInputEnabled();
+            UpdateTimeScale();
         }
 
         private void OnLookPerformed(InputAction.CallbackContext context)
@@ -99,10 +114,26 @@ namespace Features.Game.View
             EventBus.Raise(new MoveCancelledEvent());
         }
 
+        private void OnPausePerformed(InputAction.CallbackContext context)
+        {
+            EventBus.Raise(new PausePerformedEvent());
+        }
+
         private void UpdateCursorVisibility()
         {
-            if (ViewModel.ShowCursor) CursorUtility.ShowCursor();
-            else CursorUtility.HideCursor();
+            Cursor.lockState = ViewModel.ShowCursor ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = ViewModel.ShowCursor;
+        }
+
+        private void SetInputEnabled()
+        {
+            if (ViewModel.InputEnabled) _inputActions.Enable();
+            else _inputActions.Disable();
+        }
+
+        private void UpdateTimeScale()
+        {
+            Time.timeScale = ViewModel.TimeScale;
         }
     }
 }

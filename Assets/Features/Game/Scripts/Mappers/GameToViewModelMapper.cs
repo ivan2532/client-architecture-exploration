@@ -10,7 +10,10 @@ namespace Features.Game.Mappers
                 DroneToViewModelMapper.Map(model.Drone),
                 MainCharacterToViewModelMapper.Map(model.MainCharacter),
                 new HudViewModel(model.Score.Value),
-                model.ShowCursor
+                new PauseMenuViewModel(model.Paused),
+                model.Paused,
+                !model.Paused,
+                model.Paused ? 0f : 1f
             );
         }
     }

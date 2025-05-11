@@ -6,6 +6,9 @@ namespace Features.Game.ViewModel
         DroneViewModel Drone,
         MainCharacterViewModel MainCharacter,
         HudViewModel Hud,
-        bool ShowCursor
+        PauseMenuViewModel PauseMenu,
+        bool ShowCursor,
+        bool InputEnabled,
+        float TimeScale
     ) : IViewModel;
 }

@@ -51,6 +51,8 @@ namespace Features.Game.Controller
 
             EventBus.Subscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Subscribe<MoveCancelledEvent>(OnMoveCancelled);
+
+            EventBus.Subscribe<PausePerformedEvent>(OnPausePerformed);
         }
 
         private void UnsubscribeFromEvents()
@@ -61,6 +63,8 @@ namespace Features.Game.Controller
 
             EventBus.Unsubscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Unsubscribe<MoveCancelledEvent>(OnMoveCancelled);
+
+            EventBus.Unsubscribe<PausePerformedEvent>(OnPausePerformed);
         }
 
         private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
@@ -90,6 +94,12 @@ namespace Features.Game.Controller
         private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
             _game.OnMoveCancelled(moveCancelledEvent);
+            UpdateViewModel();
+        }
+
+        private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
+        {
+            _game.OnPausePerformed(pausePerformedEvent);
             UpdateViewModel();
         }
 

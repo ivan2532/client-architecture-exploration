@@ -9,7 +9,7 @@ namespace Features.Game.Domain
         public readonly MainCharacter MainCharacter;
         public readonly Score Score;
 
-        public bool ShowCursor { get; private set; }
+        public bool Paused { get; private set; }
 
         public Game(Drone drone, MainCharacter mainCharacter)
         {
@@ -34,6 +34,11 @@ namespace Features.Game.Domain
             Drone.OnLookPerformed(lookPerformedEvent);
         }
 
+        public void OnDroneUpdate(DroneUpdateEvent updateEvent)
+        {
+            Drone.Update(updateEvent);
+        }
+
         public void OnMovePerformed(MovePerformedEvent movePerformedEvent)
         {
             MainCharacter.OnMovePerformed(movePerformedEvent);
@@ -44,9 +49,9 @@ namespace Features.Game.Domain
             MainCharacter.OnMoveCancelled(moveCancelledEvent);
         }
 
-        public void OnDroneUpdate(DroneUpdateEvent updateEvent)
+        public void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
         {
-            Drone.Update(updateEvent);
+            Paused = true;
         }
     }
 }
