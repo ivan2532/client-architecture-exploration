@@ -1,12 +1,12 @@
 using Core.Infrastructure;
-using Core.View;
+using Core.Infrastructure.ViewController;
 using Features.Game.Events;
-using Features.Game.ViewModel;
+using Features.Game.ViewModels;
 using UnityEngine;
 
-namespace Features.Game.View
+namespace Features.Game.Views
 {
-    public class PauseMenuView : ViewBase<PauseMenuViewModel>
+    public class PauseMenuView : View<PauseMenuViewModel>
     {
         [SerializeField] private Canvas pauseMenuCanvas;
 

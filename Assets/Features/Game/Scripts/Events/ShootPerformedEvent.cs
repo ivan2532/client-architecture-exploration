@@ -1,5 +1,5 @@
 ﻿using Core.Infrastructure;
-using Features.Game.View;
+using Features.Game.Views;
 
 namespace Features.Game.Events
 {

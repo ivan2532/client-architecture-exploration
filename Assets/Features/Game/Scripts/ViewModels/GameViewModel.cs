@@ -1,6 +1,6 @@
-﻿using Core.ViewModel;
+﻿using Core.Infrastructure.ViewController;
 
-namespace Features.Game.ViewModel
+namespace Features.Game.ViewModels
 {
     public record GameViewModel(
         DroneViewModel Drone,

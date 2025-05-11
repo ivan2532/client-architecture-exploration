@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core.Controller;
 
-namespace Core.Utility
+namespace Core.Infrastructure.ViewController
 {
     public static class ControllerUtility
     {
@@ -11,9 +10,9 @@ namespace Core.Utility
         {
             return AppDomain.CurrentDomain.GetAssemblies()
                 .SelectMany(assembly => assembly.GetTypes())
-                .Where(type => type.BaseType != null && type.IsSubclassOf(typeof(ControllerBase)))
+                .Where(type => type.BaseType != null && type.IsSubclassOf(typeof(Controller)))
                 .Where(type => type.BaseType.IsGenericType &&
-                               type.BaseType.GetGenericTypeDefinition() == typeof(ControllerBase<>))
+                               type.BaseType.GetGenericTypeDefinition() == typeof(Controller<>))
                 .ToList();
         }
     }

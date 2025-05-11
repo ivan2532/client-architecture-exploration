@@ -1,10 +1,10 @@
-using Core.View;
-using Features.Game.ViewModel;
+using Core.Infrastructure.ViewController;
+using Features.Game.ViewModels;
 using UnityEngine;
 
-namespace Features.Game.View
+namespace Features.Game.Views
 {
-    public class MainCharacterView : ViewBase<MainCharacterViewModel>
+    public class MainCharacterView : View<MainCharacterViewModel>
     {
         [SerializeField] private new Rigidbody rigidbody;
 

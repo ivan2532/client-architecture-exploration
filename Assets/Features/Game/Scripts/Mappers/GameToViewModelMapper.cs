@@ -1,4 +1,4 @@
-﻿using Features.Game.ViewModel;
+﻿using Features.Game.ViewModels;
 
 namespace Features.Game.Mappers
 {

@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
-using Core.Controller;
 using UnityEditor;
 using UnityEngine;
 
-namespace Core.Infrastructure
+namespace Core.Infrastructure.ViewController
 {
     [InitializeOnLoad]
     public static class ControllerValidator
@@ -34,7 +33,7 @@ namespace Core.Infrastructure
             var controllerTypes = AppDomain.CurrentDomain
                 .GetAssemblies()
                 .SelectMany(a => a.GetTypes())
-                .Where(t => typeof(ControllerBase).IsAssignableFrom(t) && !t.IsAbstract);
+                .Where(t => typeof(Controller).IsAssignableFrom(t) && !t.IsAbstract);
 
             foreach (var controllerType in controllerTypes)
             {

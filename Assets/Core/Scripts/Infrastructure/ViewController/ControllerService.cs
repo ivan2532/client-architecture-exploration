@@ -2,19 +2,16 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Core.Controller;
 using Core.Events;
-using Core.Utility;
-using Core.View;
 using JetBrains.Annotations;
 
-namespace Core.Infrastructure
+namespace Core.Infrastructure.ViewController
 {
     public class ControllerService : IDisposable
     {
         private readonly ServiceRegistry _serviceRegistry;
 
-        private readonly Dictionary<ViewBase, ControllerBase> _controllers = new();
+        private readonly Dictionary<View, Controller> _controllers = new();
 
         public ControllerService(ServiceRegistry serviceRegistry)
         {
@@ -57,7 +54,7 @@ namespace Core.Infrastructure
             _controllers.Clear();
         }
 
-        private static void DisposeController(ControllerBase controller)
+        private static void DisposeController(Controller controller)
         {
             if (controller is IDisposable disposableController)
             {
@@ -66,16 +63,16 @@ namespace Core.Infrastructure
         }
 
         [CanBeNull]
-        private ControllerBase TryCreateControllerForView(ViewBase view)
+        private Controller TryCreateControllerForView(View view)
         {
             var controllerType = GetControllerType(view);
             if (controllerType == null) return null;
 
             var resolvedConstructorParameters = ResolveControllerConstructorParameters(view, controllerType);
-            return (ControllerBase)Activator.CreateInstance(controllerType, args: resolvedConstructorParameters);
+            return (Controller)Activator.CreateInstance(controllerType, args: resolvedConstructorParameters);
         }
 
-        private object[] ResolveControllerConstructorParameters(ViewBase view, Type controllerType)
+        private object[] ResolveControllerConstructorParameters(View view, Type controllerType)
         {
             var constructorParameters = controllerType.GetConstructors().First().GetParameters();
             var resolvedConstructorParameters = new object[constructorParameters.Length];
@@ -90,7 +87,7 @@ namespace Core.Infrastructure
         }
 
         private object ResolveControllerConstructorParameter(
-            ViewBase view,
+            View view,
             Type controllerType,
             ParameterInfo parameter)
         {
@@ -116,7 +113,7 @@ namespace Core.Infrastructure
         }
 
         [CanBeNull]
-        private static Type GetControllerType(ViewBase view)
+        private static Type GetControllerType(View view)
         {
             var controllerType = ControllerUtility.GetAllControllerImplementationTypes()
                 .FirstOrDefault(type => type.BaseType != null &&

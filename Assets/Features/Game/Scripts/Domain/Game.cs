@@ -1,5 +1,4 @@
 ﻿using Features.Game.Events;
-using Features.Game.View;
 
 namespace Features.Game.Domain
 {

@@ -1,11 +1,9 @@
 ﻿using Core.Events;
-using Core.Infrastructure;
-using Core.ViewModel;
 using UnityEngine;
 
-namespace Core.View
+namespace Core.Infrastructure.ViewController
 {
-    public abstract class ViewBase : MonoBehaviour
+    public abstract class View : MonoBehaviour
     {
         protected virtual void OnEnable()
         {
@@ -18,7 +16,7 @@ namespace Core.View
         }
     }
 
-    public abstract class ViewBase<TViewModel> : ViewBase where TViewModel : IViewModel
+    public abstract class View<TViewModel> : View where TViewModel : IViewModel
     {
         public TViewModel ViewModel
         {

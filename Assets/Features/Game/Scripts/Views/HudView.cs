@@ -1,11 +1,11 @@
-using Core.View;
-using Features.Game.ViewModel;
+using Core.Infrastructure.ViewController;
+using Features.Game.ViewModels;
 using TMPro;
 using UnityEngine;
 
-namespace Features.Game.View
+namespace Features.Game.Views
 {
-    public class HudView : ViewBase<HudViewModel>
+    public class HudView : View<HudViewModel>
     {
         [SerializeField] private TextMeshProUGUI scoreText;
 

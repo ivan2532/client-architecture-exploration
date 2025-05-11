@@ -1,14 +1,14 @@
 ﻿using Core.Infrastructure;
-using Core.View;
+using Core.Infrastructure.ViewController;
 using Features.Game.Domain;
 using Features.Game.Events;
-using Features.Game.ViewModel;
+using Features.Game.ViewModels;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Features.Game.View
+namespace Features.Game.Views
 {
-    public class GameView : ViewBase<GameViewModel>
+    public class GameView : View<GameViewModel>
     {
         [SerializeField] private DroneView drone;
         [SerializeField] private MainCharacterView mainCharacter;

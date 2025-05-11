@@ -1,7 +1,7 @@
 ﻿using Core.Infrastructure;
-using Core.View;
+using Core.Infrastructure.ViewController;
 
 namespace Core.Events
 {
-    public record ViewDisabledEvent(ViewBase View) : IEvent;
+    public record ViewDisabledEvent(View View) : IEvent;
 }

@@ -1,18 +1,18 @@
 ﻿using System;
-using Core.Controller;
 using Core.Infrastructure;
+using Core.Infrastructure.ViewController;
 using Features.Game.Configuration;
 using Features.Game.Domain;
 using Features.Game.Events;
 using Features.Game.Mappers;
-using Features.Game.View;
+using Features.Game.Views;
 using JetBrains.Annotations;
 using UnityEngine.SceneManagement;
 
-namespace Features.Game.Controller
+namespace Features.Game.Controllers
 {
     [UsedImplicitly]
-    public class GameController : ControllerBase<GameView>, IDisposable
+    public class GameController : Controller<GameView>, IDisposable
     {
         private readonly GameView _view;
         private readonly Domain.Game _game;

@@ -1,4 +1,4 @@
-﻿namespace Features.Game.View
+﻿namespace Features.Game.Views
 {
     public record RaycastShootResult(bool DummyTargetHit);
 }
