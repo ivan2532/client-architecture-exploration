@@ -44,22 +44,22 @@ namespace Features.Game.Domain
             MainCharacter.OnMovePerformed(movePerformedEvent);
         }
 
-        public void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
+        public void OnMoveCancelled()
         {
-            MainCharacter.OnMoveCancelled(moveCancelledEvent);
+            MainCharacter.OnMoveCancelled();
         }
 
-        public void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
+        public void OnPausePerformed()
         {
             Paused = true;
         }
 
-        public void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
+        public void OnResumeButtonClicked()
         {
             Paused = false;
         }
 
-        public void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
+        public void OnMainMenuButtonClicked()
         {
             Paused = false;
         }

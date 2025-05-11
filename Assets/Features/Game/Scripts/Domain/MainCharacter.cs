@@ -26,7 +26,7 @@ namespace Features.Game.Domain
             );
         }
 
-        public void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
+        public void OnMoveCancelled()
         {
             _velocity = new Vector3(0f, _velocity.y, 0f);
         }

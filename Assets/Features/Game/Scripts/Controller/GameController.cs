@@ -98,25 +98,25 @@ namespace Features.Game.Controller
 
         private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
-            _game.OnMoveCancelled(moveCancelledEvent);
+            _game.OnMoveCancelled();
             UpdateViewModel();
         }
 
         private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
         {
-            _game.OnPausePerformed(pausePerformedEvent);
+            _game.OnPausePerformed();
             UpdateViewModel();
         }
 
         private void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
         {
-            _game.OnResumeButtonClicked(resumeButtonClickedEvent);
+            _game.OnResumeButtonClicked();
             UpdateViewModel();
         }
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
-            _game.OnMainMenuButtonClicked(mainMenuButtonClickedEvent);
+            _game.OnMainMenuButtonClicked();
             UpdateViewModel();
             LoadMainMenu();
         }
