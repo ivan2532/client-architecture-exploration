@@ -1,27 +1,25 @@
 ﻿using System;
 using Core.Infrastructure;
-using Core.Infrastructure.ViewController;
 using Features.MainMenu.Events;
-using Features.MainMenu.Views;
-using JetBrains.Annotations;
+using UnityEngine.SceneManagement;
 
-namespace Features.MainMenu.Controllers
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
+namespace Features.MainMenu
 {
-    [UsedImplicitly]
-    public class MainMenuController : Controller<MainMenuView>, IDisposable
+    public class MainMenuService : IDisposable
     {
-        private readonly MainMenuView _view;
-
-        public MainMenuController(MainMenuView view) : base(view)
-        {
-            _view = view;
-            _view.ShowCursor();
-            SubscribeToEvents();
-        }
-
         public void Dispose()
         {
-            UnsubscribeToEvents();
+            UnsubscribeFromEvents();
+        }
+
+        public void LoadMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu");
+            SubscribeToEvents();
         }
 
         private void SubscribeToEvents()
@@ -30,7 +28,7 @@ namespace Features.MainMenu.Controllers
             EventBus.Subscribe<ExitButtonClickedEvent>(OnExitButtonClicked);
         }
 
-        private void UnsubscribeToEvents()
+        private void UnsubscribeFromEvents()
         {
             EventBus.Unsubscribe<PlayButtonClickedEvent>(OnPlayButtonClicked);
             EventBus.Unsubscribe<ExitButtonClickedEvent>(OnExitButtonClicked);
@@ -38,12 +36,27 @@ namespace Features.MainMenu.Controllers
 
         private void OnPlayButtonClicked(PlayButtonClickedEvent playButtonClickedEvent)
         {
-            _view.LoadGame();
+            LoadGame();
         }
 
         private void OnExitButtonClicked(ExitButtonClickedEvent exitButtonClickedEvent)
         {
-            _view.ExitGame();
+            ExitGame();
+        }
+
+        private void LoadGame()
+        {
+            UnsubscribeFromEvents();
+            SceneManager.LoadScene("Game");
+        }
+
+        private void ExitGame()
+        {
+#if UNITY_EDITOR
+            EditorApplication.ExitPlaymode();
+#else
+            Application.Quit();
+#endif
         }
     }
 }

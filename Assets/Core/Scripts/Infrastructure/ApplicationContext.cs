@@ -1,24 +1,37 @@
-using Core.Infrastructure.ViewController;
+using System;
+using Features.MainMenu;
 using UnityEngine;
 
 namespace Core.Infrastructure
 {
-    [DefaultExecutionOrder(-1)]
-    public class ApplicationContext : MonoBehaviour
+    public class ApplicationContext : MonoBehaviour, IDisposable
     {
-        [SerializeField] private ServiceRegistry serviceRegistry;
-
-        private ControllerService _controllerService;
+        private MainMenuService _mainMenuService;
 
         private void OnEnable()
         {
-            serviceRegistry.Initialize();
-            _controllerService = new ControllerService(serviceRegistry);
+            Initialize();
+            StartApplication();
         }
 
         private void OnDisable()
         {
-            _controllerService.Dispose();
+            Dispose();
+        }
+
+        public void Dispose()
+        {
+            _mainMenuService.Dispose();
+        }
+
+        private void Initialize()
+        {
+            _mainMenuService = new MainMenuService();
+        }
+
+        private void StartApplication()
+        {
+            _mainMenuService.LoadMainMenu();
         }
     }
 }

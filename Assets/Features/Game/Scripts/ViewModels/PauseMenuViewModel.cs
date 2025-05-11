@@ -1,4 +1,5 @@
-﻿using Core.Infrastructure.ViewController;
+﻿using Core.Infrastructure;
+using Core.Infrastructure.ViewController;
 
 namespace Features.Game.ViewModels
 {

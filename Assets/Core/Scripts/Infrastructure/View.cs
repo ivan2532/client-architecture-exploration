@@ -1,22 +1,22 @@
 ﻿using Core.Events;
 using UnityEngine;
 
-namespace Core.Infrastructure.ViewController
+namespace Core.Infrastructure
 {
-    public abstract class View : MonoBehaviour
+    public abstract class View<TView> : MonoBehaviour
     {
         protected virtual void OnEnable()
         {
-            EventBus.Raise(new ViewEnabledEvent(this));
+            EventBus.Raise(new ViewEnabledEvent<TView>(GetComponent<TView>()));
         }
 
         protected virtual void OnDisable()
         {
-            EventBus.Raise(new ViewDisabledEvent(this));
+            EventBus.Raise(new ViewDisabledEvent<TView>(GetComponent<TView>()));
         }
     }
 
-    public abstract class View<TViewModel> : View where TViewModel : IViewModel
+    public abstract class View<TView, TViewModel> : View<TView> where TViewModel : IViewModel
     {
         public TViewModel ViewModel
         {
