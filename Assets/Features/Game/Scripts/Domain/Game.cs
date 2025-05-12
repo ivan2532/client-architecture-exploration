@@ -6,8 +6,8 @@ namespace Features.Game.Domain
     {
         public readonly Drone Drone;
         public readonly MainCharacter MainCharacter;
-        public readonly Score Score;
 
+        public Score Score { get; private set; }
         public bool Paused { get; private set; }
 
         public Game(Drone drone, MainCharacter mainCharacter)
