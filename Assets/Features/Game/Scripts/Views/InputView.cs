@@ -2,6 +2,7 @@
 using Core.Infrastructure.ViewController;
 using Features.Game.Domain;
 using Features.Game.Events;
+using Features.Game.Models;
 using Features.Game.ViewModels;
 using UnityEngine;
 using UnityEngine.InputSystem;

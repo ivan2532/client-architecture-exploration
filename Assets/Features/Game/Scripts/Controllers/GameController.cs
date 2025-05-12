@@ -2,12 +2,10 @@
 using Core.Infrastructure;
 using Core.Infrastructure.ViewController;
 using Features.Game.Configuration;
-using Features.Game.Domain;
 using Features.Game.Events;
-using Features.Game.Mappers;
+using Features.Game.Models;
 using Features.Game.Views;
 using JetBrains.Annotations;
-using UnityEngine.SceneManagement;
 
 namespace Features.Game.Controllers
 {
@@ -15,12 +13,14 @@ namespace Features.Game.Controllers
     public class GameController : Controller<GameView>, IDisposable
     {
         private readonly GameView _view;
-        private readonly Domain.Game _game;
+        private readonly GameConfiguration _configuration;
+
+        private GameModel _model;
 
         public GameController(GameView view, GameConfiguration configuration) : base(view)
         {
             _view = view;
-            _game = CreateModel(configuration, view);
+            _configuration = configuration;
             SubscribeToEvents();
         }
 
@@ -29,30 +29,8 @@ namespace Features.Game.Controllers
             UnsubscribeFromEvents();
         }
 
-        private Domain.Game CreateModel(GameConfiguration configuration, GameView view)
-        {
-            var drone = new Drone(
-                configuration.Drone,
-                view.DroneOffsetFromMainCharacter,
-                view.DronePosition,
-                view.DronePitch,
-                view.DroneYaw
-            );
-
-            var mainCharacter = new MainCharacter(configuration.MainCharacter);
-
-            return new Domain.Game(drone, mainCharacter);
-        }
-
         private void SubscribeToEvents()
         {
-            EventBus.Subscribe<ShootPerformedEvent>(OnShootPerformed);
-            EventBus.Subscribe<LookPerformedEvent>(OnLookPerformed);
-            EventBus.Subscribe<DroneUpdateEvent>(OnDroneUpdate);
-
-            EventBus.Subscribe<MovePerformedEvent>(OnMovePerformed);
-            EventBus.Subscribe<MoveCancelledEvent>(OnMoveCancelled);
-
             EventBus.Subscribe<PausePerformedEvent>(OnPausePerformed);
             EventBus.Subscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
             EventBus.Subscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);
@@ -60,70 +38,35 @@ namespace Features.Game.Controllers
 
         private void UnsubscribeFromEvents()
         {
-            EventBus.Unsubscribe<ShootPerformedEvent>(OnShootPerformed);
-            EventBus.Unsubscribe<LookPerformedEvent>(OnLookPerformed);
-            EventBus.Unsubscribe<DroneUpdateEvent>(OnDroneUpdate);
-
-            EventBus.Unsubscribe<MovePerformedEvent>(OnMovePerformed);
-            EventBus.Unsubscribe<MoveCancelledEvent>(OnMoveCancelled);
-
             EventBus.Unsubscribe<PausePerformedEvent>(OnPausePerformed);
             EventBus.Unsubscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
             EventBus.Unsubscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);
         }
 
-        private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
+        public ShootResult OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
         {
-            var shootResult = _game.OnShootPerformed(shootPerformedEvent);
-            if (shootResult.ScoreChanged) UpdateViewModel();
-        }
-
-        private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
-        {
-            _game.OnLookPerformed(lookPerformedEvent);
-            UpdateViewModel();
-        }
-
-        private void OnDroneUpdate(DroneUpdateEvent updateEvent)
-        {
-            _game.OnDroneUpdate(updateEvent);
-            UpdateViewModel();
-        }
-
-        private void OnMovePerformed(MovePerformedEvent movePerformedEvent)
-        {
-            _game.OnMovePerformed(movePerformedEvent);
-            UpdateViewModel();
-        }
-
-        private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
-        {
-            _game.OnMoveCancelled();
-            UpdateViewModel();
+            // if (shootPerformedEvent.RaycastShootResult.DummyTargetHit)
+            // {
+            //     Score.Increment();
+            //     return new ShootResult(true);
+            // }
+            //
+            return new ShootResult(false);
         }
 
         private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
         {
-            _game.OnPausePerformed();
-            UpdateViewModel();
+            _model.Paused = true;
         }
 
         private void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
         {
-            _game.OnResumeButtonClicked();
-            UpdateViewModel();
+            _model.Paused = false;
         }
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
-            _game.OnMainMenuButtonClicked();
-            UpdateViewModel();
-            _view.LoadMainMenu();
-        }
-
-        private void UpdateViewModel()
-        {
-            _view.UpdateViewModel(GameToViewModelMapper.Map(_game));
+            _model.Paused = false;
         }
     }
 }
