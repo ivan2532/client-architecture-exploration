@@ -1,4 +1,5 @@
-﻿using Core.Infrastructure;
+﻿using System.Collections;
+using Core.Infrastructure;
 using Features.Game;
 using Features.MainMenu.Events;
 using UnityEngine.SceneManagement;
@@ -12,16 +13,17 @@ namespace Features.MainMenu
     public class MainMenuService
     {
         private GameService _gameService;
+        private CoroutineRunner _coroutineRunner;
 
-        public void Initialize(GameService gameService)
+        public void Initialize(GameService gameService, CoroutineRunner coroutineRunner)
         {
             _gameService = gameService;
+            _coroutineRunner = coroutineRunner;
         }
 
         public void Load()
         {
-            SceneManager.LoadScene("MainMenu");
-            SubscribeToEvents();
+            _coroutineRunner.StartCoroutine(LoadCoroutine());
         }
 
         public void Unload()
@@ -49,6 +51,12 @@ namespace Features.MainMenu
         private void OnExitButtonClicked(ExitButtonClickedEvent exitButtonClickedEvent)
         {
             ExitGame();
+        }
+
+        private IEnumerator LoadCoroutine()
+        {
+            SubscribeToEvents();
+            yield return SceneManager.LoadSceneAsync("MainMenu");
         }
 
         private void LoadGame()

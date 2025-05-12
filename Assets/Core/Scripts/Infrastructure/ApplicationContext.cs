@@ -8,6 +8,7 @@ namespace Core.Infrastructure
     public class ApplicationContext : MonoBehaviour
     {
         [SerializeField] private GameConfiguration gameConfiguration;
+        [SerializeField] private CoroutineRunner coroutineRunner;
 
         private MainMenuService _mainMenuService;
         private GameService _gameService;
@@ -28,8 +29,8 @@ namespace Core.Infrastructure
             _mainMenuService = new MainMenuService();
             _gameService = new GameService();
 
-            _mainMenuService.Initialize(_gameService);
-            _gameService.Initialize(gameConfiguration, _mainMenuService);
+            _mainMenuService.Initialize(_gameService, coroutineRunner);
+            _gameService.Initialize(gameConfiguration, _mainMenuService, coroutineRunner);
         }
 
         private void StartApplication()

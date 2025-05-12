@@ -1,4 +1,5 @@
-﻿using Core.Infrastructure;
+﻿using System.Collections;
+using Core.Infrastructure;
 using Features.Game.Configuration;
 using Features.Game.Domain;
 using Features.Game.Events;
@@ -20,19 +21,23 @@ namespace Features.Game
         private GameViewProvider _viewProvider;
         private MainMenuService _mainMenuService;
 
-        public void Initialize(GameConfiguration configuration, MainMenuService mainMenuService)
+        private CoroutineRunner _coroutineRunner;
+
+        public void Initialize(
+            GameConfiguration configuration,
+            MainMenuService mainMenuService,
+            CoroutineRunner coroutineRunner
+        )
         {
             _configuration = configuration;
             _viewProvider = new GameViewProvider();
             _mainMenuService = mainMenuService;
-
-            SubscribeToEvents();
+            _coroutineRunner = coroutineRunner;
         }
 
         public void Load()
         {
-            SceneManager.LoadScene("Game");
-            InitializeDomain();
+            _coroutineRunner.StartCoroutine(LoadCoroutine());
         }
 
         public void Unload()
@@ -132,6 +137,13 @@ namespace Features.Game
             UpdateGameViewModel();
             Unload();
             _mainMenuService.Load();
+        }
+
+        private IEnumerator LoadCoroutine()
+        {
+            SubscribeToEvents();
+            yield return SceneManager.LoadSceneAsync("Game");
+            InitializeDomain();
         }
 
         private void UpdateGameViewModel()
