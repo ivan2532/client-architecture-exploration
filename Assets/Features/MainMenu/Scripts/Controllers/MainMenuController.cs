@@ -4,18 +4,20 @@ using Core.Infrastructure.ViewController;
 using Features.MainMenu.Events;
 using Features.MainMenu.Views;
 using JetBrains.Annotations;
+using UnityEngine.SceneManagement;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Features.MainMenu.Controllers
 {
     [UsedImplicitly]
     public class MainMenuController : Controller<MainMenuView>, IDisposable
     {
-        private readonly MainMenuView _view;
-
         public MainMenuController(MainMenuView view) : base(view)
         {
-            _view = view;
-            _view.ShowCursor();
+            view.ShowCursor();
             SubscribeToEvents();
         }
 
@@ -38,12 +40,26 @@ namespace Features.MainMenu.Controllers
 
         private void OnPlayButtonClicked(PlayButtonClickedEvent playButtonClickedEvent)
         {
-            _view.LoadGame();
+            LoadGame();
         }
 
         private void OnExitButtonClicked(ExitButtonClickedEvent exitButtonClickedEvent)
         {
-            _view.ExitGame();
+            ExitGame();
+        }
+
+        private void LoadGame()
+        {
+            SceneManager.LoadScene("Game");
+        }
+
+        private void ExitGame()
+        {
+#if UNITY_EDITOR
+            EditorApplication.ExitPlaymode();
+#else
+            Application.Quit();
+#endif
         }
     }
 }

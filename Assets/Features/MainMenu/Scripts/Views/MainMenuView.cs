@@ -24,20 +24,6 @@ namespace Features.MainMenu.Views
             Cursor.lockState = CursorLockMode.None;
         }
 
-        public void LoadGame()
-        {
-            SceneManager.LoadScene("Game");
-        }
-
-        public void ExitGame()
-        {
-#if UNITY_EDITOR
-            EditorApplication.ExitPlaymode();
-#else
-            Application.Quit();
-#endif
-        }
-
         private void InitializeButtonListeners()
         {
             playButton.onClick.AddListener(OnPlayButtonClicked);

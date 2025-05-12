@@ -4,6 +4,7 @@ using Core.Infrastructure.ViewController;
 using Features.Game.Events;
 using Features.Game.Views;
 using JetBrains.Annotations;
+using UnityEngine.SceneManagement;
 
 namespace Features.Game.Controllers
 {
@@ -71,6 +72,7 @@ namespace Features.Game.Controllers
         {
             _model.OnMainMenuButtonClicked();
             UpdateGameViewModel();
+            LoadMainMenu();
         }
 
         private void UpdateGameViewModel()
@@ -91,6 +93,11 @@ namespace Features.Game.Controllers
         private void UpdateInputViewModel()
         {
             _view.Input.UpdateViewModel(_model.CreateInputViewModel());
+        }
+
+        private void LoadMainMenu()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
     }
 }
