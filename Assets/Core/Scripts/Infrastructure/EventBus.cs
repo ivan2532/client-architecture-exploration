@@ -36,7 +36,8 @@ namespace Core.Infrastructure
 
             if (Subscribers.TryGetValue(type, out var callbacks))
             {
-                foreach (var callback in callbacks)
+                var callbacksSnapshot = new List<Delegate>(callbacks);
+                foreach (var callback in callbacksSnapshot)
                 {
                     ((Action<TEvent>)callback)?.Invoke(raisedEvent);
                 }
