@@ -1,4 +1,3 @@
-using System;
 using Core.Infrastructure;
 using Features.Game.Events;
 using Features.Game.ViewModels;
@@ -13,13 +12,14 @@ namespace Features.Game.Views
         [SerializeField] private Button resumeButton;
         [SerializeField] private Button mainMenuButton;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             resumeButton.onClick.AddListener(OnResumeButtonClicked);
             mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         }
 
-        protected override PauseMenuViewModel CreateInitialViewModel()
+        protected override PauseMenuViewModel Initialize()
         {
             return new PauseMenuViewModel(false);
         }

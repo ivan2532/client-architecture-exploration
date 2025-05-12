@@ -14,7 +14,7 @@ namespace Features.Game.Views
         private float _pitch;
         private float _yaw;
 
-        protected override GameViewModel CreateInitialViewModel()
+        protected override GameViewModel Initialize()
         {
             return new GameViewModel(false, true, 1f);
         }

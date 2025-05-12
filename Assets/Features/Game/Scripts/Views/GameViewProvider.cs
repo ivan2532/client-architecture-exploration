@@ -6,21 +6,30 @@ namespace Features.Game.Views
 {
     public class GameViewProvider : IDisposable
     {
-        public GameView GameView => _gameView ?? throw new ViewNotInitializedException<GameView>();
-        public DroneView DroneView => _droneView ?? throw new ViewNotInitializedException<DroneView>();
+        public GameView GameView =>
+            _gameView ? _gameView : throw new ViewNotCreatedException<GameView>();
+
+        public DroneView DroneView =>
+            _droneView ? _droneView : throw new ViewNotCreatedException<DroneView>();
 
         public MainCharacterView MainCharacterView =>
-            _mainCharacterView ?? throw new ViewNotInitializedException<MainCharacterView>();
+            _mainCharacterView ? _mainCharacterView : throw new ViewNotCreatedException<MainCharacterView>();
 
-        public HudView HudView => _hudView ?? throw new ViewNotInitializedException<HudView>();
+        public HudView HudView =>
+            _hudView ? _hudView : throw new ViewNotCreatedException<HudView>();
 
-        public PauseMenuView PauseMenuView => _pauseMenuView ?? throw new ViewNotInitializedException<PauseMenuView>();
+        public PauseMenuView PauseMenuView =>
+            _pauseMenuView ? _pauseMenuView : throw new ViewNotCreatedException<PauseMenuView>();
+
+        public InputView InputView =>
+            _inputView ? _inputView : throw new ViewNotCreatedException<InputView>();
 
         private GameView _gameView;
         private DroneView _droneView;
         private MainCharacterView _mainCharacterView;
         private HudView _hudView;
         private PauseMenuView _pauseMenuView;
+        private InputView _inputView;
 
         public GameViewProvider()
         {
@@ -34,88 +43,52 @@ namespace Features.Game.Views
 
         private void SubscribeToEvents()
         {
-            EventBus.Subscribe<ViewEnabledEvent<GameView>>(OnGameViewEnabled);
-            EventBus.Subscribe<ViewDisabledEvent<GameView>>(OnGameViewDisabled);
-
-            EventBus.Subscribe<ViewEnabledEvent<DroneView>>(OnDroneViewEnabled);
-            EventBus.Subscribe<ViewDisabledEvent<DroneView>>(OnDroneViewDisabled);
-
-            EventBus.Subscribe<ViewEnabledEvent<MainCharacterView>>(OnMainCharacterViewEnabled);
-            EventBus.Subscribe<ViewDisabledEvent<MainCharacterView>>(OnMainCharacterViewDisabled);
-
-            EventBus.Subscribe<ViewEnabledEvent<HudView>>(OnHudViewEnabled);
-            EventBus.Subscribe<ViewDisabledEvent<HudView>>(OnHudViewDisabled);
-
-            EventBus.Subscribe<ViewEnabledEvent<PauseMenuView>>(OnPauseMenuViewEnabled);
-            EventBus.Subscribe<ViewDisabledEvent<PauseMenuView>>(OnPauseMenuViewDisabled);
+            EventBus.Subscribe<ViewCreatedEvent<GameView>>(OnGameViewCreated);
+            EventBus.Subscribe<ViewCreatedEvent<DroneView>>(OnDroneViewCreated);
+            EventBus.Subscribe<ViewCreatedEvent<MainCharacterView>>(OnMainCharacterViewCreated);
+            EventBus.Subscribe<ViewCreatedEvent<HudView>>(OnHudViewCreated);
+            EventBus.Subscribe<ViewCreatedEvent<PauseMenuView>>(OnPauseMenuViewCreated);
+            EventBus.Subscribe<ViewCreatedEvent<InputView>>(OnInputViewCreated);
         }
 
         private void UnsubscribeFromEvents()
         {
-            EventBus.Unsubscribe<ViewEnabledEvent<GameView>>(OnGameViewEnabled);
-            EventBus.Unsubscribe<ViewDisabledEvent<GameView>>(OnGameViewDisabled);
-
-            EventBus.Unsubscribe<ViewEnabledEvent<DroneView>>(OnDroneViewEnabled);
-            EventBus.Unsubscribe<ViewDisabledEvent<DroneView>>(OnDroneViewDisabled);
-
-            EventBus.Unsubscribe<ViewEnabledEvent<MainCharacterView>>(OnMainCharacterViewEnabled);
-            EventBus.Unsubscribe<ViewDisabledEvent<MainCharacterView>>(OnMainCharacterViewDisabled);
-
-            EventBus.Unsubscribe<ViewEnabledEvent<HudView>>(OnHudViewEnabled);
-            EventBus.Unsubscribe<ViewDisabledEvent<HudView>>(OnHudViewDisabled);
-
-            EventBus.Unsubscribe<ViewEnabledEvent<PauseMenuView>>(OnPauseMenuViewEnabled);
-            EventBus.Unsubscribe<ViewDisabledEvent<PauseMenuView>>(OnPauseMenuViewDisabled);
+            EventBus.Unsubscribe<ViewCreatedEvent<GameView>>(OnGameViewCreated);
+            EventBus.Unsubscribe<ViewCreatedEvent<DroneView>>(OnDroneViewCreated);
+            EventBus.Unsubscribe<ViewCreatedEvent<MainCharacterView>>(OnMainCharacterViewCreated);
+            EventBus.Unsubscribe<ViewCreatedEvent<HudView>>(OnHudViewCreated);
+            EventBus.Unsubscribe<ViewCreatedEvent<PauseMenuView>>(OnPauseMenuViewCreated);
+            EventBus.Unsubscribe<ViewCreatedEvent<InputView>>(OnInputViewCreated);
         }
 
-        private void OnGameViewEnabled(ViewEnabledEvent<GameView> gameViewEnabledEvent)
+        private void OnGameViewCreated(ViewCreatedEvent<GameView> gameViewCreatedEvent)
         {
-            _gameView = gameViewEnabledEvent.View;
+            _gameView = gameViewCreatedEvent.View;
         }
 
-        private void OnGameViewDisabled(ViewDisabledEvent<GameView> gameViewDisabledEvent)
+        private void OnDroneViewCreated(ViewCreatedEvent<DroneView> droneViewCreatedEvent)
         {
-            _gameView = null;
+            _droneView = droneViewCreatedEvent.View;
         }
 
-        private void OnDroneViewEnabled(ViewEnabledEvent<DroneView> droneViewEnabledEvent)
+        private void OnMainCharacterViewCreated(ViewCreatedEvent<MainCharacterView> mainCharacterViewCreatedEvent)
         {
-            _droneView = droneViewEnabledEvent.View;
+            _mainCharacterView = mainCharacterViewCreatedEvent.View;
         }
 
-        private void OnDroneViewDisabled(ViewDisabledEvent<DroneView> droneViewDisabledEvent)
+        private void OnHudViewCreated(ViewCreatedEvent<HudView> hudViewCreatedEvent)
         {
-            _droneView = null;
+            _hudView = hudViewCreatedEvent.View;
         }
 
-        private void OnMainCharacterViewEnabled(ViewEnabledEvent<MainCharacterView> obj)
+        private void OnPauseMenuViewCreated(ViewCreatedEvent<PauseMenuView> pauseMenuViewCreatedEvent)
         {
-            _mainCharacterView = obj.View;
+            _pauseMenuView = pauseMenuViewCreatedEvent.View;
         }
 
-        private void OnMainCharacterViewDisabled(ViewDisabledEvent<MainCharacterView> obj)
+        private void OnInputViewCreated(ViewCreatedEvent<InputView> inputViewCreatedEvent)
         {
-            _mainCharacterView = null;
-        }
-
-        private void OnHudViewEnabled(ViewEnabledEvent<HudView> hudViewEnabledEvent)
-        {
-            _hudView = hudViewEnabledEvent.View;
-        }
-
-        private void OnHudViewDisabled(ViewDisabledEvent<HudView> hudViewDisabledEvent)
-        {
-            _hudView = null;
-        }
-
-        private void OnPauseMenuViewEnabled(ViewEnabledEvent<PauseMenuView> pauseMenuViewEnabledEvent)
-        {
-            _pauseMenuView = pauseMenuViewEnabledEvent.View;
-        }
-
-        private void OnPauseMenuViewDisabled(ViewDisabledEvent<PauseMenuView> pauseMenuViewDisabledEvent)
-        {
-            _pauseMenuView = null;
+            _inputView = inputViewCreatedEvent.View;
         }
     }
 }

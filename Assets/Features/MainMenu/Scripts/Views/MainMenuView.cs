@@ -10,8 +10,9 @@ namespace Features.MainMenu.Views
         [SerializeField] public Button playButton;
         [SerializeField] public Button exitButton;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             InitializeButtonListeners();
         }
 

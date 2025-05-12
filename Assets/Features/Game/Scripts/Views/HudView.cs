@@ -11,7 +11,7 @@ namespace Features.Game.Views
 
         private const string ScoreTextFormat = "Score: {0}";
 
-        protected override HudViewModel CreateInitialViewModel()
+        protected override HudViewModel Initialize()
         {
             return new HudViewModel(0);
         }

@@ -120,6 +120,7 @@ namespace Features.Game
         private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
         {
             _game.OnPausePerformed();
+            UpdateInputViewModel();
             UpdateGameViewModel();
             UpdatePauseMenuViewModel();
         }
@@ -129,12 +130,14 @@ namespace Features.Game
             _game.OnResumeButtonClicked();
             UpdatePauseMenuViewModel();
             UpdateGameViewModel();
+            UpdateInputViewModel();
         }
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
             _game.OnMainMenuButtonClicked();
             UpdateGameViewModel();
+
             Unload();
             _mainMenuService.Load();
         }
@@ -169,6 +172,11 @@ namespace Features.Game
         private void UpdatePauseMenuViewModel()
         {
             _viewProvider.PauseMenuView.UpdateViewModel(new PauseMenuViewModel(_game.Paused));
+        }
+
+        private void UpdateInputViewModel()
+        {
+            _viewProvider.InputView.UpdateViewModel(new InputViewModel(!_game.Paused));
         }
     }
 }

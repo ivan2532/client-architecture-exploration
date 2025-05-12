@@ -11,20 +11,21 @@ namespace Features.Game.Views
     {
         private GameInputActions _inputActions;
 
-        private void Awake()
+        private void OnEnable()
         {
-            _inputActions = new GameInputActions();
-        }
-
-        protected override void OnEnable()
-        {
-            base.OnEnable();
             SubscribeToInputEvents();
             _inputActions.Enable();
         }
 
-        protected override InputViewModel CreateInitialViewModel()
+        private void OnDisable()
         {
+            UnsubscribeFromInputEvents();
+            _inputActions.Disable();
+        }
+
+        protected override InputViewModel Initialize()
+        {
+            _inputActions = new GameInputActions();
             return new InputViewModel(true);
         }
 
@@ -32,13 +33,6 @@ namespace Features.Game.Views
         {
             base.OnViewModelUpdated();
             UpdateInputEnabled();
-        }
-
-        protected override void OnDisable()
-        {
-            base.OnDisable();
-            UnsubscribeFromInputEvents();
-            _inputActions.Disable();
         }
 
         private void SubscribeToInputEvents()

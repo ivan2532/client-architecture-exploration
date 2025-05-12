@@ -10099,6 +10099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1743478282}
   - component: {fileID: 1743478283}
+  - component: {fileID: 1743478284}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -10137,6 +10138,18 @@ MonoBehaviour:
   mainCharacter: {fileID: 1848580629}
   hud: {fileID: 2009157482}
   pauseMenu: {fileID: 1138564879231618091}
+--- !u!114 &1743478284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743478280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1da346e250b040be98695b5afeac4b25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1848580627 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7609154005711820468, guid: 6b0fcac65c4e27e4eb7cef1dc380ec53, type: 3}
