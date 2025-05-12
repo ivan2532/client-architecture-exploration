@@ -2,13 +2,5 @@
 
 namespace Features.Game.ViewModels
 {
-    public record GameViewModel(
-        DroneViewModel Drone,
-        MainCharacterViewModel MainCharacter,
-        HudViewModel Hud,
-        PauseMenuViewModel PauseMenu,
-        bool ShowCursor,
-        bool InputEnabled,
-        float TimeScale
-    ) : IViewModel;
+    public record GameViewModel(bool ShowCursor, bool InputEnabled, float TimeScale) : IViewModel;
 }

@@ -31,6 +31,7 @@ namespace Features.Game.Controllers
 
         private void SubscribeToEvents()
         {
+            EventBus.Subscribe<ShootPerformedEvent>(OnShootPerformed);
             EventBus.Subscribe<PausePerformedEvent>(OnPausePerformed);
             EventBus.Subscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
             EventBus.Subscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);
@@ -38,35 +39,63 @@ namespace Features.Game.Controllers
 
         private void UnsubscribeFromEvents()
         {
+            EventBus.Unsubscribe<ShootPerformedEvent>(OnShootPerformed);
             EventBus.Unsubscribe<PausePerformedEvent>(OnPausePerformed);
             EventBus.Unsubscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
             EventBus.Unsubscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);
         }
 
-        public ShootResult OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
+        private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
         {
-            // if (shootPerformedEvent.RaycastShootResult.DummyTargetHit)
-            // {
-            //     Score.Increment();
-            //     return new ShootResult(true);
-            // }
-            //
-            return new ShootResult(false);
+            var raycastShootResult = _view.Drone.ShootRaycast();
+
+            if (raycastShootResult.DummyTargetHit)
+            {
+                _model.Score.Increment();
+                UpdateHudViewModel();
+            }
         }
 
         private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
         {
             _model.Paused = true;
+            UpdateInputViewModel();
+            UpdateGameViewModel();
+            UpdatePauseMenuViewModel();
         }
 
         private void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
         {
             _model.Paused = false;
+            UpdatePauseMenuViewModel();
+            UpdateGameViewModel();
+            UpdateInputViewModel();
         }
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
             _model.Paused = false;
+            UpdateGameViewModel();
+        }
+
+        private void UpdateGameViewModel()
+        {
+            _view.UpdateViewModel(_model.CreateViewModel());
+        }
+
+        private void UpdateHudViewModel()
+        {
+            _view.Hud.UpdateViewModel(_model.CreateHudViewModel());
+        }
+
+        private void UpdatePauseMenuViewModel()
+        {
+            _view.PauseMenu.UpdateViewModel(_model.CreatePauseMenuViewModel());
+        }
+
+        private void UpdateInputViewModel()
+        {
+            _view.Input.UpdateViewModel(_model.CreateInputViewModel());
         }
     }
 }

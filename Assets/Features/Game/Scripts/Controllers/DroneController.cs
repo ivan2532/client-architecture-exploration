@@ -13,6 +13,7 @@ namespace Features.Game.Controllers
     [UsedImplicitly]
     public class DroneController : Controller<DroneView>, IDisposable
     {
+        private readonly DroneView _view;
         private readonly DroneConfiguration _configuration;
         private readonly Vector3 _offsetFromMainCharacter;
 
@@ -22,6 +23,7 @@ namespace Features.Game.Controllers
 
         public DroneController(DroneView view, DroneConfiguration configuration) : base(view)
         {
+            _view = view;
             _configuration = configuration;
             _offsetFromMainCharacter = view.OffsetFromMainCharacter;
 
@@ -47,6 +49,7 @@ namespace Features.Game.Controllers
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
+            // TODO: Move logic to model
             _model.Pitch = Math.Clamp(
                 _model.Pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
                 _configuration.MinimumPitch,
@@ -56,6 +59,8 @@ namespace Features.Game.Controllers
                 _model.Yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
                 _configuration.MinimumYaw,
                 _configuration.MaximumYaw);
+
+            UpdateViewModel();
         }
 
         private void OnUpdate(DroneUpdateEvent updateEvent)
@@ -66,6 +71,13 @@ namespace Features.Game.Controllers
                 ref _velocity,
                 _configuration.FollowSmoothTime
             );
+
+            UpdateViewModel();
+        }
+
+        private void UpdateViewModel()
+        {
+            _view.UpdateViewModel(_model.CreateViewModel());
         }
     }
 }

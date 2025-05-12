@@ -1,54 +1,29 @@
 ﻿using Core.Infrastructure.ViewController;
 using Features.Game.ViewModels;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Features.Game.Views
 {
     public class GameView : View<GameViewModel>
     {
-        [SerializeField] private DroneView drone;
-        [SerializeField] private MainCharacterView mainCharacter;
-        [SerializeField] private HudView hud;
-        [SerializeField] private PauseMenuView pauseMenu;
-
-        public Vector3 DroneOffsetFromMainCharacter => drone.OffsetFromMainCharacter;
-        public Vector3 DronePosition => drone.Position;
-        public float DronePitch => drone.Pitch;
-        public float DroneYaw => drone.Yaw;
+        [field: SerializeField] public HudView Hud { get; private set; }
+        [field: SerializeField] public PauseMenuView PauseMenu { get; private set; }
+        [field: SerializeField] public InputView Input { get; private set; }
+        [field: SerializeField] public DroneView Drone { get; private set; }
 
         private float _pitch;
         private float _yaw;
 
         protected override GameViewModel Initialize()
         {
-            return new GameViewModel(
-                drone.ViewModel,
-                mainCharacter.ViewModel,
-                hud.ViewModel,
-                pauseMenu.ViewModel,
-                false,
-                true,
-                1f
-            );
+            return new GameViewModel(false, true, 1f);
         }
 
         protected override void OnViewModelUpdated()
         {
             base.OnViewModelUpdated();
-
-            drone.UpdateViewModel(ViewModel.Drone);
-            mainCharacter.UpdateViewModel(ViewModel.MainCharacter);
-            hud.UpdateViewModel(ViewModel.Hud);
-            pauseMenu.UpdateViewModel(ViewModel.PauseMenu);
-
             UpdateCursorVisibility();
             UpdateTimeScale();
-        }
-
-        public void LoadMainMenu()
-        {
-            SceneManager.LoadScene("MainMenu");
         }
 
         private void UpdateCursorVisibility()

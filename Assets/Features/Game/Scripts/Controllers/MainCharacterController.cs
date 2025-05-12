@@ -13,6 +13,7 @@ namespace Features.Game.Controllers
     [UsedImplicitly]
     public class MainCharacterController : Controller<MainCharacterView>, IDisposable
     {
+        private readonly MainCharacterView _view;
         private readonly MainCharacterConfiguration _configuration;
 
         private MainCharacterModel _model;
@@ -22,6 +23,7 @@ namespace Features.Game.Controllers
             MainCharacterConfiguration configuration
         ) : base(view)
         {
+            _view = view;
             _configuration = configuration;
 
             SubscribeToEvents();
@@ -51,11 +53,19 @@ namespace Features.Game.Controllers
                 _model.Velocity.y,
                 movePerformedEvent.NormalizedInput.Y * _configuration.MovementSpeed
             );
+
+            UpdateViewModel();
         }
 
         private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
             _model.Velocity = new Vector3(0f, _model.Velocity.y, 0f);
+            UpdateViewModel();
+        }
+
+        private void UpdateViewModel()
+        {
+            _view.UpdateViewModel(_model.CreateViewModel());
         }
     }
 }

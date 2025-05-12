@@ -10099,6 +10099,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1743478282}
   - component: {fileID: 1743478283}
+  - component: {fileID: 1743478284}
   m_Layer: 0
   m_Name: Game
   m_TagString: Untagged
@@ -10133,26 +10134,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b941aea937da4d27ba6f5f7174f56025, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  drone: {fileID: 166570740}
-  mainCharacter: {fileID: 1848580629}
-  hud: {fileID: 2009157482}
-  pauseMenu: {fileID: 1138564879231618091}
+  <Hud>k__BackingField: {fileID: 2009157482}
+  <PauseMenu>k__BackingField: {fileID: 1138564879231618091}
+  <Input>k__BackingField: {fileID: 1743478284}
+  <Drone>k__BackingField: {fileID: 166570740}
+--- !u!114 &1743478284
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1743478280}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d98875d1a15406a99ffc83a8f0f7041, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1848580627 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7609154005711820468, guid: 6b0fcac65c4e27e4eb7cef1dc380ec53, type: 3}
   m_PrefabInstance: {fileID: 5627992860940671079}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1848580629 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6651181296137951740, guid: 6b0fcac65c4e27e4eb7cef1dc380ec53, type: 3}
-  m_PrefabInstance: {fileID: 5627992860940671079}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 960c21af92a2b974eb1c8e548530dc09, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2009157482 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4912441626732967731, guid: bf9b49d0bd45d194a91ae88a517ae644, type: 3}
