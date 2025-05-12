@@ -8,14 +8,14 @@ namespace Features.Game.Views
     {
         [SerializeField] private new Rigidbody rigidbody;
 
-        private void FixedUpdate()
-        {
-            UpdateVelocity();
-        }
-
         protected override MainCharacterViewModel Initialize()
         {
             return new MainCharacterViewModel(Vector3.zero);
+        }
+
+        private void FixedUpdate()
+        {
+            UpdateVelocity();
         }
 
         private void UpdateVelocity()

@@ -17,14 +17,14 @@ namespace Features.Game.Views
         public float Pitch => transform.rotation.eulerAngles.y;
         public float Yaw => transform.rotation.eulerAngles.x;
 
-        private void LateUpdate()
-        {
-            EventBus.Raise(new DroneUpdateEvent(transform.position, mainCharacter.position));
-        }
-
         protected override DroneViewModel Initialize()
         {
             return new DroneViewModel(Position, Pitch, Yaw);
+        }
+
+        private void LateUpdate()
+        {
+            EventBus.Raise(new DroneUpdateEvent(transform.position, mainCharacter.position));
         }
 
         protected override void OnViewModelUpdated()
