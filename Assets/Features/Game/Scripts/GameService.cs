@@ -122,8 +122,8 @@ namespace Features.Game
         private void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
         {
             _game.OnResumeButtonClicked();
-            UpdateGameViewModel();
             UpdatePauseMenuViewModel();
+            UpdateGameViewModel();
         }
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
