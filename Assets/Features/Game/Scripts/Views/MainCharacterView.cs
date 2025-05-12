@@ -13,7 +13,7 @@ namespace Features.Game.Views
             UpdateVelocity();
         }
 
-        protected override MainCharacterViewModel CreateInitialViewModel()
+        protected override MainCharacterViewModel Initialize()
         {
             return new MainCharacterViewModel(Vector3.zero);
         }

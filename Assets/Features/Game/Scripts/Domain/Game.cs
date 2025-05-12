@@ -19,12 +19,12 @@ namespace Features.Game.Domain
 
         public ShootResult OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
         {
-            if (shootPerformedEvent.RaycastShootResult.DummyTargetHit)
-            {
-                Score.Increment();
-                return new ShootResult(true);
-            }
-
+            // if (shootPerformedEvent.RaycastShootResult.DummyTargetHit)
+            // {
+            //     Score.Increment();
+            //     return new ShootResult(true);
+            // }
+            //
             return new ShootResult(false);
         }
 

@@ -22,7 +22,7 @@ namespace Features.Game.Views
             EventBus.Raise(new DroneUpdateEvent(transform.position, mainCharacter.position));
         }
 
-        protected override DroneViewModel CreateInitialViewModel()
+        protected override DroneViewModel Initialize()
         {
             return new DroneViewModel(Position, Pitch, Yaw);
         }

@@ -10,7 +10,7 @@ namespace Features.Game.Views
     {
         [SerializeField] private Canvas pauseMenuCanvas;
 
-        protected override PauseMenuViewModel CreateInitialViewModel()
+        protected override PauseMenuViewModel Initialize()
         {
             return new PauseMenuViewModel(false);
         }

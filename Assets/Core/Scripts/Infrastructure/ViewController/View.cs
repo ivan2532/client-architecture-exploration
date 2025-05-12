@@ -22,20 +22,20 @@ namespace Core.Infrastructure.ViewController
         {
             get
             {
-                InitializeViewModelIfNeeded();
+                InitializeIfNeeded();
                 return _viewModel;
             }
 
             private set => _viewModel = value;
         }
 
-        private bool _viewModelInitialized;
+        private bool _initialized;
         private TViewModel _viewModel;
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            InitializeViewModelIfNeeded();
+            InitializeIfNeeded();
         }
 
         public void UpdateViewModel(TViewModel viewModel)
@@ -44,18 +44,18 @@ namespace Core.Infrastructure.ViewController
             OnViewModelUpdated();
         }
 
-        protected abstract TViewModel CreateInitialViewModel();
+        protected abstract TViewModel Initialize();
 
         protected virtual void OnViewModelUpdated()
         {
-            _viewModelInitialized = true;
+            _initialized = true;
         }
 
-        private void InitializeViewModelIfNeeded()
+        private void InitializeIfNeeded()
         {
-            if (!_viewModelInitialized)
+            if (!_initialized)
             {
-                var initialViewModel = CreateInitialViewModel();
+                var initialViewModel = Initialize();
                 UpdateViewModel(initialViewModel);
             }
         }
