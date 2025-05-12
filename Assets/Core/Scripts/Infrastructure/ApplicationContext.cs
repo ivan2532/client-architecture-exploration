@@ -25,8 +25,11 @@ namespace Core.Infrastructure
 
         private void Initialize()
         {
-            _mainMenuService = new MainMenuService(_gameService);
-            _gameService = new GameService(gameConfiguration, _mainMenuService);
+            _mainMenuService = new MainMenuService();
+            _gameService = new GameService();
+
+            _mainMenuService.Initialize(_gameService);
+            _gameService.Initialize(gameConfiguration, _mainMenuService);
         }
 
         private void StartApplication()

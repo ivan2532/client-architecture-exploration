@@ -388,8 +388,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b04885bdee8cf0f42942e57a91c6faa5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  gameState: {fileID: 0}
   pauseMenuCanvas: {fileID: 7443357525793431203}
+  resumeButton: {fileID: 2483111516221080246}
+  mainMenuButton: {fileID: 2727430890471454873}
 --- !u!1 &6161073249913015587
 GameObject:
   m_ObjectHideFlags: 0

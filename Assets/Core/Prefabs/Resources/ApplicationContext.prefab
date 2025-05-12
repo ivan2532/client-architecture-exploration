@@ -44,6 +44,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e33a6cea6c60aee4e809af1ecd6fa811, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  serviceRegistry:
-    scriptableObjectServices:
-    - {fileID: 11400000, guid: 1ae6e0a75285a34428cd9e42fcfc1eda, type: 2}
+  gameConfiguration: {fileID: 11400000, guid: 1ae6e0a75285a34428cd9e42fcfc1eda, type: 2}

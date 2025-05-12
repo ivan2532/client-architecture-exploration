@@ -16,11 +16,11 @@ namespace Features.Game
         private MainCharacter _mainCharacter;
         private Domain.Game _game;
 
-        private readonly GameConfiguration _configuration;
-        private readonly GameViewProvider _viewProvider;
-        private readonly MainMenuService _mainMenuService;
+        private GameConfiguration _configuration;
+        private GameViewProvider _viewProvider;
+        private MainMenuService _mainMenuService;
 
-        public GameService(GameConfiguration configuration, MainMenuService mainMenuService)
+        public void Initialize(GameConfiguration configuration, MainMenuService mainMenuService)
         {
             _configuration = configuration;
             _viewProvider = new GameViewProvider();
@@ -32,7 +32,7 @@ namespace Features.Game
         public void Load()
         {
             SceneManager.LoadScene("Game");
-            Initialize();
+            InitializeDomain();
         }
 
         public void Unload()
@@ -40,7 +40,7 @@ namespace Features.Game
             UnsubscribeFromEvents();
         }
 
-        private void Initialize()
+        private void InitializeDomain()
         {
             _drone = new Drone(
                 _configuration.Drone,

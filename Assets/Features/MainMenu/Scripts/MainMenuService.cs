@@ -11,9 +11,9 @@ namespace Features.MainMenu
 {
     public class MainMenuService
     {
-        private readonly GameService _gameService;
+        private GameService _gameService;
 
-        public MainMenuService(GameService gameService)
+        public void Initialize(GameService gameService)
         {
             _gameService = gameService;
         }
