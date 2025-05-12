@@ -18,7 +18,7 @@ namespace Features.Game.Controllers
         public DroneController(DroneView view, DroneConfiguration configuration) : base(view)
         {
             _view = view;
-            _model = new Drone(configuration, view.OffsetFromMainCharacter);
+            _model = new Drone(configuration, view.Pitch, view.Yaw, view.OffsetFromMainCharacter);
 
             SubscribeToEvents();
         }
