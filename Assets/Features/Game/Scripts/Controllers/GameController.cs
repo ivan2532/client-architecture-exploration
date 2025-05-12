@@ -71,6 +71,7 @@ namespace Features.Game.Controllers
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
             _model.OnMainMenuButtonClicked();
+            
             UpdateGameViewModel();
             LoadMainMenu();
         }
