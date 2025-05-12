@@ -6,7 +6,6 @@ using Features.Game.Events;
 using Features.Game.Models;
 using Features.Game.Views;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace Features.Game.Controllers
 {
@@ -14,9 +13,7 @@ namespace Features.Game.Controllers
     public class MainCharacterController : Controller<MainCharacterView>, IDisposable
     {
         private readonly MainCharacterView _view;
-        private readonly MainCharacterConfiguration _configuration;
-
-        private MainCharacterModel _model;
+        private readonly MainCharacter _model;
 
         public MainCharacterController(
             MainCharacterView view,
@@ -24,7 +21,7 @@ namespace Features.Game.Controllers
         ) : base(view)
         {
             _view = view;
-            _configuration = configuration;
+            _model = new MainCharacter(configuration);
 
             SubscribeToEvents();
         }
@@ -48,18 +45,13 @@ namespace Features.Game.Controllers
 
         private void OnMovePerformed(MovePerformedEvent movePerformedEvent)
         {
-            _model.Velocity = new Vector3(
-                movePerformedEvent.NormalizedInput.X * _configuration.MovementSpeed,
-                _model.Velocity.y,
-                movePerformedEvent.NormalizedInput.Y * _configuration.MovementSpeed
-            );
-
+            _model.OnMovePerformed(movePerformedEvent);
             UpdateViewModel();
         }
 
         private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
-            _model.Velocity = new Vector3(0f, _model.Velocity.y, 0f);
+            _model.OnMoveCancelled(moveCancelledEvent);
             UpdateViewModel();
         }
 

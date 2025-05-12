@@ -1,9 +1,7 @@
 ﻿using System;
 using Core.Infrastructure;
 using Core.Infrastructure.ViewController;
-using Features.Game.Configuration;
 using Features.Game.Events;
-using Features.Game.Models;
 using Features.Game.Views;
 using JetBrains.Annotations;
 
@@ -13,14 +11,13 @@ namespace Features.Game.Controllers
     public class GameController : Controller<GameView>, IDisposable
     {
         private readonly GameView _view;
-        private readonly GameConfiguration _configuration;
+        private readonly Models.Game _model;
 
-        private GameModel _model;
-
-        public GameController(GameView view, GameConfiguration configuration) : base(view)
+        public GameController(GameView view) : base(view)
         {
             _view = view;
-            _configuration = configuration;
+            _model = new Models.Game();
+
             SubscribeToEvents();
         }
 
@@ -48,17 +45,14 @@ namespace Features.Game.Controllers
         private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
         {
             var raycastShootResult = _view.Drone.ShootRaycast();
-
-            if (raycastShootResult.DummyTargetHit)
-            {
-                _model.Score.Increment();
-                UpdateHudViewModel();
-            }
+            var shootResult = _model.Shoot(raycastShootResult);
+            if (shootResult.ScoreChanged) UpdateHudViewModel();
         }
 
         private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
         {
-            _model.Paused = true;
+            _model.OnPausePerformed();
+
             UpdateInputViewModel();
             UpdateGameViewModel();
             UpdatePauseMenuViewModel();
@@ -66,7 +60,8 @@ namespace Features.Game.Controllers
 
         private void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
         {
-            _model.Paused = false;
+            _model.OnResumeButtonClicked();
+
             UpdatePauseMenuViewModel();
             UpdateGameViewModel();
             UpdateInputViewModel();
@@ -74,7 +69,7 @@ namespace Features.Game.Controllers
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
-            _model.Paused = false;
+            _model.OnMainMenuButtonClicked();
             UpdateGameViewModel();
         }
 

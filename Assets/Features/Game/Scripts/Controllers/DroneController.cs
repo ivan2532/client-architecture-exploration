@@ -6,7 +6,6 @@ using Features.Game.Events;
 using Features.Game.Models;
 using Features.Game.Views;
 using JetBrains.Annotations;
-using UnityEngine;
 
 namespace Features.Game.Controllers
 {
@@ -14,18 +13,12 @@ namespace Features.Game.Controllers
     public class DroneController : Controller<DroneView>, IDisposable
     {
         private readonly DroneView _view;
-        private readonly DroneConfiguration _configuration;
-        private readonly Vector3 _offsetFromMainCharacter;
-
-        private DroneModel _model;
-
-        private Vector3 _velocity;
+        private readonly Drone _model;
 
         public DroneController(DroneView view, DroneConfiguration configuration) : base(view)
         {
             _view = view;
-            _configuration = configuration;
-            _offsetFromMainCharacter = view.OffsetFromMainCharacter;
+            _model = new Drone(configuration, view.OffsetFromMainCharacter);
 
             SubscribeToEvents();
         }
@@ -49,29 +42,13 @@ namespace Features.Game.Controllers
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
-            // TODO: Move logic to model
-            _model.Pitch = Math.Clamp(
-                _model.Pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
-                _configuration.MinimumPitch,
-                _configuration.MaximumPitch);
-
-            _model.Yaw = Math.Clamp(
-                _model.Yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
-                _configuration.MinimumYaw,
-                _configuration.MaximumYaw);
-
+            _model.OnLookPerformed(lookPerformedEvent);
             UpdateViewModel();
         }
 
         private void OnUpdate(DroneUpdateEvent updateEvent)
         {
-            _model.Position = Vector3.SmoothDamp(
-                updateEvent.DronePosition,
-                updateEvent.MainCharacterPosition + _offsetFromMainCharacter,
-                ref _velocity,
-                _configuration.FollowSmoothTime
-            );
-
+            _model.OnUpdate(updateEvent);
             UpdateViewModel();
         }
 
