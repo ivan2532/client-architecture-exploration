@@ -35,9 +35,11 @@ namespace Features.Game
             _coroutineRunner = coroutineRunner;
         }
 
-        public void Load()
+        public IEnumerator Load()
         {
-            _coroutineRunner.StartCoroutine(LoadCoroutine());
+            SubscribeToEvents();
+            yield return SceneManager.LoadSceneAsync("Game");
+            InitializeDomain();
         }
 
         public void Unload()
@@ -139,14 +141,7 @@ namespace Features.Game
             UpdateGameViewModel();
 
             Unload();
-            _mainMenuService.Load();
-        }
-
-        private IEnumerator LoadCoroutine()
-        {
-            SubscribeToEvents();
-            yield return SceneManager.LoadSceneAsync("Game");
-            InitializeDomain();
+            _coroutineRunner.Run(_mainMenuService.Load());
         }
 
         private void UpdateGameViewModel()

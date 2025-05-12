@@ -21,9 +21,10 @@ namespace Features.MainMenu
             _coroutineRunner = coroutineRunner;
         }
 
-        public void Load()
+        public IEnumerator Load()
         {
-            _coroutineRunner.StartCoroutine(LoadCoroutine());
+            SubscribeToEvents();
+            yield return SceneManager.LoadSceneAsync("MainMenu");
         }
 
         public void Unload()
@@ -45,7 +46,7 @@ namespace Features.MainMenu
 
         private void OnPlayButtonClicked(PlayButtonClickedEvent playButtonClickedEvent)
         {
-            LoadGame();
+            _coroutineRunner.Run(LoadGame());
         }
 
         private void OnExitButtonClicked(ExitButtonClickedEvent exitButtonClickedEvent)
@@ -53,16 +54,10 @@ namespace Features.MainMenu
             ExitGame();
         }
 
-        private IEnumerator LoadCoroutine()
-        {
-            SubscribeToEvents();
-            yield return SceneManager.LoadSceneAsync("MainMenu");
-        }
-
-        private void LoadGame()
+        private IEnumerator LoadGame()
         {
             Unload();
-            _gameService.Load();
+            yield return _gameService.Load();
         }
 
         private void ExitGame()

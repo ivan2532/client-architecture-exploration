@@ -35,7 +35,7 @@ namespace Core.Infrastructure
 
         private void StartApplication()
         {
-            _mainMenuService.Load();
+            coroutineRunner.Run(_mainMenuService.Load());
         }
 
         private void Unload()
