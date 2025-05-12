@@ -1,19 +1,19 @@
 ﻿using System;
 using Features.Game.Configuration;
 using Features.Game.Events;
+using Features.Game.ViewModels;
 using UnityEngine;
 
 namespace Features.Game.Domain
 {
     public class Drone
     {
-        public Vector3 Position { get; private set; }
-        public float Pitch { get; private set; }
-        public float Yaw { get; private set; }
-
         private readonly DroneConfiguration _configuration;
         private readonly Vector3 _offsetFromMainCharacter;
 
+        private Vector3 _position;
+        private float _pitch;
+        private float _yaw;
         private Vector3 _velocity;
 
         public Drone(
@@ -26,14 +26,14 @@ namespace Features.Game.Domain
             _configuration = configuration;
             _offsetFromMainCharacter = offsetFromMainCharacter;
 
-            Position = position;
-            Pitch = pitch;
-            Yaw = yaw;
+            _position = position;
+            _pitch = pitch;
+            _yaw = yaw;
         }
 
         public void OnUpdate(DroneUpdateEvent updateEvent)
         {
-            Position = Vector3.SmoothDamp(
+            _position = Vector3.SmoothDamp(
                 updateEvent.DronePosition,
                 updateEvent.MainCharacterPosition + _offsetFromMainCharacter,
                 ref _velocity,
@@ -43,15 +43,20 @@ namespace Features.Game.Domain
 
         public void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
-            Pitch = Math.Clamp(
-                Pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
+            _pitch = Math.Clamp(
+                _pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
                 _configuration.MinimumPitch,
                 _configuration.MaximumPitch);
 
-            Yaw = Math.Clamp(
-                Yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
+            _yaw = Math.Clamp(
+                _yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
                 _configuration.MinimumYaw,
                 _configuration.MaximumYaw);
+        }
+
+        public DroneViewModel CreateViewModel()
+        {
+            return new DroneViewModel(_position, _pitch, _yaw);
         }
     }
 }

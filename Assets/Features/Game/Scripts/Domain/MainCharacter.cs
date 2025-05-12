@@ -1,13 +1,12 @@
 ﻿using Features.Game.Configuration;
 using Features.Game.Events;
+using Features.Game.ViewModels;
 using UnityEngine;
 
 namespace Features.Game.Domain
 {
     public class MainCharacter
     {
-        public Vector3 Velocity => _velocity;
-
         private readonly MainCharacterConfiguration _configuration;
 
         private Vector3 _velocity;
@@ -29,6 +28,11 @@ namespace Features.Game.Domain
         public void OnMoveCancelled()
         {
             _velocity = new Vector3(0f, _velocity.y, 0f);
+        }
+
+        public MainCharacterViewModel CreateViewModel()
+        {
+            return new MainCharacterViewModel(_velocity);
         }
     }
 }

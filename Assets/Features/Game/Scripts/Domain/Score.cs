@@ -1,6 +1,6 @@
 ﻿namespace Features.Game.Domain
 {
-    public class Score
+    public struct Score
     {
         public int Value { get; private set; }
 

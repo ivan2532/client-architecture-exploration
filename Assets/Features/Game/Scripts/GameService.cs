@@ -3,8 +3,6 @@ using Core.Infrastructure;
 using Features.Game.Configuration;
 using Features.Game.Domain;
 using Features.Game.Events;
-using Features.Game.Mappers;
-using Features.Game.ViewModels;
 using Features.Game.Views;
 using Features.MainMenu;
 using UnityEngine.SceneManagement;
@@ -146,32 +144,32 @@ namespace Features.Game
 
         private void UpdateGameViewModel()
         {
-            _viewProvider.GameView.UpdateViewModel(GameToViewModelMapper.Map(_game));
+            _viewProvider.GameView.UpdateViewModel(_game.CreateViewModel());
         }
 
         private void UpdateDroneViewModel()
         {
-            _viewProvider.DroneView.UpdateViewModel(DroneToViewModelMapper.Map(_drone));
+            _viewProvider.DroneView.UpdateViewModel(_drone.CreateViewModel());
         }
 
         private void UpdateMainCharacterViewModel()
         {
-            _viewProvider.MainCharacterView.UpdateViewModel(MainCharacterToViewModelMapper.Map(_mainCharacter));
+            _viewProvider.MainCharacterView.UpdateViewModel(_mainCharacter.CreateViewModel());
         }
 
         private void UpdateHudViewModel()
         {
-            _viewProvider.HudView.UpdateViewModel(new HudViewModel(_game.Score.Value));
+            _viewProvider.HudView.UpdateViewModel(_game.CreateHudViewModel());
         }
 
         private void UpdatePauseMenuViewModel()
         {
-            _viewProvider.PauseMenuView.UpdateViewModel(new PauseMenuViewModel(_game.Paused));
+            _viewProvider.PauseMenuView.UpdateViewModel(_game.CreatePauseMenuViewModel());
         }
 
         private void UpdateInputViewModel()
         {
-            _viewProvider.InputView.UpdateViewModel(new InputViewModel(!_game.Paused));
+            _viewProvider.InputView.UpdateViewModel(_game.CreateInputViewModel());
         }
     }
 }
