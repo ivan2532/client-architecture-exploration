@@ -7,7 +7,7 @@ namespace Features.Game.Mappers
         public static GameViewModel Map(Domain.Game model)
         {
             return new GameViewModel(
-                model.Paused,
+                model.ShowCursor,
                 !model.Paused,
                 model.Paused ? 0f : 1f
             );

@@ -6,6 +6,7 @@ namespace Features.Game.Domain
     {
         public readonly Score Score = new();
 
+        public bool ShowCursor { get; private set; }
         public bool Paused { get; private set; }
 
         public ShootResult OnShootPerformed(RaycastShootResult raycastShootResult)
@@ -21,16 +22,19 @@ namespace Features.Game.Domain
 
         public void OnPausePerformed()
         {
+            ShowCursor = true;
             Paused = true;
         }
 
         public void OnResumeButtonClicked()
         {
+            ShowCursor = false;
             Paused = false;
         }
 
         public void OnMainMenuButtonClicked()
         {
+            ShowCursor = true;
             Paused = false;
         }
     }
