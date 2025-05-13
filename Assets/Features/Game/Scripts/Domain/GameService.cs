@@ -11,10 +11,7 @@ namespace Features.Game.Domain
 {
     public class GameService
     {
-        private Drone _drone;
-        private MainCharacter _mainCharacter;
-        private Domain.Model.Game _game;
-
+        private GameModel _model;
         private GameConfiguration _configuration;
         private GameViewProvider _viewProvider;
         private MainMenuService _mainMenuService;
@@ -37,7 +34,7 @@ namespace Features.Game.Domain
         {
             SubscribeToEvents();
             yield return SceneManager.LoadSceneAsync("Game");
-            InitializeDomain();
+            InitializeModel();
         }
 
         public void Unload()
@@ -45,19 +42,16 @@ namespace Features.Game.Domain
             UnsubscribeFromEvents();
         }
 
-        private void InitializeDomain()
+        private void InitializeModel()
         {
             var droneView = _viewProvider.GetView<DroneView>();
-            _drone = new Drone(
-                _configuration.Drone,
+            _model = new GameModel(
+                _configuration,
                 droneView.OffsetFromMainCharacter,
                 droneView.Position,
                 droneView.Pitch,
                 droneView.Yaw
             );
-
-            _mainCharacter = new MainCharacter(_configuration.MainCharacter);
-            _game = new Domain.Model.Game();
         }
 
         private void SubscribeToEvents()
@@ -91,37 +85,37 @@ namespace Features.Game.Domain
         private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
         {
             var raycastShootResult = _viewProvider.GetView<DroneView>().ShootRaycast();
-            var shootResult = _game.OnShootPerformed(raycastShootResult);
+            var shootResult = _model.OnShootPerformed(raycastShootResult);
             if (shootResult.ScoreChanged) UpdateHudViewModel();
         }
 
         private void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
-            _drone.OnLookPerformed(lookPerformedEvent);
+            _model.OnLookPerformed(lookPerformedEvent);
             UpdateDroneViewModel();
         }
 
         private void OnDroneUpdate(DroneUpdateEvent updateEvent)
         {
-            _drone.OnUpdate(updateEvent);
+            _model.OnDroneUpdate(updateEvent);
             UpdateDroneViewModel();
         }
 
         private void OnMovePerformed(MovePerformedEvent movePerformedEvent)
         {
-            _mainCharacter.OnMovePerformed(movePerformedEvent);
+            _model.OnMovePerformed(movePerformedEvent);
             UpdateMainCharacterViewModel();
         }
 
         private void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
         {
-            _mainCharacter.OnMoveCancelled();
+            _model.OnMoveCancelled();
             UpdateMainCharacterViewModel();
         }
 
         private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
         {
-            _game.OnPausePerformed();
+            _model.OnPausePerformed();
             UpdateInputViewModel();
             UpdateGameViewModel();
             UpdatePauseMenuViewModel();
@@ -129,7 +123,7 @@ namespace Features.Game.Domain
 
         private void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
         {
-            _game.OnResumeButtonClicked();
+            _model.OnResumeButtonClicked();
             UpdatePauseMenuViewModel();
             UpdateGameViewModel();
             UpdateInputViewModel();
@@ -137,7 +131,7 @@ namespace Features.Game.Domain
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
-            _game.OnMainMenuButtonClicked();
+            _model.OnMainMenuButtonClicked();
             UpdateGameViewModel();
 
             Unload();
@@ -161,17 +155,17 @@ namespace Features.Game.Domain
 
         private void UpdateHudViewModel()
         {
-            _viewProvider.GetView<HudView>().UpdateViewModel(_game.CreateHudViewModel());
+            _viewProvider.GetView<HudView>().UpdateViewModel(_model.CreateHudViewModel());
         }
 
         private void UpdatePauseMenuViewModel()
         {
-            _viewProvider.GetView<PauseMenuView>().UpdateViewModel(_game.CreatePauseMenuViewModel());
+            _viewProvider.GetView<PauseMenuView>().UpdateViewModel(_model.CreatePauseMenuViewModel());
         }
 
         private void UpdateInputViewModel()
         {
-            _viewProvider.GetView<InputView>().UpdateViewModel(_game.CreateInputViewModel());
+            _viewProvider.GetView<InputView>().UpdateViewModel(_model.CreateInputViewModel());
         }
     }
 }
