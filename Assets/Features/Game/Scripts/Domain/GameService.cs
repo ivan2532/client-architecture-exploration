@@ -1,19 +1,19 @@
 ﻿using System.Collections;
 using Core.Infrastructure;
 using Features.Game.Configuration;
-using Features.Game.Domain;
+using Features.Game.Domain.Model;
 using Features.Game.Events;
 using Features.Game.Views;
 using Features.MainMenu;
 using UnityEngine.SceneManagement;
 
-namespace Features.Game
+namespace Features.Game.Domain
 {
     public class GameService
     {
         private Drone _drone;
         private MainCharacter _mainCharacter;
-        private Domain.Game _game;
+        private Domain.Model.Game _game;
 
         private GameConfiguration _configuration;
         private GameViewProvider _viewProvider;
@@ -55,7 +55,7 @@ namespace Features.Game
                 _viewProvider.DroneView.Yaw
             );
             _mainCharacter = new MainCharacter(_configuration.MainCharacter);
-            _game = new Domain.Game();
+            _game = new Domain.Model.Game();
         }
 
         private void SubscribeToEvents()

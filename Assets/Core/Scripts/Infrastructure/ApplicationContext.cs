@@ -1,5 +1,6 @@
 using Features.Game;
 using Features.Game.Configuration;
+using Features.Game.Domain;
 using Features.MainMenu;
 using UnityEngine;
 

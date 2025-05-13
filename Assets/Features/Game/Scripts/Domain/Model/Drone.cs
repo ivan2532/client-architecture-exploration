@@ -4,7 +4,7 @@ using Features.Game.Events;
 using Features.Game.Views.ViewModels;
 using UnityEngine;
 
-namespace Features.Game.Domain
+namespace Features.Game.Domain.Model
 {
     public class Drone
     {

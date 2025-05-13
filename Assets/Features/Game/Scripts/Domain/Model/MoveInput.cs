@@ -1,4 +1,4 @@
-﻿namespace Features.Game.Domain
+﻿namespace Features.Game.Domain.Model
 {
     public record MoveInput(float X, float Y);
 }

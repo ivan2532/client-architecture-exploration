@@ -1,7 +1,7 @@
 ﻿using Features.Game.Views;
 using Features.Game.Views.ViewModels;
 
-namespace Features.Game.Domain
+namespace Features.Game.Domain.Model
 {
     public class Game
     {

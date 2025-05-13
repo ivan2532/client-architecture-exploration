@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using Core.Infrastructure;
 using Features.Game;
+using Features.Game.Domain;
 using Features.MainMenu.Events;
 using UnityEngine.SceneManagement;
 
