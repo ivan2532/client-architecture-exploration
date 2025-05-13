@@ -1,6 +1,6 @@
 ﻿using Core.Infrastructure;
 
-namespace Features.Game.ViewModels
+namespace Features.Game.Views.ViewModels
 {
     public record InputViewModel(bool InputEnabled) : IViewModel;
 }

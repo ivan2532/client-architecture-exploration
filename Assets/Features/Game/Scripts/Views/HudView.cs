@@ -1,5 +1,5 @@
 using Core.Infrastructure;
-using Features.Game.ViewModels;
+using Features.Game.Views.ViewModels;
 using TMPro;
 using UnityEngine;
 

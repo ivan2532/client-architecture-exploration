@@ -1,7 +1,7 @@
 ﻿using Core.Infrastructure;
 using Features.Game.Domain;
 using Features.Game.Events;
-using Features.Game.ViewModels;
+using Features.Game.Views.ViewModels;
 using UnityEngine;
 using UnityEngine.InputSystem;
 

@@ -1,5 +1,5 @@
-﻿using Features.Game.ViewModels;
-using Features.Game.Views;
+﻿using Features.Game.Views;
+using Features.Game.Views.ViewModels;
 
 namespace Features.Game.Domain
 {
