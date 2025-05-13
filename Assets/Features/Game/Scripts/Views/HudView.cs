@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Features.Game.Views
 {
-    public class HudView : View<HudView, HudViewModel>
+    public class HudView : GameView<HudViewModel>
     {
         [SerializeField] private TextMeshProUGUI scoreText;
 

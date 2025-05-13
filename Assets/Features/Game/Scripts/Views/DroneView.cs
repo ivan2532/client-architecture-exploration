@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Features.Game.Views
 {
-    public class DroneView : View<DroneView, DroneViewModel>
+    public class DroneView : GameView<DroneViewModel>
     {
         [SerializeField] private Transform droneCamera;
         [SerializeField] private Transform mainCharacter;

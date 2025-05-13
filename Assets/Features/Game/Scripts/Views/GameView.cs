@@ -1,40 +1,28 @@
-﻿using Core.Infrastructure;
-using Features.Game.Views.ViewModels;
+﻿using Core.Events;
+using Core.Infrastructure;
+using Features.Game.Events;
 using UnityEngine;
 
 namespace Features.Game.Views
 {
-    public class GameView : View<GameView, GameViewModel>
+    public class GameViewCreatedEventFactory : IViewCreatedEventFactory
     {
-        [SerializeField] private DroneView drone;
-        [SerializeField] private MainCharacterView mainCharacter;
-        [SerializeField] private HudView hud;
-        [SerializeField] private PauseMenuView pauseMenu;
-
-        private float _pitch;
-        private float _yaw;
-
-        protected override GameViewModel Initialize()
+        public IViewCreatedEvent Create(MonoBehaviour view)
         {
-            return new GameViewModel(false, true, 1f);
+            return new GameViewCreatedEvent(view);
         }
+    }
 
-        protected override void OnViewModelUpdated()
-        {
-            base.OnViewModelUpdated();
-            UpdateCursorVisibility();
-            UpdateTimeScale();
-        }
+    public abstract class GameView : View<GameViewCreatedEventFactory>
+    {
+    }
 
-        private void UpdateCursorVisibility()
-        {
-            Cursor.lockState = ViewModel.ShowCursor ? CursorLockMode.None : CursorLockMode.Locked;
-            Cursor.visible = ViewModel.ShowCursor;
-        }
+    public abstract class GameView<TViewModel> : View<GameViewCreatedEventFactory, TViewModel>
+        where TViewModel : IViewModel
+    {
+    }
 
-        private void UpdateTimeScale()
-        {
-            Time.timeScale = ViewModel.TimeScale;
-        }
+    public class GameViewProvider : ViewProvider<GameViewCreatedEvent>
+    {
     }
 }

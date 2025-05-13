@@ -8,7 +8,7 @@ using UnityEngine.InputSystem;
 
 namespace Features.Game.Views
 {
-    public class InputView : View<InputView, InputViewModel>
+    public class InputView : GameView<InputViewModel>
     {
         private GameInputActions _inputActions;
 

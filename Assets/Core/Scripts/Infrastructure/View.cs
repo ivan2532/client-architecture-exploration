@@ -1,17 +1,20 @@
-﻿using Core.Events;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core.Infrastructure
 {
-    public abstract class View<TView> : MonoBehaviour
+    public abstract class View<TViewCreatedEventFactory> : MonoBehaviour
+        where TViewCreatedEventFactory : IViewCreatedEventFactory, new()
     {
         protected virtual void Awake()
         {
-            EventBus.Raise(new ViewCreatedEvent<TView>(GetComponent<TView>()));
+            var viewCreatedEvent = new TViewCreatedEventFactory().Create(this);
+            EventBus.Raise(viewCreatedEvent.GetType(), viewCreatedEvent);
         }
     }
 
-    public abstract class View<TView, TViewModel> : View<TView> where TViewModel : IViewModel
+    public abstract class View<TViewCreatedEventFactory, TViewModel> : View<TViewCreatedEventFactory>
+        where TViewCreatedEventFactory : IViewCreatedEventFactory, new()
+        where TViewModel : IViewModel
     {
         protected TViewModel ViewModel
         {

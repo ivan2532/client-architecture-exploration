@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 namespace Features.Game.Views
 {
-    public class PauseMenuView : View<PauseMenuView, PauseMenuViewModel>
+    public class PauseMenuView : GameView<PauseMenuViewModel>
     {
         [SerializeField] private Canvas pauseMenuCanvas;
         [SerializeField] private Button resumeButton;

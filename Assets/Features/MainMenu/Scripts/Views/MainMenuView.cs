@@ -1,35 +1,23 @@
+﻿using Core.Events;
 using Core.Infrastructure;
 using Features.MainMenu.Events;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace Features.MainMenu.Views
 {
-    public class MainMenuView : View<MainMenuView>
+    public class MainMenuViewCreatedEventFactory : IViewCreatedEventFactory
     {
-        [SerializeField] public Button playButton;
-        [SerializeField] public Button exitButton;
-
-        protected override void Awake()
+        public IViewCreatedEvent Create(MonoBehaviour view)
         {
-            base.Awake();
-            InitializeButtonListeners();
+            return new MainMenuViewCreatedEvent(view);
         }
+    }
 
-        private void InitializeButtonListeners()
-        {
-            playButton.onClick.AddListener(OnPlayButtonClicked);
-            exitButton.onClick.AddListener(OnExitButtonClicked);
-        }
+    public abstract class MainMenuView : View<MainMenuViewCreatedEventFactory>
+    {
+    }
 
-        private void OnPlayButtonClicked()
-        {
-            EventBus.Raise(new PlayButtonClickedEvent());
-        }
-
-        private void OnExitButtonClicked()
-        {
-            EventBus.Raise(new ExitButtonClickedEvent());
-        }
+    public class MainMenuViewProvider : ViewProvider<MainMenuViewCreatedEvent>
+    {
     }
 }
