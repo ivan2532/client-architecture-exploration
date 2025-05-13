@@ -2,6 +2,7 @@
 using Core.Infrastructure;
 using Features.Game.Domain;
 using Features.MainMenu.Events;
+using Features.MainMenu.Ports.Input;
 using UnityEditor;
 using UnityEngine.SceneManagement;
 
@@ -9,44 +10,38 @@ namespace Features.MainMenu.Domain
 {
     public class MainMenuService
     {
+        private IMainMenuEventHandler _eventHandler;
         private GameService _gameService;
         private CoroutineRunner _coroutineRunner;
 
-        public void Initialize(GameService gameService, CoroutineRunner coroutineRunner)
+        public void Initialize(
+            IMainMenuEventHandler eventHandler,
+            GameService gameService,
+            CoroutineRunner coroutineRunner
+        )
         {
+            _eventHandler = eventHandler;
             _gameService = gameService;
             _coroutineRunner = coroutineRunner;
         }
 
         public IEnumerator Load()
         {
-            SubscribeToEvents();
+            _eventHandler.Enable();
             yield return SceneManager.LoadSceneAsync("MainMenu");
         }
 
         public void Unload()
         {
-            UnsubscribeFromEvents();
+            _eventHandler.Disable();
         }
 
-        private void SubscribeToEvents()
-        {
-            EventBus.Subscribe<PlayButtonClickedEvent>(OnPlayButtonClicked);
-            EventBus.Subscribe<ExitButtonClickedEvent>(OnExitButtonClicked);
-        }
-
-        private void UnsubscribeFromEvents()
-        {
-            EventBus.Unsubscribe<PlayButtonClickedEvent>(OnPlayButtonClicked);
-            EventBus.Unsubscribe<ExitButtonClickedEvent>(OnExitButtonClicked);
-        }
-
-        private void OnPlayButtonClicked(PlayButtonClickedEvent playButtonClickedEvent)
+        public void OnPlayButtonClicked(PlayButtonClickedEvent playButtonClickedEvent)
         {
             _coroutineRunner.Run(LoadGame());
         }
 
-        private void OnExitButtonClicked(ExitButtonClickedEvent exitButtonClickedEvent)
+        public void OnExitButtonClicked(ExitButtonClickedEvent exitButtonClickedEvent)
         {
             ExitGame();
         }

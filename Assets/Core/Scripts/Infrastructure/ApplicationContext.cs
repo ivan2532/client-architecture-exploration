@@ -1,7 +1,8 @@
+using Features.Game.Adapters.Input;
 using Features.Game.Adapters.Output;
 using Features.Game.Configuration;
 using Features.Game.Domain;
-using Features.MainMenu;
+using Features.MainMenu.Adapters.Input;
 using Features.MainMenu.Domain;
 using UnityEngine;
 
@@ -28,13 +29,21 @@ namespace Core.Infrastructure
 
         private void Initialize()
         {
-            var gamePresenter = new GamePresenter();
-
             _mainMenuService = new MainMenuService();
-            _gameService = new GameService();
+            var mainMenuEventHandler = new MainMenuEventHandler(_mainMenuService);
 
-            _mainMenuService.Initialize(_gameService, coroutineRunner);
-            _gameService.Initialize(gameConfiguration, gamePresenter, _mainMenuService, coroutineRunner);
+            var gamePresenter = new GamePresenter();
+            _gameService = new GameService();
+            var gameEventHandler = new GameEventHandler(_gameService);
+
+            _mainMenuService.Initialize(mainMenuEventHandler, _gameService, coroutineRunner);
+            _gameService.Initialize(
+                gameConfiguration,
+                gameEventHandler,
+                gamePresenter,
+                _mainMenuService,
+                coroutineRunner
+            );
         }
 
         private void StartApplication()
