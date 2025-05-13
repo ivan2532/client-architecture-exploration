@@ -1,39 +1,33 @@
 ﻿using System;
 using Features.Game.Configuration;
 using Features.Game.Events;
-using Features.Game.Views.ViewModels;
 using UnityEngine;
 
 namespace Features.Game.Domain.Model
 {
     public class Drone
     {
+        public Vector3 Position { get; private set; }
+        public float Pitch { get; private set; }
+        public float Yaw { get; private set; }
+
         private readonly DroneConfiguration _configuration;
         private readonly Vector3 _offsetFromMainCharacter;
 
-        private Vector3 _position;
-        private float _pitch;
-        private float _yaw;
         private Vector3 _velocity;
 
-        public Drone(
-            DroneConfiguration configuration,
-            Vector3 offsetFromMainCharacter,
-            Vector3 position,
-            float pitch,
-            float yaw)
+        public Drone(DroneConfiguration configuration, DroneStartingState droneStartingState)
         {
             _configuration = configuration;
-            _offsetFromMainCharacter = offsetFromMainCharacter;
-
-            _position = position;
-            _pitch = pitch;
-            _yaw = yaw;
+            _offsetFromMainCharacter = droneStartingState.OffsetFromMainCharacter;
+            Position = droneStartingState.Position;
+            Pitch = droneStartingState.Pitch;
+            Yaw = droneStartingState.Yaw;
         }
 
         public void OnUpdate(DroneUpdateEvent updateEvent)
         {
-            _position = Vector3.SmoothDamp(
+            Position = Vector3.SmoothDamp(
                 updateEvent.DronePosition,
                 updateEvent.MainCharacterPosition + _offsetFromMainCharacter,
                 ref _velocity,
@@ -43,20 +37,15 @@ namespace Features.Game.Domain.Model
 
         public void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
-            _pitch = Math.Clamp(
-                _pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
+            Pitch = Math.Clamp(
+                Pitch + lookPerformedEvent.InputDelta.X * _configuration.LookSensitivity,
                 _configuration.MinimumPitch,
                 _configuration.MaximumPitch);
 
-            _yaw = Math.Clamp(
-                _yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
+            Yaw = Math.Clamp(
+                Yaw - lookPerformedEvent.InputDelta.Y * _configuration.LookSensitivity,
                 _configuration.MinimumYaw,
                 _configuration.MaximumYaw);
-        }
-
-        public DroneViewModel CreateViewModel()
-        {
-            return new DroneViewModel(_position, _pitch, _yaw);
         }
     }
 }

@@ -1,12 +1,11 @@
 using Core.Infrastructure;
 using Features.Game.Events;
-using Features.Game.Views.ViewModels;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace Features.Game.Views
 {
-    public class PauseMenuView : GameView<PauseMenuViewModel>
+    public class PauseMenuView : GameView
     {
         [SerializeField] private Canvas pauseMenuCanvas;
         [SerializeField] private Button resumeButton;
@@ -19,15 +18,14 @@ namespace Features.Game.Views
             mainMenuButton.onClick.AddListener(OnMainMenuButtonClicked);
         }
 
-        protected override PauseMenuViewModel Initialize()
+        public void Show()
         {
-            return new PauseMenuViewModel(false);
+            pauseMenuCanvas.enabled = true;
         }
 
-        protected override void OnViewModelUpdated()
+        public void Hide()
         {
-            base.OnViewModelUpdated();
-            UpdateVisibility();
+            pauseMenuCanvas.enabled = false;
         }
 
         private void OnResumeButtonClicked()
@@ -38,11 +36,6 @@ namespace Features.Game.Views
         private void OnMainMenuButtonClicked()
         {
             EventBus.Raise(new MainMenuButtonClickedEvent());
-        }
-
-        private void UpdateVisibility()
-        {
-            pauseMenuCanvas.enabled = ViewModel.Visible;
         }
     }
 }

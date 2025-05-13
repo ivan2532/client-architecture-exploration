@@ -1,15 +1,14 @@
 ﻿using Features.Game.Configuration;
 using Features.Game.Events;
-using Features.Game.Views.ViewModels;
 using UnityEngine;
 
 namespace Features.Game.Domain.Model
 {
     public class MainCharacter
     {
-        private readonly MainCharacterConfiguration _configuration;
+        public Vector3 Velocity { get; private set; }
 
-        private Vector3 _velocity;
+        private readonly MainCharacterConfiguration _configuration;
 
         public MainCharacter(MainCharacterConfiguration configuration)
         {
@@ -18,21 +17,16 @@ namespace Features.Game.Domain.Model
 
         public void OnMovePerformed(MovePerformedEvent movePerformedEvent)
         {
-            _velocity = new Vector3(
+            Velocity = new Vector3(
                 movePerformedEvent.NormalizedInput.X * _configuration.MovementSpeed,
-                _velocity.y,
+                Velocity.y,
                 movePerformedEvent.NormalizedInput.Y * _configuration.MovementSpeed
             );
         }
 
         public void OnMoveCancelled()
         {
-            _velocity = new Vector3(0f, _velocity.y, 0f);
-        }
-
-        public MainCharacterViewModel CreateViewModel()
-        {
-            return new MainCharacterViewModel(_velocity);
+            Velocity = new Vector3(0f, Velocity.y, 0f);
         }
     }
 }

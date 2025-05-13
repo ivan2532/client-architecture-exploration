@@ -7,36 +7,24 @@ namespace Features.Game.Domain.Model
 {
     public class GameModel
     {
-        private readonly Drone _drone;
-        private readonly MainCharacter _mainCharacter;
+        public readonly Drone Drone;
+        public readonly MainCharacter MainCharacter;
 
-        private Score _score;
-        private bool _showCursor;
-        private bool _paused;
+        public Score Score;
 
         public GameModel(
             GameConfiguration configuration,
-            Vector3 droneOffsetFromMainCharacter,
-            Vector3 dronePosition,
-            float dronePitch,
-            float droneYaw)
+            DroneStartingState droneStartingState)
         {
-            _drone = new Drone(
-                configuration.Drone,
-                droneOffsetFromMainCharacter,
-                dronePosition,
-                dronePitch,
-                droneYaw
-            );
-
-            _mainCharacter = new MainCharacter(configuration.MainCharacter);
+            Drone = new Drone(configuration.Drone, droneStartingState);
+            MainCharacter = new MainCharacter(configuration.MainCharacter);
         }
 
         public ShootResult OnShootPerformed(RaycastShootResult raycastShootResult)
         {
             if (raycastShootResult.DummyTargetHit)
             {
-                _score.Increment();
+                Score.Increment();
                 return new ShootResult(true);
             }
 
@@ -45,40 +33,22 @@ namespace Features.Game.Domain.Model
 
         public void OnLookPerformed(LookPerformedEvent lookPerformedEvent)
         {
-            _drone.OnLookPerformed(lookPerformedEvent);
+            Drone.OnLookPerformed(lookPerformedEvent);
         }
 
         public void OnDroneUpdate(DroneUpdateEvent droneUpdateEvent)
         {
-            _drone.OnUpdate(droneUpdateEvent);
+            Drone.OnUpdate(droneUpdateEvent);
         }
 
         public void OnMovePerformed(MovePerformedEvent movePerformedEvent)
         {
-            _mainCharacter.OnMovePerformed(movePerformedEvent);
+            MainCharacter.OnMovePerformed(movePerformedEvent);
         }
 
         public void OnMoveCancelled()
         {
-            _mainCharacter.OnMoveCancelled();
-        }
-
-        public void OnPausePerformed()
-        {
-            _showCursor = true;
-            _paused = true;
-        }
-
-        public void OnResumeButtonClicked()
-        {
-            _showCursor = false;
-            _paused = false;
-        }
-
-        public void OnMainMenuButtonClicked()
-        {
-            _showCursor = true;
-            _paused = false;
+            MainCharacter.OnMoveCancelled();
         }
     }
 }

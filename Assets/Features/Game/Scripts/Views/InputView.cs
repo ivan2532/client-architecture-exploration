@@ -1,16 +1,20 @@
 ﻿using Core.Infrastructure;
-using Features.Game.Domain;
 using Features.Game.Domain.Model;
 using Features.Game.Events;
-using Features.Game.Views.ViewModels;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 namespace Features.Game.Views
 {
-    public class InputView : GameView<InputViewModel>
+    public class InputView : GameView
     {
         private GameInputActions _inputActions;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _inputActions = new GameInputActions();
+        }
 
         private void OnEnable()
         {
@@ -24,16 +28,14 @@ namespace Features.Game.Views
             _inputActions.Disable();
         }
 
-        protected override InputViewModel Initialize()
+        public void EnableInput()
         {
-            _inputActions = new GameInputActions();
-            return new InputViewModel(true);
+            _inputActions.Enable();
         }
 
-        protected override void OnViewModelUpdated()
+        public void DisableInput()
         {
-            base.OnViewModelUpdated();
-            UpdateInputEnabled();
+            _inputActions.Disable();
         }
 
         private void SubscribeToInputEvents()
@@ -82,12 +84,6 @@ namespace Features.Game.Views
         private void OnPausePerformed(InputAction.CallbackContext context)
         {
             EventBus.Raise(new PausePerformedEvent());
-        }
-
-        private void UpdateInputEnabled()
-        {
-            if (ViewModel.InputEnabled) _inputActions.Enable();
-            else _inputActions.Disable();
         }
     }
 }

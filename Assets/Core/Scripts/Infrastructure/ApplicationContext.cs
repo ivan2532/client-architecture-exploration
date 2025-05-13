@@ -1,4 +1,4 @@
-using Features.Game;
+using Features.Game.Adapters.Output;
 using Features.Game.Configuration;
 using Features.Game.Domain;
 using Features.MainMenu;
@@ -27,11 +27,13 @@ namespace Core.Infrastructure
 
         private void Initialize()
         {
+            var gamePresenter = new GamePresenter();
+
             _mainMenuService = new MainMenuService();
             _gameService = new GameService();
 
             _mainMenuService.Initialize(_gameService, coroutineRunner);
-            _gameService.Initialize(gameConfiguration, _mainMenuService, coroutineRunner);
+            _gameService.Initialize(gameConfiguration, gamePresenter, _mainMenuService, coroutineRunner);
         }
 
         private void StartApplication()
