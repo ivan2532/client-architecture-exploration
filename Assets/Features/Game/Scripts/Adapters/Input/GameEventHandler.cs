@@ -54,7 +54,7 @@ namespace Features.Game.Adapters.Input
 
         private void OnShootPerformed(ShootPerformedEvent @event)
         {
-            _gameService.OnShootPerformed(@event);
+            _gameService.OnShootPerformed();
         }
 
         private void OnLookPerformed(LookPerformedEvent @event)
@@ -74,22 +74,22 @@ namespace Features.Game.Adapters.Input
 
         private void OnMoveCancelled(MoveCancelledEvent @event)
         {
-            _gameService.OnMoveCancelled(@event);
+            _gameService.OnMoveCancelled();
         }
 
         private void OnPausePerformed(PausePerformedEvent @event)
         {
-            _gameService.OnPausePerformed(@event);
+            _gameService.OnPausePerformed();
         }
 
         private void OnResumeButtonClicked(ResumeButtonClickedEvent @event)
         {
-            _gameService.OnResumeButtonClicked(@event);
+            _gameService.OnResumeButtonClicked();
         }
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent @event)
         {
-            _gameService.OnMainMenuButtonClicked(@event);
+            _gameService.OnMainMenuButtonClicked();
         }
     }
 }

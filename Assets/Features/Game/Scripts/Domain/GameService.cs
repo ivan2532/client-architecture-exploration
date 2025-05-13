@@ -51,7 +51,7 @@ namespace Features.Game.Domain
             _eventHandler.Disable();
         }
 
-        public void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
+        public void OnShootPerformed()
         {
             var raycastShootResult = _presenter.ShootRaycastFromDrone();
             var shootResult = _model.OnShootPerformed(raycastShootResult);
@@ -76,13 +76,13 @@ namespace Features.Game.Domain
             _presenter.UpdateMainCharacter(_model.MainCharacter);
         }
 
-        public void OnMoveCancelled(MoveCancelledEvent moveCancelledEvent)
+        public void OnMoveCancelled()
         {
             _model.OnMoveCancelled();
             _presenter.UpdateMainCharacter(_model.MainCharacter);
         }
 
-        public void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
+        public void OnPausePerformed()
         {
             _presenter.FreezeTime();
             _presenter.DisableInput();
@@ -90,7 +90,7 @@ namespace Features.Game.Domain
             _presenter.ShowCursor();
         }
 
-        public void OnResumeButtonClicked(ResumeButtonClickedEvent resumeButtonClickedEvent)
+        public void OnResumeButtonClicked()
         {
             _presenter.HideCursor();
             _presenter.HidePauseMenu();
@@ -98,7 +98,7 @@ namespace Features.Game.Domain
             _presenter.ResumeTime();
         }
 
-        public void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
+        public void OnMainMenuButtonClicked()
         {
             _presenter.ResumeTime();
             Unload();
