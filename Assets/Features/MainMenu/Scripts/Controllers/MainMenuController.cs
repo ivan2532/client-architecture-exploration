@@ -23,7 +23,7 @@ namespace Features.MainMenu.Controllers
 
         public void Dispose()
         {
-            UnsubscribeToEvents();
+            UnsubscribeFromEvents();
         }
 
         private void SubscribeToEvents()
@@ -32,7 +32,7 @@ namespace Features.MainMenu.Controllers
             EventBus.Subscribe<ExitButtonClickedEvent>(OnExitButtonClicked);
         }
 
-        private void UnsubscribeToEvents()
+        private void UnsubscribeFromEvents()
         {
             EventBus.Unsubscribe<PlayButtonClickedEvent>(OnPlayButtonClicked);
             EventBus.Unsubscribe<ExitButtonClickedEvent>(OnExitButtonClicked);
