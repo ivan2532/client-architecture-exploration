@@ -1,15 +1,11 @@
 ﻿using System.Collections;
 using Core.Infrastructure;
-using Features.Game;
 using Features.Game.Domain;
 using Features.MainMenu.Events;
+using UnityEditor;
 using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
-namespace Features.MainMenu
+namespace Features.MainMenu.Domain
 {
     public class MainMenuService
     {

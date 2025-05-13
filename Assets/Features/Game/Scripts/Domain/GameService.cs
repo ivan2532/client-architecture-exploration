@@ -5,6 +5,7 @@ using Features.Game.Domain.Model;
 using Features.Game.Events;
 using Features.Game.Ports.Output;
 using Features.MainMenu;
+using Features.MainMenu.Domain;
 using UnityEngine.SceneManagement;
 
 namespace Features.Game.Domain

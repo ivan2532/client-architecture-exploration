@@ -2,6 +2,7 @@ using Features.Game.Adapters.Output;
 using Features.Game.Configuration;
 using Features.Game.Domain;
 using Features.MainMenu;
+using Features.MainMenu.Domain;
 using UnityEngine;
 
 namespace Core.Infrastructure
