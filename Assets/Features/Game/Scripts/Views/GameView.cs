@@ -36,8 +36,4 @@ namespace Features.Game.Views
             ViewModelUpdated?.Invoke(viewModel);
         }
     }
-
-    public class GameViewProvider : ViewProvider<GameView, GameViewCreatedEvent>
-    {
-    }
 }
