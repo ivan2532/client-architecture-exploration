@@ -16,18 +16,13 @@ namespace Features.Game.Models
         private float _yaw;
         private Vector3 _velocity;
 
-        public Drone(
-            DroneConfiguration configuration,
-            Vector3 position,
-            float pitch,
-            float yaw,
-            Vector3 offsetFromMainCharacter)
+        public Drone(DroneConfiguration configuration, DroneStartingState startingState)
         {
             _configuration = configuration;
-            _position = position;
-            _pitch = pitch;
-            _yaw = yaw;
-            _offsetFromMainCharacter = offsetFromMainCharacter;
+            _offsetFromMainCharacter = startingState.OffsetFromMainCharacter;
+            _position = startingState.Position;
+            _pitch = startingState.Pitch;
+            _yaw = startingState.Yaw;
         }
 
         public void OnLookPerformed(LookPerformedEvent lookPerformedEvent)

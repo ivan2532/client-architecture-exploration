@@ -18,7 +18,7 @@ namespace Features.Game.Controllers
         public DroneController(DroneView view, DroneConfiguration configuration) : base(view)
         {
             _view = view;
-            _model = new Drone(configuration, view.Position, view.Pitch, view.Yaw, view.OffsetFromMainCharacter);
+            _model = new Drone(configuration, CreateDroneStartingState());
 
             SubscribeToEvents();
         }
@@ -26,6 +26,16 @@ namespace Features.Game.Controllers
         public void Dispose()
         {
             UnsubscribeFromEvents();
+        }
+
+        private DroneStartingState CreateDroneStartingState()
+        {
+            return new DroneStartingState(
+                _view.OffsetFromMainCharacter,
+                _view.Position,
+                _view.Pitch,
+                _view.Yaw
+            );
         }
 
         private void SubscribeToEvents()
