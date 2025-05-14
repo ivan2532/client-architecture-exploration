@@ -1,5 +1,4 @@
-﻿using Core.Infrastructure;
-using Features.Game.Domain;
+﻿using Core.Events;
 using Features.Game.Domain.Model;
 
 namespace Features.Game.Events

@@ -1,4 +1,4 @@
-﻿using Core.Infrastructure;
+﻿using Core.Events;
 using UnityEngine;
 
 namespace Features.Game.Events

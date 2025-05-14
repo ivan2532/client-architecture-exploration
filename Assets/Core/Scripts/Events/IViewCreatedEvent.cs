@@ -1,5 +1,4 @@
-﻿using Core.Infrastructure;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Core.Events
 {

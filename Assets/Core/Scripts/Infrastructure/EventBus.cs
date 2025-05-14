@@ -1,45 +1,60 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Core.Events;
 
 namespace Core.Infrastructure
 {
     public static class EventBus
     {
-        private static readonly Dictionary<Type, List<Delegate>> Subscribers = new();
+        public delegate void EventHandlerDelegate(IEvent @event);
 
-        public static void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : IEvent
+        public delegate void EventHandlerDelegate<in TEvent>(TEvent @event) where TEvent : IEvent;
+
+
+        private static readonly Dictionary<Type, List<EventHandlerDelegate>> Subscribers = new();
+
+        public static void Subscribe<TEvent>(EventHandlerDelegate<TEvent> eventHandler) where TEvent : IEvent
         {
-            if (!Subscribers.ContainsKey(typeof(TEvent)))
-            {
-                Subscribers[typeof(TEvent)] = new List<Delegate>();
-            }
-
-            Subscribers[typeof(TEvent)].Add(handler);
+            Subscribe(typeof(TEvent), @event => eventHandler((TEvent)@event));
         }
 
-        public static void Unsubscribe<TEvent>(Action<TEvent> handler) where TEvent : IEvent
+        public static void Unsubscribe<TEvent>(EventHandlerDelegate<TEvent> eventHandler) where TEvent : IEvent
         {
-            if (Subscribers.ContainsKey(typeof(TEvent)))
-            {
-                Subscribers[typeof(TEvent)].Remove(handler);
-                Subscribers.Remove(typeof(TEvent));
-            }
+            Unsubscribe(typeof(TEvent), @event => eventHandler((TEvent)@event));
         }
 
         public static void Raise<TEvent>(TEvent @event) where TEvent : IEvent
         {
-            if (Subscribers.TryGetValue(typeof(TEvent), out var callbacks))
+            Raise(typeof(TEvent), @event);
+        }
+
+        public static void Subscribe(Type eventType, EventHandlerDelegate eventHandler)
+        {
+            if (!Subscribers.ContainsKey(eventType))
             {
-                var callbacksSnapshot = new List<Delegate>(callbacks);
-                foreach (var callback in callbacksSnapshot)
-                {
-                    ((Action<TEvent>)callback)?.Invoke(@event);
-                }
+                Subscribers[eventType] = new List<EventHandlerDelegate>();
+            }
+
+            Subscribers[eventType].Add(eventHandler);
+        }
+
+        public static void Unsubscribe(Type eventType, EventHandlerDelegate eventHandler)
+        {
+            if (Subscribers.ContainsKey(eventType))
+            {
+                Subscribers[eventType].Remove(eventHandler);
+                Subscribers.Remove(eventType);
             }
         }
-    }
 
-    public interface IEvent
-    {
+        public static void Raise(Type eventType, IEvent @event)
+        {
+            if (Subscribers.TryGetValue(eventType, out var callbacks))
+            {
+                var callbacksSnapshot = callbacks.ToList();
+                callbacksSnapshot.ForEach(callback => callback.Invoke(@event));
+            }
+        }
     }
 }

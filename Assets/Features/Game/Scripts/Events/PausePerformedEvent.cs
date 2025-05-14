@@ -1,4 +1,4 @@
-﻿using Core.Infrastructure;
+﻿using Core.Events;
 
 namespace Features.Game.Events
 {
