@@ -18,11 +18,13 @@ namespace Features.Game.Models
 
         public Drone(
             DroneConfiguration configuration,
+            Vector3 position,
             float pitch,
             float yaw,
             Vector3 offsetFromMainCharacter)
         {
             _configuration = configuration;
+            _position = position;
             _pitch = pitch;
             _yaw = yaw;
             _offsetFromMainCharacter = offsetFromMainCharacter;
