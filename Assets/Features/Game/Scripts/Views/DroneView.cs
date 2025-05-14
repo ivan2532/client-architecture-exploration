@@ -23,20 +23,20 @@ namespace Features.Game.Views
 
         protected override DroneViewModel Initialize()
         {
+            ViewModelUpdated += OnViewModelUpdated;
             return new DroneViewModel(Position, Pitch, Yaw);
-        }
-
-        protected override void OnViewModelUpdated()
-        {
-            base.OnViewModelUpdated();
-            UpdatePosition();
-            UpdateCameraOrientation();
         }
 
         public RaycastShootResult ShootRaycast()
         {
             Physics.Raycast(droneCamera.position, droneCamera.forward, out var hit);
             return new RaycastShootResult(hit.collider == dummyTarget);
+        }
+
+        private void OnViewModelUpdated(DroneViewModel viewModel)
+        {
+            UpdatePosition();
+            UpdateCameraOrientation();
         }
 
         private void UpdatePosition()

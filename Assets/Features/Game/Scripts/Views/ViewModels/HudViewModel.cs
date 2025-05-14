@@ -1,6 +1,4 @@
-﻿using Core.Infrastructure;
-
-namespace Features.Game.Views.ViewModels
+﻿namespace Features.Game.Views.ViewModels
 {
-    public record HudViewModel(int Score) : IViewModel;
+    public record HudViewModel(int Score) : IGameViewModel;
 }

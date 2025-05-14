@@ -5,9 +5,11 @@ using UnityEngine;
 
 namespace Core.Infrastructure
 {
-    public abstract class ViewProvider<TViewCreatedEvent> : IDisposable where TViewCreatedEvent : IViewCreatedEvent
+    public abstract class ViewProvider<TView, TViewCreatedEvent> : IDisposable
+        where TView : MonoBehaviour
+        where TViewCreatedEvent : IViewCreatedEvent
     {
-        private readonly Dictionary<Type, MonoBehaviour> _views = new();
+        private readonly Dictionary<Type, TView> _views = new();
 
         protected ViewProvider()
         {
@@ -19,19 +21,14 @@ namespace Core.Infrastructure
             UnsubscribeFromEvents();
         }
 
-        public TView GetView<TView>()
+        public TRequestedView GetView<TRequestedView>() where TRequestedView : TView
         {
-            if (!_views.ContainsKey(typeof(TView)) || !_views[typeof(TView)])
+            if (!_views.ContainsKey(typeof(TRequestedView)) || !_views[typeof(TRequestedView)])
             {
-                throw new ViewNotCreatedException<TView>();
+                throw new ViewNotCreatedException<TRequestedView>();
             }
 
-            if (_views[typeof(TView)] is not TView view)
-            {
-                throw new ArgumentException($"There is no view registered for the given type {typeof(TView)}");
-            }
-
-            return view;
+            return (TRequestedView)_views[typeof(TRequestedView)];
         }
 
         private void SubscribeToEvents()
@@ -47,7 +44,7 @@ namespace Core.Infrastructure
         private void OnViewCreated(TViewCreatedEvent viewCreatedEvent)
         {
             var view = viewCreatedEvent.GetView();
-            _views[view.GetType()] = view;
+            _views[view.GetType()] = (TView)view;
         }
     }
 }

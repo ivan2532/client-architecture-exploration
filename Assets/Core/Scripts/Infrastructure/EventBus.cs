@@ -37,26 +37,9 @@ namespace Core.Infrastructure
                 }
             }
         }
+    }
 
-        /// <summary>
-        /// This method uses DynamicInvoke and is considered expensive.
-        /// Avoid calling in performance-critical code paths.
-        /// </summary>
-        public static void Raise<TEvent>(Type eventType, TEvent @event) where TEvent : IEvent
-        {
-            if (!eventType.IsInstanceOfType(@event))
-            {
-                throw new ArgumentException($"Event {nameof(@event)} is not of type {eventType.FullName}");
-            }
-
-            if (Subscribers.TryGetValue(eventType, out var callbacks))
-            {
-                var callbacksSnapshot = new List<Delegate>(callbacks);
-                foreach (var callback in callbacksSnapshot)
-                {
-                    callback.DynamicInvoke(@event);
-                }
-            }
-        }
+    public interface IEvent
+    {
     }
 }

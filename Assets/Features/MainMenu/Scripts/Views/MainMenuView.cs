@@ -1,23 +1,13 @@
-﻿using Core.Events;
-using Core.Infrastructure;
+﻿using Core.Infrastructure;
 using Features.MainMenu.Events;
-using UnityEngine;
 
 namespace Features.MainMenu.Views
 {
-    public class MainMenuViewCreatedEventFactory : IViewCreatedEventFactory
+    public abstract class MainMenuView : View
     {
-        public IViewCreatedEvent Create(MonoBehaviour view)
+        protected override void RaiseViewCreatedEvent()
         {
-            return new MainMenuViewCreatedEvent(view);
+            EventBus.Raise(new MainMenuViewCreatedEvent(this));
         }
-    }
-
-    public abstract class MainMenuView : View<MainMenuViewCreatedEventFactory>
-    {
-    }
-
-    public class MainMenuViewProvider : ViewProvider<MainMenuViewCreatedEvent>
-    {
     }
 }

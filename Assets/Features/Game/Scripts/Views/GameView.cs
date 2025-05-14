@@ -1,28 +1,43 @@
-﻿using Core.Events;
-using Core.Infrastructure;
+﻿using Core.Infrastructure;
 using Features.Game.Events;
-using UnityEngine;
+using Features.Game.Views.ViewModels;
 
 namespace Features.Game.Views
 {
-    public class GameViewCreatedEventFactory : IViewCreatedEventFactory
+    public abstract class GameView : View
     {
-        public IViewCreatedEvent Create(MonoBehaviour view)
+        protected override void RaiseViewCreatedEvent()
         {
-            return new GameViewCreatedEvent(view);
+            EventBus.Raise(new GameViewCreatedEvent(this));
         }
     }
 
-    public abstract class GameView : View<GameViewCreatedEventFactory>
+    public abstract class GameView<TViewModel> : GameView where TViewModel : IGameViewModel
     {
+        public delegate void ViewModelUpdatedDelegate(TViewModel viewModel);
+
+        public event ViewModelUpdatedDelegate ViewModelUpdated;
+
+        protected TViewModel ViewModel { get; private set; }
+
+        protected override void Awake()
+        {
+            base.Awake();
+
+            var initialViewModel = Initialize();
+            UpdateViewModel(initialViewModel);
+        }
+
+        protected abstract TViewModel Initialize();
+
+        public void UpdateViewModel(TViewModel viewModel)
+        {
+            ViewModel = viewModel;
+            ViewModelUpdated?.Invoke(viewModel);
+        }
     }
 
-    public abstract class GameView<TViewModel> : View<GameViewCreatedEventFactory, TViewModel>
-        where TViewModel : IViewModel
-    {
-    }
-
-    public class GameViewProvider : ViewProvider<GameViewCreatedEvent>
+    public class GameViewProvider : ViewProvider<GameView, GameViewCreatedEvent>
     {
     }
 }
