@@ -16,12 +16,12 @@ namespace Features.Game.Views
 
         protected override GameViewModel Initialize()
         {
+            ViewModelUpdated += OnViewModelUpdated;
             return new GameViewModel(false, true, 1f);
         }
 
-        protected override void OnViewModelUpdated()
+        private void OnViewModelUpdated(GameViewModel viewModel)
         {
-            base.OnViewModelUpdated();
             UpdateCursorVisibility();
             UpdateTimeScale();
         }

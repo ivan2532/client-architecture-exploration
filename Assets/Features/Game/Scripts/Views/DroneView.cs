@@ -19,6 +19,7 @@ namespace Features.Game.Views
 
         protected override DroneViewModel Initialize()
         {
+            ViewModelUpdated += OnViewModelUpdated;
             return new DroneViewModel(Position, Pitch, Yaw);
         }
 
@@ -27,9 +28,8 @@ namespace Features.Game.Views
             EventBus.Raise(new DroneUpdateEvent(transform.position, mainCharacter.position));
         }
 
-        protected override void OnViewModelUpdated()
+        private void OnViewModelUpdated(DroneViewModel viewModel)
         {
-            base.OnViewModelUpdated();
             UpdatePosition();
             UpdateCameraOrientation();
         }

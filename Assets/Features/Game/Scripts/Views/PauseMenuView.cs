@@ -12,13 +12,8 @@ namespace Features.Game.Views
 
         protected override PauseMenuViewModel Initialize()
         {
+            ViewModelUpdated += OnViewModelUpdated;
             return new PauseMenuViewModel(false);
-        }
-
-        protected override void OnViewModelUpdated()
-        {
-            base.OnViewModelUpdated();
-            UpdateVisibility();
         }
 
         public void OnResumeButtonClicked()
@@ -29,6 +24,11 @@ namespace Features.Game.Views
         public void OnMainMenuButtonClicked()
         {
             EventBus.Raise(new MainMenuButtonClickedEvent());
+        }
+
+        private void OnViewModelUpdated(PauseMenuViewModel viewModel)
+        {
+            UpdateVisibility();
         }
 
         private void UpdateVisibility()

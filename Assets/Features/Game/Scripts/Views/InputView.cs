@@ -14,13 +14,8 @@ namespace Features.Game.Views
 
         protected override InputViewModel Initialize()
         {
+            ViewModelUpdated += OnViewModelUpdated;
             return new InputViewModel(true);
-        }
-
-        protected override void OnViewModelUpdated()
-        {
-            base.OnViewModelUpdated();
-            UpdateInputEnabled();
         }
 
         private void Awake()
@@ -40,6 +35,11 @@ namespace Features.Game.Views
             base.OnDisable();
             UnsubscribeFromInputEvents();
             _inputActions.Disable();
+        }
+
+        private void OnViewModelUpdated(InputViewModel inputViewModel)
+        {
+            UpdateInputEnabled();
         }
 
         private void SubscribeToInputEvents()

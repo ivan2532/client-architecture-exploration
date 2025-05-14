@@ -13,12 +13,12 @@ namespace Features.Game.Views
 
         protected override HudViewModel Initialize()
         {
+            ViewModelUpdated += OnViewModelUpdated;
             return new HudViewModel(0);
         }
 
-        protected override void OnViewModelUpdated()
+        private void OnViewModelUpdated(HudViewModel viewModel)
         {
-            base.OnViewModelUpdated();
             UpdateScore();
         }
 

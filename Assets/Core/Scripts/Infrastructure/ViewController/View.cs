@@ -18,46 +18,26 @@ namespace Core.Infrastructure.ViewController
 
     public abstract class View<TViewModel> : View where TViewModel : IViewModel
     {
-        public TViewModel ViewModel
-        {
-            get
-            {
-                InitializeIfNeeded();
-                return _viewModel;
-            }
+        public delegate void ViewModelUpdatedDelegate(TViewModel viewModel);
 
-            private set => _viewModel = value;
-        }
+        public event ViewModelUpdatedDelegate ViewModelUpdated;
 
-        private bool _initialized;
-        private TViewModel _viewModel;
+        protected TViewModel ViewModel { get; private set; }
 
         protected override void OnEnable()
         {
             base.OnEnable();
-            InitializeIfNeeded();
-        }
 
-        public void UpdateViewModel(TViewModel viewModel)
-        {
-            ViewModel = viewModel;
-            OnViewModelUpdated();
+            var initialViewModel = Initialize();
+            UpdateViewModel(initialViewModel);
         }
 
         protected abstract TViewModel Initialize();
 
-        protected virtual void OnViewModelUpdated()
+        public void UpdateViewModel(TViewModel viewModel)
         {
-            _initialized = true;
-        }
-
-        private void InitializeIfNeeded()
-        {
-            if (!_initialized)
-            {
-                var initialViewModel = Initialize();
-                UpdateViewModel(initialViewModel);
-            }
+            ViewModel = viewModel;
+            ViewModelUpdated?.Invoke(viewModel);
         }
     }
 }
