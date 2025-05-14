@@ -1,45 +1,59 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
+using Core.Events;
 
 namespace Core.Infrastructure
 {
     public static class EventBus
     {
-        private static readonly Dictionary<Type, List<Delegate>> Subscribers = new();
+        public delegate void EventHandlerDelegate(IEvent @event);
 
-        public static void Subscribe<TEvent>(Action<TEvent> handler) where TEvent : IEvent
+        public delegate void EventHandlerDelegate<in TEvent>(TEvent @event) where TEvent : IEvent;
+
+
+        private static readonly Dictionary<Type, List<EventHandlerDelegate>> Subscribers = new();
+
+        public static void Subscribe<TEvent>(EventHandlerDelegate<TEvent> eventHandler) where TEvent : IEvent
         {
-            var type = typeof(TEvent);
-
-            if (!Subscribers.ContainsKey(type))
-            {
-                Subscribers[type] = new List<Delegate>();
-            }
-
-            Subscribers[type].Add(handler);
+            Subscribe(typeof(TEvent), @event => eventHandler((TEvent)@event));
         }
 
-        public static void Unsubscribe<TEvent>(Action<TEvent> handler) where TEvent : IEvent
+        public static void Unsubscribe<TEvent>(EventHandlerDelegate<TEvent> eventHandler) where TEvent : IEvent
         {
-            var type = typeof(TEvent);
+            Unsubscribe(typeof(TEvent), @event => eventHandler((TEvent)@event));
+        }
 
-            if (Subscribers.ContainsKey(type))
+        public static void Raise<TEvent>(TEvent @event) where TEvent : IEvent
+        {
+            Raise(typeof(TEvent), @event);
+        }
+
+        public static void Subscribe(Type eventType, EventHandlerDelegate eventHandler)
+        {
+            if (!Subscribers.ContainsKey(eventType))
             {
-                Subscribers[type].Remove(handler);
-                Subscribers.Remove(type);
+                Subscribers[eventType] = new List<EventHandlerDelegate>();
+            }
+
+            Subscribers[eventType].Add(eventHandler);
+        }
+
+        public static void Unsubscribe(Type eventType, EventHandlerDelegate eventHandler)
+        {
+            if (Subscribers.ContainsKey(eventType))
+            {
+                Subscribers[eventType].Remove(eventHandler);
+                Subscribers.Remove(eventType);
             }
         }
 
-        public static void Raise<TEvent>(TEvent raisedEvent) where TEvent : IEvent
+        public static void Raise(Type eventType, IEvent @event)
         {
-            var type = raisedEvent.GetType();
-
-            if (Subscribers.TryGetValue(type, out var callbacks))
+            if (Subscribers.TryGetValue(eventType, out var callbacks))
             {
-                foreach (var callback in callbacks)
-                {
-                    ((Action<TEvent>)callback)?.Invoke(raisedEvent);
-                }
+                var callbacksSnapshot = callbacks.ToList();
+                callbacksSnapshot.ForEach(callback => callback.Invoke(@event));
             }
         }
     }
