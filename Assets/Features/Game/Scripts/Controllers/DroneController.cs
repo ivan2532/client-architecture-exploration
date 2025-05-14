@@ -62,6 +62,12 @@ namespace Features.Game.Controllers
             UpdateViewModel();
         }
 
+        public ShootResult Shoot()
+        {
+            var raycastShootResult = _view.ShootRaycast();
+            return new ShootResult(raycastShootResult.DummyTargetHit);
+        }
+
         private void UpdateViewModel()
         {
             _view.UpdateViewModel(_model.CreateViewModel());

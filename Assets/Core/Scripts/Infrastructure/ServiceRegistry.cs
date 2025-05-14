@@ -14,7 +14,6 @@ namespace Core.Infrastructure
         public void Initialize()
         {
             RegisterScriptableObjectServices();
-            RegisterHardCodedServices();
         }
 
         private void RegisterScriptableObjectServices()
@@ -25,8 +24,9 @@ namespace Core.Infrastructure
             }
         }
 
-        private void RegisterHardCodedServices()
+        public void Register<TService>(TService service)
         {
+            Register(typeof(TService), service);
         }
 
         public void Register<TService, TImplementation>(TImplementation serviceImplementation)

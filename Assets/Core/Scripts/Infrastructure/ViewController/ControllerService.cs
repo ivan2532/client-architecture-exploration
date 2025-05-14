@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using Core.Events;
+using Features.Game.Views;
 using JetBrains.Annotations;
 
 namespace Core.Infrastructure.ViewController
@@ -27,6 +28,18 @@ namespace Core.Infrastructure.ViewController
 
             EventBus.Unsubscribe<ViewEnabledEvent>(OnViewEnabled);
             EventBus.Unsubscribe<ViewDisabledEvent>(OnViewDisabled);
+        }
+
+        public TController GetController<TController>(View droneView) where TController : Controller
+        {
+            if (_controllers[droneView] is not TController controller)
+            {
+                throw new ArgumentException(
+                    $"Controller of view {droneView.GetType().FullName} " +
+                    $"is not of type {typeof(TController).FullName}!");
+            }
+
+            return controller;
         }
 
         private void OnViewEnabled(ViewEnabledEvent viewEnabledEvent)

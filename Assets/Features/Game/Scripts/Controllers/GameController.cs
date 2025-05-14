@@ -13,11 +13,13 @@ namespace Features.Game.Controllers
     {
         private readonly GameView _view;
         private readonly Models.Game _model;
+        private readonly DroneController _drone;
 
-        public GameController(GameView view) : base(view)
+        public GameController(GameView view, ControllerService controllerService) : base(view)
         {
             _view = view;
             _model = new Models.Game();
+            _drone = controllerService.GetController<DroneController>(_view.Drone);
 
             SubscribeToEvents();
         }
@@ -45,9 +47,9 @@ namespace Features.Game.Controllers
 
         private void OnShootPerformed(ShootPerformedEvent shootPerformedEvent)
         {
-            var raycastShootResult = _view.Drone.ShootRaycast();
-            var shootResult = _model.Shoot(raycastShootResult);
-            if (shootResult.ScoreChanged) UpdateHudViewModel();
+            var shootResult = _drone.Shoot();
+            _model.ProcessShot(shootResult);
+            UpdateHudViewModel();
         }
 
         private void OnPausePerformed(PausePerformedEvent pausePerformedEvent)
@@ -71,7 +73,7 @@ namespace Features.Game.Controllers
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent mainMenuButtonClickedEvent)
         {
             _model.OnMainMenuButtonClicked();
-            
+
             UpdateGameViewModel();
             LoadMainMenu();
         }

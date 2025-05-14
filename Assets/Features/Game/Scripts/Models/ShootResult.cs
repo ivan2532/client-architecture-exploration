@@ -1,4 +1,4 @@
 ﻿namespace Features.Game.Models
 {
-    public record ShootResult(bool ScoreChanged);
+    public record ShootResult(bool DummyTargetHit);
 }

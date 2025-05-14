@@ -9,15 +9,9 @@ namespace Features.Game.Models
         private bool _showCursor;
         private bool _paused;
 
-        public ShootResult Shoot(RaycastShootResult raycastShootResult)
+        public void ProcessShot(ShootResult shootResult)
         {
-            if (raycastShootResult.DummyTargetHit)
-            {
-                _score.Increment();
-                return new ShootResult(true);
-            }
-
-            return new ShootResult(false);
+            if (shootResult.DummyTargetHit) _score.Increment();
         }
 
         public void OnPausePerformed()

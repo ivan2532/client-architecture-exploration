@@ -13,10 +13,21 @@ namespace Core.Infrastructure
         private void OnEnable()
         {
             serviceRegistry.Initialize();
-            _controllerService = new ControllerService(serviceRegistry);
+            InitializeServices();
         }
 
         private void OnDisable()
+        {
+            DisposeServices();
+        }
+
+        private void InitializeServices()
+        {
+            _controllerService = new ControllerService(serviceRegistry);
+            serviceRegistry.Register(_controllerService);
+        }
+
+        private void DisposeServices()
         {
             _controllerService.Dispose();
         }
