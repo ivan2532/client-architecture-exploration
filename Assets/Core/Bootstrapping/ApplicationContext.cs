@@ -1,61 +1,51 @@
-using Features.Game.Adapters.Input;
-using Features.Game.Adapters.Output;
-using Features.Game.Configuration;
-using Features.Game.Domain;
-using Features.MainMenu.Adapters.Input;
-using Features.MainMenu.Domain;
+using System;
+using Features.Game.Infrastructure;
+using Features.MainMenu.Infrastructure;
 using UnityEngine;
+using Utility;
 
 namespace Core.Bootstrapping
 {
-    public class ApplicationContext : MonoBehaviour
+    public class ApplicationContext : MonoBehaviour, IDisposable
     {
-        [SerializeField] private GameConfiguration gameConfiguration;
+        [SerializeField] private ScriptableObjectRepository scriptableObjectRepository;
         [SerializeField] private CoroutineRunner coroutineRunner;
 
-        private MainMenuService _mainMenuService;
-        private GameService _gameService;
+        private MainMenuDomainContext _mainMenuDomain;
+        private GameDomainContext _gameDomain;
 
         private void OnEnable()
         {
-            Initialize();
+            CreateDomains();
+            ResolveCircularDependencies();
             StartApplication();
         }
 
         private void OnDisable()
         {
-            Unload();
+            Dispose();
         }
 
-        private void Initialize()
+        private void CreateDomains()
         {
-            _mainMenuService = new MainMenuService();
-            var mainMenuEventHandler = new MainMenuEventHandler(_mainMenuService);
+            _mainMenuDomain = MainMenuDomainContext.Create(coroutineRunner);
+            _gameDomain = GameDomainContext.Create(scriptableObjectRepository.GameConfiguration, coroutineRunner);
+        }
 
-            _gameService = new GameService();
-            var gameEventHandler = new GameEventHandler(_gameService);
-            var gameInputController = new GameInputController(gameEventHandler);
-            var gamePresenter = new GamePresenter();
-
-            _mainMenuService.Initialize(mainMenuEventHandler, _gameService, coroutineRunner);
-            _gameService.Initialize(
-                gameConfiguration,
-                gamePresenter,
-                gameInputController,
-                _mainMenuService,
-                coroutineRunner
-            );
+        private void ResolveCircularDependencies()
+        {
+            _mainMenuDomain.ResolveCircularDependencies(_gameDomain.Service);
+            _gameDomain.ResolveCircularDependencies(_mainMenuDomain.Service);
         }
 
         private void StartApplication()
         {
-            coroutineRunner.Run(_mainMenuService.Load());
+            coroutineRunner.Run(_mainMenuDomain.Service.Load());
         }
 
-        private void Unload()
+        public void Dispose()
         {
-            _mainMenuService.Unload();
-            _gameService.Unload();
+            throw new NotImplementedException();
         }
     }
 }
