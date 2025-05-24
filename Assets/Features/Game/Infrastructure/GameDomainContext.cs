@@ -1,4 +1,5 @@
-﻿using Features.Game.Adapters.Input;
+﻿using System;
+using Features.Game.Adapters.Input;
 using Features.Game.Adapters.Output;
 using Features.Game.Configuration;
 using Features.Game.Domain;
@@ -7,7 +8,7 @@ using Utility;
 
 namespace Features.Game.Infrastructure
 {
-    public class GameDomainContext
+    public class GameDomainContext : IDisposable
     {
         public GameService Service { get; private set; }
 
@@ -22,6 +23,11 @@ namespace Features.Game.Infrastructure
         {
             _configuration = configuration;
             _coroutineRunner = coroutineRunner;
+        }
+
+        public void Dispose()
+        {
+            _eventHandler.Dispose();
         }
 
         public static GameDomainContext Create(GameConfiguration configuration, ICoroutineRunner coroutineRunner)

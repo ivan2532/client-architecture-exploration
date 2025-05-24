@@ -1,11 +1,12 @@
-﻿using Features.Game.Domain;
+﻿using System;
+using Features.Game.Domain;
 using Features.MainMenu.Adapters.Input;
 using Features.MainMenu.Domain;
 using Utility;
 
 namespace Features.MainMenu.Infrastructure
 {
-    public class MainMenuDomainContext
+    public class MainMenuDomainContext : IDisposable
     {
         public MainMenuService Service { get; private set; }
 
@@ -16,6 +17,11 @@ namespace Features.MainMenu.Infrastructure
         private MainMenuDomainContext(ICoroutineRunner coroutineRunner)
         {
             _coroutineRunner = coroutineRunner;
+        }
+
+        public void Dispose()
+        {
+            _eventHandler.Dispose();
         }
 
         public static MainMenuDomainContext Create(ICoroutineRunner coroutineRunner)

@@ -45,7 +45,8 @@ namespace Core.Bootstrapping
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            _mainMenuDomain.Dispose();
+            _gameDomain.Dispose();
         }
     }
 }
