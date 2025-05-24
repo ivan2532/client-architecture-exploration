@@ -5,32 +5,36 @@ using Features.Game.Events;
 using Features.Game.Ports.Output;
 using Features.MainMenu.Domain;
 using UnityEngine.SceneManagement;
+using Utility;
 
 namespace Features.Game.Domain
 {
     public class GameService
     {
-        private GameConfiguration _configuration;
+        private readonly GameConfiguration _configuration;
+        private readonly IGamePresenter _presenter;
+        private readonly IGameInputController _inputController;
+        private readonly ICoroutineRunner _coroutineRunner;
+
         private GameModel _model;
-        private IGamePresenter _presenter;
-        private IGameInputController _inputController;
-
         private MainMenuService _mainMenuService;
-        private CoroutineRunner _coroutineRunner;
 
-        public void Initialize(
+        public GameService(
             GameConfiguration configuration,
             IGamePresenter presenter,
             IGameInputController gameInputController,
-            MainMenuService mainMenuService,
-            CoroutineRunner coroutineRunner
+            ICoroutineRunner coroutineRunner
         )
         {
             _configuration = configuration;
             _presenter = presenter;
             _inputController = gameInputController;
-            _mainMenuService = mainMenuService;
             _coroutineRunner = coroutineRunner;
+        }
+
+        public void ResolveMainMenuService(MainMenuService mainMenuService)
+        {
+            _mainMenuService = mainMenuService;
         }
 
         public IEnumerator Load()

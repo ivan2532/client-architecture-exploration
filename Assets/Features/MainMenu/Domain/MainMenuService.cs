@@ -4,24 +4,26 @@ using Features.MainMenu.Events;
 using Features.MainMenu.Ports.Input;
 using UnityEditor;
 using UnityEngine.SceneManagement;
+using Utility;
 
 namespace Features.MainMenu.Domain
 {
     public class MainMenuService
     {
-        private IMainMenuEventHandler _eventHandler;
-        private GameService _gameService;
-        private CoroutineRunner _coroutineRunner;
+        private readonly IMainMenuEventHandler _eventHandler;
+        private readonly ICoroutineRunner _coroutineRunner;
 
-        public void Initialize(
-            IMainMenuEventHandler eventHandler,
-            GameService gameService,
-            CoroutineRunner coroutineRunner
-        )
+        private GameService _gameService;
+
+        public MainMenuService(IMainMenuEventHandler eventHandler, ICoroutineRunner coroutineRunner)
         {
             _eventHandler = eventHandler;
-            _gameService = gameService;
             _coroutineRunner = coroutineRunner;
+        }
+
+        public void ResolveGameService(GameService gameService)
+        {
+            _gameService = gameService;
         }
 
         public IEnumerator Load()
