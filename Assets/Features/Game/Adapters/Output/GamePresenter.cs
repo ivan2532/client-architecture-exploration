@@ -14,7 +14,6 @@ namespace Features.Game.Adapters.Output
         private DroneView _droneView;
         private MainCharacterView _mainCharacterView;
         private HudView _hudView;
-        private InputView _inputView;
         private PauseMenuView _pauseMenuView;
 
         public void Initialize()
@@ -22,7 +21,6 @@ namespace Features.Game.Adapters.Output
             _droneView = _viewProvider.GetView<DroneView>();
             _mainCharacterView = _viewProvider.GetView<MainCharacterView>();
             _hudView = _viewProvider.GetView<HudView>();
-            _inputView = _viewProvider.GetView<InputView>();
             _pauseMenuView = _viewProvider.GetView<PauseMenuView>();
         }
 

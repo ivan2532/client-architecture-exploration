@@ -7,11 +7,11 @@ namespace Features.MainMenu.Adapters.Input
 {
     public class MainMenuEventHandler : IMainMenuEventHandler
     {
-        private readonly MainMenuService _mainMenuService;
+        private MainMenuService _service;
 
-        public MainMenuEventHandler(MainMenuService mainMenuService)
+        public void ResolveService(MainMenuService mainMenuService)
         {
-            _mainMenuService = mainMenuService;
+            _service = mainMenuService;
         }
 
         public void Enable()
@@ -38,12 +38,12 @@ namespace Features.MainMenu.Adapters.Input
 
         private void OnPlayButtonClicked(PlayButtonClickedEvent @event)
         {
-            _mainMenuService.OnPlayButtonClicked(@event);
+            _service.OnPlayButtonClicked(@event);
         }
 
         private void OnExitButtonClicked(ExitButtonClickedEvent @event)
         {
-            _mainMenuService.OnExitButtonClicked(@event);
+            _service.OnExitButtonClicked(@event);
         }
     }
 }

@@ -7,17 +7,21 @@ namespace Features.Game.Adapters.Input
 {
     public class GameEventHandler : IDisposable
     {
-        private readonly GameService _gameService;
+        private GameService _service;
 
-        public GameEventHandler(GameService gameService)
+        public GameEventHandler()
         {
-            _gameService = gameService;
             SubscribeToEvents();
         }
 
         public void Dispose()
         {
             UnsubscribeFromEvents();
+        }
+
+        public void ResolveService(GameService service)
+        {
+            _service = service;
         }
 
         public void EnableGameInput()
@@ -76,42 +80,42 @@ namespace Features.Game.Adapters.Input
 
         private void OnShootPerformed(ShootPerformedEvent @event)
         {
-            _gameService.OnShootPerformed();
+            _service.OnShootPerformed();
         }
 
         private void OnLookPerformed(LookPerformedEvent @event)
         {
-            _gameService.OnLookPerformed(@event);
+            _service.OnLookPerformed(@event);
         }
 
         private void OnDroneUpdate(DroneUpdateEvent @event)
         {
-            _gameService.OnDroneUpdate(@event);
+            _service.OnDroneUpdate(@event);
         }
 
         private void OnMovePerformed(MovePerformedEvent @event)
         {
-            _gameService.OnMovePerformed(@event);
+            _service.OnMovePerformed(@event);
         }
 
         private void OnMoveCancelled(MoveCancelledEvent @event)
         {
-            _gameService.OnMoveCancelled();
+            _service.OnMoveCancelled();
         }
 
         private void OnPausePerformed(PausePerformedEvent @event)
         {
-            _gameService.OnPausePerformed();
+            _service.OnPausePerformed();
         }
 
         private void OnResumeButtonClicked(ResumeButtonClickedEvent @event)
         {
-            _gameService.OnResumeButtonClicked();
+            _service.OnResumeButtonClicked();
         }
 
         private void OnMainMenuButtonClicked(MainMenuButtonClickedEvent @event)
         {
-            _gameService.OnMainMenuButtonClicked();
+            _service.OnMainMenuButtonClicked();
         }
     }
 }
