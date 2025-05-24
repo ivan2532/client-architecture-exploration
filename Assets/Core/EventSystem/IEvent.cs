@@ -1,4 +1,4 @@
-﻿namespace Core.Events
+﻿namespace Core.EventSystem
 {
     public interface IEvent
     {

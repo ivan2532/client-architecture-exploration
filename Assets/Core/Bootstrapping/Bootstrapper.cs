@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Core.Infrastructure
+namespace Core.Bootstrapping
 {
     public static class Bootstrapper
     {

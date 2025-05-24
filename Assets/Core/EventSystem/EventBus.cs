@@ -1,9 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Core.Events;
 
-namespace Core.Infrastructure
+namespace Core.EventSystem
 {
     public static class EventBus
     {

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Core.Infrastructure
+namespace Core.ViewSystem
 {
     public abstract class View : MonoBehaviour
     {

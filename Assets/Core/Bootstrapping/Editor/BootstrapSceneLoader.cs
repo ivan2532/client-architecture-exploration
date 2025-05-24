@@ -2,7 +2,7 @@
 using UnityEditor.SceneManagement;
 using UnityEngine.SceneManagement;
 
-namespace Core.Editor
+namespace Core.Bootstrapping.Editor
 {
     [InitializeOnLoad]
     public static class BootstrapSceneLoader

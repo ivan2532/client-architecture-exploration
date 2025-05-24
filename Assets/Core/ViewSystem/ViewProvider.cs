@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Core.Events;
+using Core.EventSystem;
 using UnityEngine;
 
-namespace Core.Infrastructure
+namespace Core.ViewSystem
 {
     public abstract class ViewProvider<TView, TViewCreatedEvent> : IDisposable
         where TView : MonoBehaviour

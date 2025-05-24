@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using Core.EventSystem;
+using UnityEngine;
 
-namespace Core.Events
+namespace Core.ViewSystem
 {
     public interface IViewCreatedEvent : IEvent
     {

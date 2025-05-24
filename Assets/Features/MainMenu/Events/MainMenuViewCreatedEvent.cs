@@ -1,4 +1,4 @@
-﻿using Core.Events;
+﻿using Core.ViewSystem;
 using UnityEngine;
 
 namespace Features.MainMenu.Events

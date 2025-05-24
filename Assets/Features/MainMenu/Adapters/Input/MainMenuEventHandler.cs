@@ -1,4 +1,5 @@
-﻿using Core.Infrastructure;
+﻿using Core.EventSystem;
+using Core.Infrastructure;
 using Features.MainMenu.Domain;
 using Features.MainMenu.Events;
 using Features.MainMenu.Ports.Input;

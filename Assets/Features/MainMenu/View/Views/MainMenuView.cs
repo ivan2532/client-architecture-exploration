@@ -1,9 +1,10 @@
-﻿using Core.Infrastructure;
+﻿using Core.EventSystem;
+using Core.Infrastructure;
 using Features.MainMenu.Events;
 
 namespace Features.MainMenu.View.Views
 {
-    public abstract class MainMenuView : Core.Infrastructure.View
+    public abstract class MainMenuView : Core.ViewSystem.View
     {
         protected override void RaiseViewCreatedEvent()
         {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Core.Infrastructure
+namespace Core.ViewSystem
 {
     public class ViewNotCreatedException<TView> : Exception
     {

@@ -1,10 +1,11 @@
-﻿using Core.Infrastructure;
+﻿using Core.EventSystem;
+using Core.Infrastructure;
 using Features.Game.Events;
 using Features.Game.View.Model;
 
 namespace Features.Game.View.Views
 {
-    public abstract class GameView : Core.Infrastructure.View
+    public abstract class GameView : Core.ViewSystem.View
     {
         protected override void RaiseViewCreatedEvent()
         {

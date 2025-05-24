@@ -1,3 +1,4 @@
+using Core.Infrastructure;
 using Features.Game.Adapters.Input;
 using Features.Game.Adapters.Output;
 using Features.Game.Configuration;
@@ -6,7 +7,7 @@ using Features.MainMenu.Adapters.Input;
 using Features.MainMenu.Domain;
 using UnityEngine;
 
-namespace Core.Infrastructure
+namespace Core.Bootstrapping
 {
     public class ApplicationContext : MonoBehaviour
     {

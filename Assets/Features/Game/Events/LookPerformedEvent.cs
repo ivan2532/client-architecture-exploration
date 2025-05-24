@@ -1,4 +1,4 @@
-﻿using Core.Events;
+﻿using Core.EventSystem;
 using Features.Game.View.Model;
 
 namespace Features.Game.Events
