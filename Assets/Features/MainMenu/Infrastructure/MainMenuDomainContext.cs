@@ -39,7 +39,7 @@ namespace Features.MainMenu.Infrastructure
 
         private void CreateService()
         {
-            Service = new MainMenuService(_eventHandler, _coroutineRunner);
+            Service = new MainMenuService(_coroutineRunner);
         }
 
         private void ResolveInternalCircularDependencies()
