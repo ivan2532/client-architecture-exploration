@@ -32,15 +32,16 @@ namespace Core.Infrastructure
             _mainMenuService = new MainMenuService();
             var mainMenuEventHandler = new MainMenuEventHandler(_mainMenuService);
 
-            var gamePresenter = new GamePresenter();
             _gameService = new GameService();
             var gameEventHandler = new GameEventHandler(_gameService);
+            var gameInputController = new GameInputController(gameEventHandler);
+            var gamePresenter = new GamePresenter();
 
             _mainMenuService.Initialize(mainMenuEventHandler, _gameService, coroutineRunner);
             _gameService.Initialize(
                 gameConfiguration,
-                gameEventHandler,
                 gamePresenter,
+                gameInputController,
                 _mainMenuService,
                 coroutineRunner
             );

@@ -3,7 +3,6 @@ using Core.Infrastructure;
 using Features.Game.Configuration;
 using Features.Game.Domain.Model;
 using Features.Game.Events;
-using Features.Game.Ports.Input;
 using Features.Game.Ports.Output;
 using Features.MainMenu.Domain;
 using UnityEngine.SceneManagement;
@@ -14,30 +13,30 @@ namespace Features.Game.Domain
     {
         private GameConfiguration _configuration;
         private GameModel _model;
-        private IGameEventHandler _eventHandler;
         private IGamePresenter _presenter;
+        private IGameInputController _inputController;
 
         private MainMenuService _mainMenuService;
         private CoroutineRunner _coroutineRunner;
 
         public void Initialize(
             GameConfiguration configuration,
-            IGameEventHandler eventHandler,
             IGamePresenter presenter,
+            IGameInputController gameInputController,
             MainMenuService mainMenuService,
             CoroutineRunner coroutineRunner
         )
         {
             _configuration = configuration;
-            _eventHandler = eventHandler;
             _presenter = presenter;
+            _inputController = gameInputController;
             _mainMenuService = mainMenuService;
             _coroutineRunner = coroutineRunner;
         }
 
         public IEnumerator Load()
         {
-            _eventHandler.Enable();
+            _inputController.EnableInput();
             yield return SceneManager.LoadSceneAsync("Game");
 
             _presenter.Initialize();
@@ -48,7 +47,7 @@ namespace Features.Game.Domain
 
         public void Unload()
         {
-            _eventHandler.Disable();
+            _inputController.DisableInput();
         }
 
         public void OnShootPerformed()

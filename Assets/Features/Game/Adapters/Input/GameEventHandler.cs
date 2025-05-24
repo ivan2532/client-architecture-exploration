@@ -1,11 +1,10 @@
 ﻿using Core.Infrastructure;
 using Features.Game.Domain;
 using Features.Game.Events;
-using Features.Game.Ports.Input;
 
 namespace Features.Game.Adapters.Input
 {
-    public class GameEventHandler : IGameEventHandler
+    public class GameEventHandler
     {
         private readonly GameService _gameService;
 
