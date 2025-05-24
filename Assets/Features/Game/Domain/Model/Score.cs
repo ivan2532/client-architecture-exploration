@@ -4,10 +4,11 @@
     {
         public int Value { get; private set; }
 
-        public static Score Zero => new() { Value = 0 };
+        public static Score Zero => new(0);
 
-        private Score()
+        private Score(int value)
         {
+            Value = value;
         }
 
         public void Increment()
