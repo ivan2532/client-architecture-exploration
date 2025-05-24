@@ -1,7 +1,6 @@
 ﻿using Features.Game.Configuration;
 using Features.Game.Events;
 using Features.Game.View.Model;
-using UnityEngine;
 
 namespace Features.Game.Domain.Model
 {

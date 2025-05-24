@@ -1,10 +1,14 @@
 ﻿namespace Features.Game.Domain.Model
 {
-    public struct Score
+    public class Score
     {
         public int Value { get; private set; }
 
         public static Score Zero => new() { Value = 0 };
+
+        private Score()
+        {
+        }
 
         public void Increment()
         {
