@@ -1,0 +1,7 @@
+﻿using Core.Events;
+using Features.Game.View.Model;
+
+namespace Features.Game.Events
+{
+    public record LookPerformedEvent(LookInputDelta InputDelta) : IEvent;
+}
