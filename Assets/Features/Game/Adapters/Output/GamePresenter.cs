@@ -60,12 +60,10 @@ namespace Features.Game.Adapters.Output
         public void PauseGame()
         {
             Time.timeScale = 0f;
-            _pauseMenuView.Show();
         }
 
         public void ResumeGame()
         {
-            _pauseMenuView.Hide();
             Time.timeScale = 1f;
         }
 
