@@ -1,4 +1,3 @@
-using Core.Infrastructure;
 using Features.Game.Adapters.Input;
 using Features.Game.Adapters.Output;
 using Features.Game.Configuration;

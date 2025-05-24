@@ -1,5 +1,4 @@
 ﻿using Core.EventSystem;
-using Core.Infrastructure;
 using Features.MainMenu.Events;
 
 namespace Features.MainMenu.View.Views

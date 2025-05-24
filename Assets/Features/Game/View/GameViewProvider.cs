@@ -1,5 +1,4 @@
-﻿using Core.Infrastructure;
-using Core.ViewSystem;
+﻿using Core.ViewSystem;
 using Features.Game.Events;
 using Features.Game.View.Views;
 

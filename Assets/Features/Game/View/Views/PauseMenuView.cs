@@ -1,5 +1,4 @@
 using Core.EventSystem;
-using Core.Infrastructure;
 using Features.Game.Events;
 using UnityEngine;
 using UnityEngine.UI;

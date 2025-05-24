@@ -1,5 +1,4 @@
 using Core.EventSystem;
-using Core.Infrastructure;
 using Features.MainMenu.Events;
 using UnityEngine;
 using UnityEngine.UI;

@@ -1,6 +1,5 @@
 ﻿using System;
 using Core.EventSystem;
-using Core.Infrastructure;
 using Features.Game.Domain;
 using Features.Game.Events;
 
