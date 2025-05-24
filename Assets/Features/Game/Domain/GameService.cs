@@ -47,7 +47,7 @@ namespace Features.Game.Domain
             _presenter.HideCursor();
         }
 
-        public void Unload()
+        private void Unload()
         {
             _inputController.EnableInput();
         }
