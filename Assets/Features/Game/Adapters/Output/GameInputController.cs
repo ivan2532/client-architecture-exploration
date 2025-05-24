@@ -14,12 +14,12 @@ namespace Features.Game.Adapters.Output
 
         public void EnableInput()
         {
-            _gameEventHandler.Enable();
+            _gameEventHandler.EnableGameInput();
         }
 
         public void DisableInput()
         {
-            _gameEventHandler.Disable();
+            _gameEventHandler.DisableGameInput();
         }
     }
 }

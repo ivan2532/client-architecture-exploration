@@ -1,51 +1,74 @@
-﻿using Core.Infrastructure;
+﻿using System;
+using Core.Infrastructure;
 using Features.Game.Domain;
 using Features.Game.Events;
 
 namespace Features.Game.Adapters.Input
 {
-    public class GameEventHandler
+    public class GameEventHandler : IDisposable
     {
         private readonly GameService _gameService;
 
         public GameEventHandler(GameService gameService)
         {
             _gameService = gameService;
-        }
-
-        public void Enable()
-        {
             SubscribeToEvents();
         }
 
-        public void Disable()
+        public void Dispose()
         {
             UnsubscribeFromEvents();
         }
 
+        public void EnableGameInput()
+        {
+            SubscribeToGameInputEvents();
+        }
+
+        public void DisableGameInput()
+        {
+            UnsubscribeFromGameInputEvents();
+        }
+
         private void SubscribeToEvents()
+        {
+            SubscribeToGameInputEvents();
+            SubscribeToPauseMenuEvents();
+        }
+
+        private void UnsubscribeFromEvents()
+        {
+            UnsubscribeFromGameInputEvents();
+            UnsubscribeFromPauseMenuEvents();
+        }
+
+        private void SubscribeToGameInputEvents()
         {
             EventBus.Subscribe<ShootPerformedEvent>(OnShootPerformed);
             EventBus.Subscribe<LookPerformedEvent>(OnLookPerformed);
             EventBus.Subscribe<DroneUpdateEvent>(OnDroneUpdate);
-
             EventBus.Subscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Subscribe<MoveCancelledEvent>(OnMoveCancelled);
+        }
 
+        private void SubscribeToPauseMenuEvents()
+        {
             EventBus.Subscribe<PausePerformedEvent>(OnPausePerformed);
             EventBus.Subscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
             EventBus.Subscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);
         }
 
-        private void UnsubscribeFromEvents()
+        private void UnsubscribeFromGameInputEvents()
         {
             EventBus.Unsubscribe<ShootPerformedEvent>(OnShootPerformed);
             EventBus.Unsubscribe<LookPerformedEvent>(OnLookPerformed);
             EventBus.Unsubscribe<DroneUpdateEvent>(OnDroneUpdate);
-
             EventBus.Unsubscribe<MovePerformedEvent>(OnMovePerformed);
             EventBus.Unsubscribe<MoveCancelledEvent>(OnMoveCancelled);
+        }
 
+        private void UnsubscribeFromPauseMenuEvents()
+        {
             EventBus.Unsubscribe<PausePerformedEvent>(OnPausePerformed);
             EventBus.Unsubscribe<ResumeButtonClickedEvent>(OnResumeButtonClicked);
             EventBus.Unsubscribe<MainMenuButtonClickedEvent>(OnMainMenuButtonClicked);

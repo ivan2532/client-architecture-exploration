@@ -59,34 +59,16 @@ namespace Features.Game.Adapters.Output
             _hudView.UpdateViewModel(viewModel);
         }
 
-        public void FreezeTime()
+        public void PauseGame()
         {
             Time.timeScale = 0f;
-        }
-
-        public void ResumeTime()
-        {
-            Time.timeScale = 1f;
-        }
-
-        public void EnableInput()
-        {
-            _inputView.EnableInput();
-        }
-
-        public void DisableInput()
-        {
-            _inputView.DisableInput();
-        }
-
-        public void ShowPauseMenu()
-        {
             _pauseMenuView.Show();
         }
 
-        public void HidePauseMenu()
+        public void ResumeGame()
         {
             _pauseMenuView.Hide();
+            Time.timeScale = 1f;
         }
 
         public void ShowCursor()
@@ -99,6 +81,16 @@ namespace Features.Game.Adapters.Output
         {
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
+        }
+
+        public void ShowPauseMenu()
+        {
+            _pauseMenuView.Show();
+        }
+
+        public void HidePauseMenu()
+        {
+            _pauseMenuView.Hide();
         }
     }
 }

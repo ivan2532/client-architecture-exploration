@@ -4,6 +4,8 @@
     {
         public int Value { get; private set; }
 
+        public static Score Zero => new() { Value = 0 };
+
         public void Increment()
         {
             Value++;

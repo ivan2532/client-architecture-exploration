@@ -36,7 +36,6 @@ namespace Features.Game.Domain
 
         public IEnumerator Load()
         {
-            _inputController.EnableInput();
             yield return SceneManager.LoadSceneAsync("Game");
 
             _presenter.Initialize();
@@ -47,7 +46,7 @@ namespace Features.Game.Domain
 
         public void Unload()
         {
-            _inputController.DisableInput();
+            _inputController.EnableInput();
         }
 
         public void OnShootPerformed()
@@ -83,23 +82,38 @@ namespace Features.Game.Domain
 
         public void OnPausePerformed()
         {
-            _presenter.FreezeTime();
-            _presenter.DisableInput();
-            _presenter.ShowPauseMenu();
-            _presenter.ShowCursor();
+            var pauseResult = _model.OnPausePerformed();
+
+            if (pauseResult.Paused)
+            {
+                _inputController.DisableInput();
+                _presenter.PauseGame();
+                _presenter.ShowCursor();
+                _presenter.ShowPauseMenu();
+            }
+            else
+            {
+                _inputController.EnableInput();
+                _presenter.HidePauseMenu();
+                _presenter.HideCursor();
+                _presenter.ResumeGame();
+            }
         }
 
         public void OnResumeButtonClicked()
         {
-            _presenter.HideCursor();
+            _model.OnResumePerformed();
+
+            _inputController.EnableInput();
             _presenter.HidePauseMenu();
-            _presenter.EnableInput();
-            _presenter.ResumeTime();
+            _presenter.HideCursor();
+            _presenter.ResumeGame();
         }
 
         public void OnMainMenuButtonClicked()
         {
-            _presenter.ResumeTime();
+            _presenter.ShowCursor();
+            _presenter.ResumeGame();
             Unload();
             _coroutineRunner.Run(_mainMenuService.Load());
         }

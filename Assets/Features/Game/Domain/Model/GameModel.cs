@@ -10,7 +10,10 @@ namespace Features.Game.Domain.Model
         public readonly Drone Drone;
         public readonly MainCharacter MainCharacter;
 
-        public Score Score;
+        public Score Score { get; }
+
+        private bool _paused;
+
 
         public GameModel(
             GameConfiguration configuration,
@@ -18,6 +21,7 @@ namespace Features.Game.Domain.Model
         {
             Drone = new Drone(configuration.Drone, droneStartingState);
             MainCharacter = new MainCharacter(configuration.MainCharacter);
+            Score = Score.Zero;
         }
 
         public ShootResult OnShootPerformed(RaycastShootResult raycastShootResult)
@@ -49,6 +53,17 @@ namespace Features.Game.Domain.Model
         public void OnMoveCancelled()
         {
             MainCharacter.OnMoveCancelled();
+        }
+
+        public PauseResult OnPausePerformed()
+        {
+            _paused = !_paused;
+            return new PauseResult(_paused);
+        }
+
+        public void OnResumePerformed()
+        {
+            _paused = false;
         }
     }
 }

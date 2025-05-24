@@ -15,16 +15,13 @@ namespace Features.Game.Ports.Output
 
         public void UpdateScore(Score modelScore);
 
-        public void FreezeTime();
-        public void ResumeTime();
-
-        public void EnableInput();
-        public void DisableInput();
-
-        public void ShowPauseMenu();
-        public void HidePauseMenu();
+        public void PauseGame();
+        public void ResumeGame();
 
         public void ShowCursor();
         public void HideCursor();
+
+        public void ShowPauseMenu();
+        public void HidePauseMenu();
     }
 }
