@@ -10,7 +10,6 @@ namespace Core.Bootstrapping
     public class ApplicationContext : MonoBehaviour, IDisposable
     {
         [SerializeField] private List<DomainContext> domains;
-
         [SerializeField] private MainMenuDomainContext mainMenuDomain;
 
         private void OnEnable()
