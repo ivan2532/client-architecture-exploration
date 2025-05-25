@@ -1,5 +1,6 @@
 using System;
-using Features.Game.Infrastructure;
+using System.Collections.Generic;
+using Core.DomainContextSystem;
 using Features.MainMenu.Infrastructure;
 using UnityEngine;
 using Utility;
@@ -8,15 +9,14 @@ namespace Core.Bootstrapping
 {
     public class ApplicationContext : MonoBehaviour, IDisposable
     {
-        [SerializeField] private ScriptableObjectRepository scriptableObjectRepository;
+        [SerializeField] private List<DomainContext> domains;
         [SerializeField] private CoroutineRunner coroutineRunner;
 
-        private MainMenuDomainContext _mainMenuDomain;
-        private GameDomainContext _gameDomain;
+        [SerializeField] private MainMenuDomainContext mainMenuDomain;
 
         private void OnEnable()
         {
-            CreateDomains();
+            InitializeDomains();
             ResolveCircularDependencies();
             StartApplication();
         }
@@ -26,27 +26,24 @@ namespace Core.Bootstrapping
             Dispose();
         }
 
-        private void CreateDomains()
+        private void InitializeDomains()
         {
-            _mainMenuDomain = MainMenuDomainContext.Create(coroutineRunner);
-            _gameDomain = GameDomainContext.Create(scriptableObjectRepository.GameConfiguration, coroutineRunner);
+            domains.ForEach(domain => domain.Initialize());
         }
 
         private void ResolveCircularDependencies()
         {
-            _mainMenuDomain.ResolveCircularDependencies(_gameDomain.Service);
-            _gameDomain.ResolveCircularDependencies(_mainMenuDomain.Service);
+            domains.ForEach(domain => domain.ResolveExternalCircularDependencies());
         }
 
         private void StartApplication()
         {
-            coroutineRunner.Run(_mainMenuDomain.Service.Load());
+            coroutineRunner.Run(mainMenuDomain.Service.Load());
         }
 
         public void Dispose()
         {
-            _mainMenuDomain.Dispose();
-            _gameDomain.Dispose();
+            domains.ForEach(domain => domain.Dispose());
         }
     }
 }
