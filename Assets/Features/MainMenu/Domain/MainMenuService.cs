@@ -15,14 +15,14 @@ namespace Features.MainMenu.Domain
             _gameService = gameService;
         }
 
-        public IEnumerator Load()
+        public IEnumerator LoadMainMenuScene()
         {
             yield return SceneManager.LoadSceneAsync("MainMenu");
         }
 
         public void OnPlayButtonClicked()
         {
-            CoroutineRunner.Run(LoadGame());
+            CoroutineRunner.Run(LoadGameScene());
         }
 
         public void OnExitButtonClicked()
@@ -30,9 +30,9 @@ namespace Features.MainMenu.Domain
             ExitGame();
         }
 
-        private IEnumerator LoadGame()
+        private IEnumerator LoadGameScene()
         {
-            yield return _gameService.Load();
+            yield return _gameService.LoadGameScene();
         }
 
         private void ExitGame()

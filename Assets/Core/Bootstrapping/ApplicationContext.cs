@@ -36,7 +36,7 @@ namespace Core.Bootstrapping
 
         private void StartApplication()
         {
-            CoroutineRunner.Run(mainMenuDomain.Service.Load());
+            CoroutineRunner.Run(mainMenuDomain.Service.LoadMainMenuScene());
         }
 
         public void Dispose()

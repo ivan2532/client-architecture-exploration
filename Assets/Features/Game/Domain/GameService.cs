@@ -34,7 +34,7 @@ namespace Features.Game.Domain
             _mainMenuService = mainMenuService;
         }
 
-        public IEnumerator Load()
+        public IEnumerator LoadGameScene()
         {
             yield return SceneManager.LoadSceneAsync("Game");
 
@@ -42,11 +42,6 @@ namespace Features.Game.Domain
             InitializeModel();
 
             _presenter.HideCursor();
-        }
-
-        private void Unload()
-        {
-            _inputController.EnableInput();
         }
 
         public void OnShootPerformed()
@@ -114,8 +109,8 @@ namespace Features.Game.Domain
         {
             _presenter.ShowCursor();
             _presenter.ResumeGame();
-            Unload();
-            CoroutineRunner.Run(_mainMenuService.Load());
+            _inputController.EnableInput();
+            CoroutineRunner.Run(_mainMenuService.LoadMainMenuScene());
         }
 
         private void InitializeModel()
