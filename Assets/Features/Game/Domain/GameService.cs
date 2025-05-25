@@ -105,7 +105,7 @@ namespace Features.Game.Domain
 
         public void OnResumeButtonClicked()
         {
-            _model.OnResumePerformed();
+            _model.OnResumeButtonClicked();
 
             _inputController.EnableInput();
             _presenter.HidePauseMenu();

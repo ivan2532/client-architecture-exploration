@@ -60,7 +60,7 @@ namespace Features.Game.Domain.Model
             return new PauseResult(_paused);
         }
 
-        public void OnResumePerformed()
+        public void OnResumeButtonClicked()
         {
             _paused = false;
         }
