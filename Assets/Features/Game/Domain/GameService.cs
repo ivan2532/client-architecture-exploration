@@ -14,7 +14,6 @@ namespace Features.Game.Domain
         private readonly GameConfiguration _configuration;
         private readonly IGamePresenter _presenter;
         private readonly IGameInputController _inputController;
-        private readonly ICoroutineRunner _coroutineRunner;
 
         private GameModel _model;
         private MainMenuService _mainMenuService;
@@ -22,14 +21,12 @@ namespace Features.Game.Domain
         public GameService(
             GameConfiguration configuration,
             IGamePresenter presenter,
-            IGameInputController gameInputController,
-            ICoroutineRunner coroutineRunner
+            IGameInputController gameInputController
         )
         {
             _configuration = configuration;
             _presenter = presenter;
             _inputController = gameInputController;
-            _coroutineRunner = coroutineRunner;
         }
 
         public void ResolveMainMenuService(MainMenuService mainMenuService)
@@ -118,7 +115,7 @@ namespace Features.Game.Domain
             _presenter.ShowCursor();
             _presenter.ResumeGame();
             Unload();
-            _coroutineRunner.Run(_mainMenuService.Load());
+            CoroutineRunner.Run(_mainMenuService.Load());
         }
 
         private void InitializeModel()

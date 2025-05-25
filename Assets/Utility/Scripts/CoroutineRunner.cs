@@ -3,16 +3,19 @@ using UnityEngine;
 
 namespace Utility
 {
-    public class CoroutineRunner : MonoBehaviour, ICoroutineRunner
+    public class CoroutineRunner : MonoBehaviour
     {
-        public void Run(IEnumerator coroutine)
-        {
-            StartCoroutine(coroutine);
-        }
-    }
+        private static CoroutineRunner _runner;
 
-    public interface ICoroutineRunner
-    {
-        public void Run(IEnumerator coroutine);
+        public static void Create()
+        {
+            _runner ??= new GameObject("CoroutineRunner").AddComponent<CoroutineRunner>();
+            DontDestroyOnLoad(_runner.gameObject);
+        }
+
+        public static void Run(IEnumerator coroutine)
+        {
+            _runner.StartCoroutine(coroutine);
+        }
     }
 }

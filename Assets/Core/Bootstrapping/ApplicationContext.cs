@@ -10,7 +10,6 @@ namespace Core.Bootstrapping
     public class ApplicationContext : MonoBehaviour, IDisposable
     {
         [SerializeField] private List<DomainContext> domains;
-        [SerializeField] private CoroutineRunner coroutineRunner;
 
         [SerializeField] private MainMenuDomainContext mainMenuDomain;
 
@@ -38,7 +37,7 @@ namespace Core.Bootstrapping
 
         private void StartApplication()
         {
-            coroutineRunner.Run(mainMenuDomain.Service.Load());
+            CoroutineRunner.Run(mainMenuDomain.Service.Load());
         }
 
         public void Dispose()

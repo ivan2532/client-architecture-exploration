@@ -1,4 +1,5 @@
 using UnityEngine;
+using Utility;
 
 namespace Core.Bootstrapping
 {
@@ -6,6 +7,12 @@ namespace Core.Bootstrapping
     {
         [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSceneLoad)]
         private static void Initialize()
+        {
+            CoroutineRunner.Create();
+            CreateApplicationContext();
+        }
+
+        private static void CreateApplicationContext()
         {
             var applicationContextPrefab = Resources.Load<GameObject>("ApplicationContext");
             var applicationContextInstance = Object.Instantiate(applicationContextPrefab);

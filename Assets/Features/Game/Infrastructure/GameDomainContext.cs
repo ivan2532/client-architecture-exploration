@@ -5,7 +5,6 @@ using Features.Game.Configuration;
 using Features.Game.Domain;
 using Features.MainMenu.Infrastructure;
 using UnityEngine;
-using Utility;
 
 namespace Features.Game.Infrastructure
 {
@@ -16,11 +15,6 @@ namespace Features.Game.Infrastructure
         [SerializeField] private MainMenuDomainContext mainMenuDomain;
 
         public GameService Service { get; private set; }
-
-        private readonly GameConfiguration _configuration;
-
-        // TODO IvanB: What about this?
-        private readonly ICoroutineRunner _coroutineRunner;
 
         private GameEventHandler _eventHandler;
         private GamePresenter _presenter;
@@ -39,7 +33,7 @@ namespace Features.Game.Infrastructure
 
         protected override void CreateService()
         {
-            Service = new GameService(_configuration, _presenter, _inputController, _coroutineRunner);
+            Service = new GameService(configuration, _presenter, _inputController);
         }
 
         protected override void ResolveInternalCircularDependencies()

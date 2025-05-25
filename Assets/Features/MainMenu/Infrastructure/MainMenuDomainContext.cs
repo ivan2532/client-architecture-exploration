@@ -3,7 +3,6 @@ using Features.Game.Infrastructure;
 using Features.MainMenu.Adapters.Input;
 using Features.MainMenu.Domain;
 using UnityEngine;
-using Utility;
 
 namespace Features.MainMenu.Infrastructure
 {
@@ -13,9 +12,6 @@ namespace Features.MainMenu.Infrastructure
         [SerializeField] private GameDomainContext gameDomain;
 
         public MainMenuService Service { get; private set; }
-
-        // TODO IvanB: What about this?
-        private readonly ICoroutineRunner _coroutineRunner;
 
         private MainMenuEventHandler _eventHandler;
 
@@ -30,7 +26,7 @@ namespace Features.MainMenu.Infrastructure
 
         protected override void CreateService()
         {
-            Service = new MainMenuService(_coroutineRunner);
+            Service = new MainMenuService();
         }
 
         protected override void ResolveInternalCircularDependencies()

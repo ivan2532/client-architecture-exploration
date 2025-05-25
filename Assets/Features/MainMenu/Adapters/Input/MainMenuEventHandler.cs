@@ -34,12 +34,12 @@ namespace Features.MainMenu.Adapters.Input
 
         private void OnPlayButtonClicked(PlayButtonClickedEvent @event)
         {
-            _service.OnPlayButtonClicked(@event);
+            _service.OnPlayButtonClicked();
         }
 
         private void OnExitButtonClicked(ExitButtonClickedEvent @event)
         {
-            _service.OnExitButtonClicked(@event);
+            _service.OnExitButtonClicked();
         }
     }
 }
