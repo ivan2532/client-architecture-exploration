@@ -1,69 +1,59 @@
-﻿using System;
+﻿using Core.DomainContextSystem;
 using Features.Game.Adapters.Input;
 using Features.Game.Adapters.Output;
 using Features.Game.Configuration;
 using Features.Game.Domain;
-using Features.MainMenu.Domain;
+using Features.MainMenu.Infrastructure;
+using UnityEngine;
 using Utility;
 
 namespace Features.Game.Infrastructure
 {
-    public class GameDomainContext : IDisposable
+    public class GameDomainContext : DomainContext
     {
+        [SerializeField] private GameConfiguration configuration;
+        [SerializeField] private MainMenuDomainContext mainMenuDomain;
+
         public GameService Service { get; private set; }
 
         private readonly GameConfiguration _configuration;
+
+        // TODO IvanB: What about this?
         private readonly ICoroutineRunner _coroutineRunner;
 
         private GameEventHandler _eventHandler;
         private GamePresenter _presenter;
         private GameInputController _inputController;
 
-        private GameDomainContext(GameConfiguration configuration, ICoroutineRunner coroutineRunner)
-        {
-            _configuration = configuration;
-            _coroutineRunner = coroutineRunner;
-        }
-
-        public void Dispose()
-        {
-            _eventHandler.Dispose();
-        }
-
-        public static GameDomainContext Create(GameConfiguration configuration, ICoroutineRunner coroutineRunner)
-        {
-            var context = new GameDomainContext(configuration, coroutineRunner);
-            context.CreateInputAdapters();
-            context.CreateOutputAdapters();
-            context.CreateService();
-            context.ResolveInternalCircularDependencies();
-            return context;
-        }
-
-        public void ResolveCircularDependencies(MainMenuService mainMenuService)
-        {
-            Service.ResolveMainMenuService(mainMenuService);
-        }
-
-        private void CreateInputAdapters()
+        protected override void CreateInputAdapters()
         {
             _eventHandler = new GameEventHandler();
         }
 
-        private void CreateOutputAdapters()
+        protected override void CreateOutputAdapters()
         {
             _presenter = new GamePresenter();
             _inputController = new GameInputController(_eventHandler);
         }
 
-        private void CreateService()
+        protected override void CreateService()
         {
             Service = new GameService(_configuration, _presenter, _inputController, _coroutineRunner);
         }
 
-        private void ResolveInternalCircularDependencies()
+        protected override void ResolveInternalCircularDependencies()
         {
             _eventHandler.ResolveService(Service);
+        }
+
+        public override void ResolveExternalCircularDependencies()
+        {
+            Service.ResolveMainMenuService(mainMenuDomain.Service);
+        }
+
+        public override void Dispose()
+        {
+            _eventHandler.Dispose();
         }
     }
 }
