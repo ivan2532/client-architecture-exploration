@@ -9,6 +9,7 @@ using Utility;
 
 namespace Features.Game.Infrastructure
 {
+    [CreateAssetMenu(fileName = "GameDomainContext", menuName = "Scriptable Objects/Domains/Game")]
     public class GameDomainContext : DomainContext
     {
         [SerializeField] private GameConfiguration configuration;

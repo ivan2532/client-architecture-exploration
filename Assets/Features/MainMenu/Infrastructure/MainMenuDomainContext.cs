@@ -7,6 +7,7 @@ using Utility;
 
 namespace Features.MainMenu.Infrastructure
 {
+    [CreateAssetMenu(fileName = "MainMenuDomainContext", menuName = "Scriptable Objects/Domains/Main Menu")]
     public class MainMenuDomainContext : DomainContext
     {
         [SerializeField] private GameDomainContext gameDomain;

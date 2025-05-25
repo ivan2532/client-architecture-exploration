@@ -2,7 +2,7 @@
 
 namespace Features.Game.Configuration
 {
-    [CreateAssetMenu(fileName = "DroneConfiguration", menuName = "ScriptableObjects/DroneConfiguration")]
+    [CreateAssetMenu(fileName = "DroneConfiguration", menuName = "Scriptable Objects/Configuration/Drone")]
     public class DroneConfiguration : ScriptableObject
     {
         [field: SerializeField] public float FollowSmoothTime { get; private set; } = 0.1f;
