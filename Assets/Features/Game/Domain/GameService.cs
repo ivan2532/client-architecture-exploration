@@ -82,15 +82,15 @@ namespace Features.Game.Domain
             {
                 _inputController.DisableInput();
                 _presenter.PauseGame();
-                _presenter.ShowCursor();
                 _presenter.ShowPauseMenu();
+                _presenter.ShowCursor();
             }
             else
             {
                 _inputController.EnableInput();
+                _presenter.ResumeGame();
                 _presenter.HidePauseMenu();
                 _presenter.HideCursor();
-                _presenter.ResumeGame();
             }
         }
 
@@ -99,16 +99,16 @@ namespace Features.Game.Domain
             _model.OnResumeButtonClicked();
 
             _inputController.EnableInput();
+            _presenter.ResumeGame();
             _presenter.HidePauseMenu();
             _presenter.HideCursor();
-            _presenter.ResumeGame();
         }
 
         public void OnMainMenuButtonClicked()
         {
-            _presenter.ShowCursor();
-            _presenter.ResumeGame();
             _inputController.EnableInput();
+            _presenter.ResumeGame();
+            _presenter.ShowCursor();
             CoroutineRunner.Run(_mainMenuService.LoadMainMenuScene());
         }
 
