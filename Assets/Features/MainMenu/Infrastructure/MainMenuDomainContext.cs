@@ -1,6 +1,7 @@
 ﻿using Core.Bootstrapping;
 using Features.Game.Infrastructure;
 using Features.MainMenu.Adapters.Input;
+using Features.MainMenu.Adapters.Output;
 using Features.MainMenu.Domain;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ namespace Features.MainMenu.Infrastructure
         public MainMenuService Service { get; private set; }
 
         private MainMenuEventHandler _eventHandler;
+        private MainMenuPresenter _presenter;
 
         protected override void CreateInputAdapters()
         {
@@ -22,11 +24,12 @@ namespace Features.MainMenu.Infrastructure
 
         protected override void CreateOutputAdapters()
         {
+            _presenter = new MainMenuPresenter();
         }
 
         protected override void CreateService()
         {
-            Service = new MainMenuService();
+            Service = new MainMenuService(_presenter);
         }
 
         protected override void ResolveInternalCircularDependencies()

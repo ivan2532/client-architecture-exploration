@@ -1,14 +1,21 @@
 ﻿using System.Collections;
 using Features.Game.Domain;
+using Features.MainMenu.Ports.Output;
 using UnityEditor;
-using UnityEngine.SceneManagement;
 using Utility;
 
 namespace Features.MainMenu.Domain
 {
     public class MainMenuService
     {
+        private readonly IMainMenuPresenter _presenter;
+
         private GameService _gameService;
+
+        public MainMenuService(IMainMenuPresenter presenter)
+        {
+            _presenter = presenter;
+        }
 
         public void ResolveGameService(GameService gameService)
         {
@@ -17,7 +24,7 @@ namespace Features.MainMenu.Domain
 
         public IEnumerator LoadMainMenuScene()
         {
-            yield return SceneManager.LoadSceneAsync("MainMenu");
+            yield return _presenter.LoadMainMenuScene();
         }
 
         public void OnPlayButtonClicked()
@@ -27,21 +34,12 @@ namespace Features.MainMenu.Domain
 
         public void OnExitButtonClicked()
         {
-            ExitGame();
+            _presenter.ExitGame();
         }
 
         private IEnumerator LoadGameScene()
         {
             yield return _gameService.LoadGameScene();
-        }
-
-        private void ExitGame()
-        {
-#if UNITY_EDITOR
-            EditorApplication.ExitPlaymode();
-#else
-            Application.Quit();
-#endif
         }
     }
 }
