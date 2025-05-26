@@ -1,9 +1,11 @@
-﻿using Features.Game.Domain.Model;
+﻿using System.Collections;
+using Features.Game.Domain.Model;
 using Features.Game.Ports.Output;
 using Features.Game.View;
 using Features.Game.View.Model;
 using Features.Game.View.Views;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Features.Game.Adapters.Output
 {
@@ -22,6 +24,11 @@ namespace Features.Game.Adapters.Output
             _mainCharacterView = _viewProvider.GetView<MainCharacterView>();
             _hudView = _viewProvider.GetView<HudView>();
             _pauseMenuView = _viewProvider.GetView<PauseMenuView>();
+        }
+
+        public IEnumerator LoadGameScene()
+        {
+            yield return SceneManager.LoadSceneAsync("Game");
         }
 
         public DroneStartingState GetDroneStartingState()

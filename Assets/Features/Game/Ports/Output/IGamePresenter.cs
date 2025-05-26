@@ -1,4 +1,5 @@
-﻿using Features.Game.Domain.Model;
+﻿using System.Collections;
+using Features.Game.Domain.Model;
 using Features.Game.View.Model;
 
 namespace Features.Game.Ports.Output
@@ -6,6 +7,8 @@ namespace Features.Game.Ports.Output
     public interface IGamePresenter
     {
         public void Initialize();
+
+        public IEnumerator LoadGameScene();
 
         public DroneStartingState GetDroneStartingState();
         public RaycastShootResult ShootRaycastFromDrone();

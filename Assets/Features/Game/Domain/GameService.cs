@@ -4,7 +4,6 @@ using Features.Game.Domain.Model;
 using Features.Game.Events;
 using Features.Game.Ports.Output;
 using Features.MainMenu.Domain;
-using UnityEngine.SceneManagement;
 using Utility;
 
 namespace Features.Game.Domain
@@ -36,7 +35,7 @@ namespace Features.Game.Domain
 
         public IEnumerator LoadGameScene()
         {
-            yield return SceneManager.LoadSceneAsync("Game");
+            yield return _presenter.LoadGameScene();
 
             _presenter.Initialize();
             InitializeModel();
