@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace Core.DomainContextSystem
+namespace Core.Bootstrapping
 {
     public abstract class DomainContext : ScriptableObject, IDisposable
     {

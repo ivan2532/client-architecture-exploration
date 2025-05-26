@@ -1,4 +1,4 @@
-﻿using Core.DomainContextSystem;
+﻿using Core.Bootstrapping;
 using Features.Game.Infrastructure;
 using Features.MainMenu.Adapters.Input;
 using Features.MainMenu.Domain;
