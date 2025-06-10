@@ -1,4 +1,4 @@
 ﻿namespace Features.Game.View.Model
 {
-    public record HudViewModel(int Score) : IGameViewModel;
+    public record HudViewModel(int Score);
 }

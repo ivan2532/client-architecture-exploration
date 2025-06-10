@@ -5,11 +5,10 @@ using UnityEngine;
 
 namespace Core.ViewSystem
 {
-    public abstract class ViewProvider<TView, TViewCreatedEvent> : IDisposable
-        where TView : MonoBehaviour
+    public abstract class ViewProvider<TViewCreatedEvent> : IDisposable
         where TViewCreatedEvent : IViewCreatedEvent
     {
-        private readonly Dictionary<Type, TView> _views = new();
+        private readonly Dictionary<Type, View> _views = new();
 
         protected ViewProvider()
         {
@@ -21,7 +20,7 @@ namespace Core.ViewSystem
             UnsubscribeFromEvents();
         }
 
-        public TRequestedView GetView<TRequestedView>() where TRequestedView : TView
+        public TRequestedView GetView<TRequestedView>() where TRequestedView : View
         {
             if (!_views.ContainsKey(typeof(TRequestedView)) || !_views[typeof(TRequestedView)])
             {
@@ -44,7 +43,7 @@ namespace Core.ViewSystem
         private void OnViewCreated(TViewCreatedEvent viewCreatedEvent)
         {
             var view = viewCreatedEvent.GetView();
-            _views[view.GetType()] = (TView)view;
+            _views[view.GetType()] = (View)view;
         }
     }
 }

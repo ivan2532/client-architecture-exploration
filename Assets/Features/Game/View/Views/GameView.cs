@@ -1,6 +1,5 @@
 ﻿using Core.EventSystem;
 using Features.Game.Events;
-using Features.Game.View.Model;
 
 namespace Features.Game.View.Views
 {
@@ -12,28 +11,11 @@ namespace Features.Game.View.Views
         }
     }
 
-    public abstract class GameView<TViewModel> : GameView where TViewModel : IGameViewModel
+    public abstract class GameView<TViewModel> : Core.ViewSystem.View<TViewModel>
     {
-        public delegate void ViewModelUpdatedDelegate(TViewModel viewModel);
-
-        public event ViewModelUpdatedDelegate ViewModelUpdated;
-
-        protected TViewModel ViewModel { get; private set; }
-
-        protected override void Awake()
+        protected override void RaiseViewCreatedEvent()
         {
-            base.Awake();
-
-            var initialViewModel = Initialize();
-            UpdateViewModel(initialViewModel);
-        }
-
-        protected abstract TViewModel Initialize();
-
-        public void UpdateViewModel(TViewModel viewModel)
-        {
-            ViewModel = viewModel;
-            ViewModelUpdated?.Invoke(viewModel);
+            EventBus.Raise(new GameViewCreatedEvent(this));
         }
     }
 }

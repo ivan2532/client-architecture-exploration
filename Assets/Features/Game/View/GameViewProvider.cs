@@ -4,7 +4,7 @@ using Features.Game.View.Views;
 
 namespace Features.Game.View
 {
-    public class GameViewProvider : ViewProvider<GameView, GameViewCreatedEvent>
+    public class GameViewProvider : ViewProvider<GameViewCreatedEvent>
     {
     }
 }
